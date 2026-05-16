@@ -408,7 +408,6 @@
   <div class="modal-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">🙋 義工自助報到</div>
-    <div class="confirm-card" id="card-confirm-card"></div>
     <div id="card-action-area"></div>
     <button class="btn btn-gray btn-full mt-3" onclick="closeCardSelfSheet()">關閉</button>
   </div>
@@ -849,13 +848,6 @@ function openCardSelfSheet(code){
   const s = data.students.find(s => nCode(s.code) === code);
   if(!s) return;
   selfStudent = s;
-  const pr = isPresentByCode(s.code);
-  document.getElementById('card-confirm-card').innerHTML = `
-    <div class="confirm-name">${esc(s.name)}</div>
-    ${s.dharma ? `<div class="confirm-dharma">${esc(s.dharma)}</div>` : ''}
-    <div class="confirm-status" style="color:${pr?'var(--green)':'var(--gray)'}">
-      目前：${pr ? '✅ 已報到' : '⬜ 未到'}
-    </div>`;
   const area = document.getElementById('card-action-area');
   area.innerHTML = '';
   area.appendChild(buildActionCard(s, true));
