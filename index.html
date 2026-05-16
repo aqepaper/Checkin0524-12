@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>0524浴佛法會 第12車 義工報到</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -21,28 +21,29 @@
       --green-pale: #d8f3dc;
       --red: #c1121f;
       --amber: #d4790a;
+      --teal: #2D5D4F;
       --frozen-bg: #f0f0f0;
       --frozen-border: #c0c0c0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 18px; }
+    html { font-size: 18px; -webkit-text-size-adjust: 100%; }
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--cream); color: var(--ink);
-      min-height: 100vh; -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
       max-width: 480px; margin: 0 auto;
       box-shadow: 0 0 40px rgba(0,0,0,0.12);
     }
 
     /* 載入條 */
     #loading-bar {
-      display: none; position: fixed; top: 0; left: 0; right: 0; height: 5px;
+      display: none; position: fixed; top: 0; left: 0; right: 0; height: 4px;
       background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
       background-size: 200% 100%; animation: shimmer 1.2s infinite; z-index: 9999;
     }
     @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-    /* ── 置頂區 ── */
+    /* ── 置頂 header + 統計 ── */
     #sticky-top { position: sticky; top: 0; z-index: 100; }
     header {
       background: #fdf8f0; padding: 7px 14px 6px; text-align: center;
@@ -52,7 +53,6 @@
       letter-spacing: 0.1em; color: var(--maroon); display: inline; }
     header .sub { font-size: 0.8rem; color: #a09080; display: inline; margin-left: 6px; }
 
-    /* 頂部統計三格 */
     #top-stats {
       display: grid; grid-template-columns: repeat(3,1fr);
       background: #faf7f2; padding: 5px 10px 6px; gap: 6px;
@@ -65,18 +65,21 @@
     .num-red   { color: #b84040; }
     .num-gray  { color: #7b5c3a; }
 
-    /* ── 兩大入口按鈕 ── */
+    /* ── 主體 ── */
+    #main-body { padding: 12px 14px 60px; }
+
+    /* 兩大入口按鈕（不固定，隨頁面捲動） */
     #entry-bar {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px; padding: 12px 12px 0;
+      gap: 10px; margin-bottom: 16px;
     }
     .entry-btn {
       padding: 14px 8px; border-radius: 16px; border: 2.5px solid transparent;
-      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.95rem;
+      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.92rem;
       cursor: pointer; text-align: center; transition: all 0.18s;
       -webkit-tap-highlight-color: transparent; line-height: 1.5;
     }
-    .entry-btn .eb-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+    .entry-btn .eb-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
     .entry-btn-self {
       background: linear-gradient(135deg, #fff8f0, #fef3c7);
       border-color: var(--gold-border); color: #92400e;
@@ -84,22 +87,9 @@
     .entry-btn-self:active { opacity: 0.75; }
     .entry-btn-leader {
       background: linear-gradient(135deg, #f0f9f4, #d8f3dc);
-      border-color: #74c69d; color: var(--green);
+      border-color: #74c69d; color: var(--teal);
     }
     .entry-btn-leader:active { opacity: 0.75; }
-
-    /* ── 主體 padding ── */
-    #main-body { padding: 12px 14px 60px; }
-
-    /* 名單區段標題 */
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .section-header h2 { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; }
-    .btn-sm {
-      padding: 8px 12px; font-size: 0.84rem; border-radius: 10px; border: 2px solid var(--gray-light);
-      background: var(--white); color: var(--gray); font-family: 'Noto Sans TC', sans-serif;
-      font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: all 0.18s;
-    }
-    .btn-sm.active { border-color: var(--red); background: #fff0f0; color: var(--red); }
 
     /* 自助報到關閉提示 */
     #self-disabled-note {
@@ -107,6 +97,31 @@
       border-radius: 12px; padding: 10px 14px; font-size: 0.85rem;
       color: var(--red); text-align: center; margin-bottom: 12px;
     }
+
+    /* 唯讀提示條 */
+    #readonly-bar {
+      display: none; background: linear-gradient(135deg,#fff8e1,#fffde7);
+      border: 1.5px solid var(--gold-border); border-radius: 12px;
+      padding: 10px 14px; text-align: center; font-size: 0.85rem;
+      color: #78350f; font-weight: 600; margin-bottom: 12px;
+    }
+
+    /* 名單區段標題 */
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .section-header h2 { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; }
+
+    /* 三按鈕群組 */
+    .filter-bar { display: flex; gap: 6px; }
+    .filter-btn {
+      padding: 8px 12px; font-size: 0.82rem; border-radius: 10px;
+      border: 2px solid var(--gray-light); background: var(--white); color: var(--gray);
+      font-family: 'Noto Sans TC', sans-serif; font-weight: 600;
+      cursor: pointer; -webkit-tap-highlight-color: transparent; transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .filter-btn.active { border-color: var(--maroon); background: #fff5f5; color: var(--maroon); }
+    .filter-btn.refresh { border-color: var(--gray-light); color: var(--gray); }
+    .filter-btn.refresh:active { opacity: 0.7; }
 
     /* ── 名單卡片 ── */
     .cards-grid { display: flex; flex-direction: column; gap: 10px; }
@@ -140,113 +155,48 @@
     .tag-room { background: #e8f5e9; color: #2e7d32; }
     .tag-group { background: #fff3e0; color: #e65100; }
 
-    /* ══ Modal 共用 ══ */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.55); z-index: 500;
-      align-items: flex-end; justify-content: center;
+    /* ══════════════════════════════════
+       滑動報到卡片（領隊＋自助確認）
+    ══════════════════════════════════ */
+    .swipe-card {
+      position: relative; overflow: hidden;
+      background: var(--white); border-radius: 16px;
+      border: 2px solid var(--gray-light);
+      margin-bottom: 8px; touch-action: pan-y;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
     }
-    .modal-overlay.show { display: flex; }
-    .modal-sheet {
-      background: #fff; border-radius: 24px 24px 0 0;
-      padding: 24px 20px 36px; width: 100%; max-width: 480px;
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
-      animation: slideUp 0.22s ease; max-height: 92vh; overflow-y: auto;
+    .swipe-card.present { border-color: #74c69d; background: #f0faf4; }
+    .swipe-card.absent  { border-color: #ffb3b3; background: #fff5f5; }
+    .swipe-card.frozen  { border-color: var(--frozen-border); background: var(--frozen-bg); opacity: 0.65; }
+
+    /* 背景層（拖曳時露出的顏色） */
+    .swipe-bg {
+      position: absolute; inset: 0; display: flex; align-items: center;
+      pointer-events: none; border-radius: 14px;
     }
-    @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
-    .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 0 auto 18px; }
-    .sheet-title {
-      font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 700;
-      color: var(--maroon); text-align: center; margin-bottom: 18px;
+    .swipe-bg-left  { justify-content: flex-start; padding-left: 20px;
+      background: linear-gradient(90deg, var(--green), transparent); opacity: 0; }
+    .swipe-bg-right { justify-content: flex-end; padding-right: 20px;
+      background: linear-gradient(270deg, var(--red), transparent); opacity: 0; }
+    .swipe-bg span { font-size: 1.3rem; font-weight: 700; color: #fff; white-space: nowrap; }
+
+    /* 前景層（實際內容） */
+    .swipe-front {
+      position: relative; z-index: 1;
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 14px; background: inherit; border-radius: 14px;
+      transition: transform 0.08s linear;
+      will-change: transform;
     }
 
-    /* ── 自助報到 Sheet ── */
-    .modal-label { font-size: 0.9rem; color: var(--gray); margin-bottom: 8px; }
-    .pin-input {
-      width: 100%; padding: 16px 18px; font-size: 1.8rem; letter-spacing: 0.6em;
-      text-align: center; font-family: 'Noto Serif TC', serif; font-weight: 700;
-      border: 2.5px solid var(--gray-light); border-radius: 14px;
-      outline: none; color: var(--ink); background: #fafafa; transition: border-color 0.2s;
+    .swipe-hint {
+      font-size: 0.72rem; color: #bbb; text-align: center;
+      padding: 2px 0 8px; letter-spacing: 0.05em;
     }
-    .pin-input:focus { border-color: var(--maroon); background: #fff; }
-    .modal-error { color: var(--red); font-size: 0.88rem; text-align: center; margin-top: 8px; min-height: 22px; }
-
-    /* 確認身份卡 */
-    .confirm-card {
-      background: linear-gradient(135deg, #fff8f0, #fff);
-      border: 2px solid var(--gold-border); border-radius: 16px;
-      padding: 16px; margin: 12px 0; text-align: center;
-    }
-    .confirm-name   { font-size: 1.5rem; font-weight: 900; font-family: 'Noto Serif TC', serif; color: var(--maroon); }
-    .confirm-dharma { font-size: 0.92rem; color: var(--gray); margin-top: 4px; }
-    .confirm-info   { font-size: 0.85rem; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-    .confirm-status { margin-top: 10px; font-size: 0.88rem; }
-
-    .reason-area { display: none; margin-top: 12px; }
-    .reason-area label { font-size: 0.88rem; color: var(--gray); display: block; margin-bottom: 6px; }
-    .reason-area textarea {
-      width: 100%; padding: 12px 14px; border: 2px solid var(--gray-light); border-radius: 12px;
-      font-family: 'Noto Sans TC', sans-serif; font-size: 0.95rem;
-      color: var(--ink); background: #fafafa; outline: none;
-      resize: none; min-height: 72px; transition: border-color 0.2s;
-    }
-    .reason-area textarea:focus { border-color: var(--amber); background: #fff; }
-
-    .modal-btns { display: flex; gap: 10px; margin-top: 16px; }
-    .modal-btns button { flex: 1; }
-
-    /* ── 領隊 Sheet ── */
-    .leader-section { margin-bottom: 16px; }
-    .leader-section-title {
-      font-family: 'Noto Serif TC', serif; font-size: 0.95rem; font-weight: 700;
-      color: var(--maroon); margin-bottom: 10px; padding-bottom: 8px;
-      border-bottom: 1.5px solid #f5e6cc;
-    }
-
-    /* 領隊登入 */
-    .leader-pin-row { display: flex; gap: 8px; margin-bottom: 10px; }
-    .leader-pin-row input {
-      flex: 1; padding: 14px 16px; font-size: 1.3rem; letter-spacing: 0.3em;
-      text-align: center; border: 2px solid #f59e0b; border-radius: 12px;
-      font-family: 'Noto Serif TC', serif; font-weight: 700; outline: none; color: var(--ink);
-    }
-    .leader-pin-row input:focus { border-color: var(--maroon); }
-
-    /* 領隊統計 2格 */
-    .admin-summary {
-      display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px;
-    }
-    .sum-box { background: #fffaf5; border-radius: 14px; padding: 14px; text-align: center; border: 1.5px solid #ffe0b2; }
-    .sum-box .s-num { font-size: 2rem; font-weight: 700; font-family: 'Noto Serif TC', serif; line-height: 1; }
-    .sum-box .s-lbl { font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
-
-    /* 報到列表 */
-    .checkin-list { display: flex; flex-direction: column; gap: 8px; }
-    .checkin-item {
-      background: var(--white); border-radius: 14px; padding: 12px 14px;
-      border: 2px solid var(--gray-light); transition: border-color 0.15s, background 0.15s;
-    }
-    .checkin-item.present { border-color: #74c69d; background: #f0faf4; }
-    .checkin-item.absent  { border-color: #ffb3b3; background: #fff5f5; }
-    .checkin-item.frozen  { border-color: var(--frozen-border); background: var(--frozen-bg); opacity: 0.65; }
-
-    .ci-top { display: flex; align-items: flex-start; gap: 10px; }
-    .checkin-btn {
-      flex-shrink: 0; width: 66px; min-height: 58px;
-      border-radius: 14px; border: none; cursor: pointer;
-      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.8rem;
-      background: var(--gray-light); color: var(--gray);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: background 0.15s;
-    }
-    .checkin-btn .cb-icon { font-size: 1.4rem; line-height: 1; }
-    .checkin-btn.is-present { background: var(--green); color: #fff; }
-    .checkin-btn.is-absent  { background: var(--red); color: #fff; }
-    .checkin-btn.frozen-btn { background: #ddd; color: #aaa; cursor: default; }
-    .checkin-btn:active:not(.frozen-btn) { opacity: 0.65; }
 
     .ci-num { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; font-weight: 900;
-      color: var(--maroon); width: 28px; text-align: center; flex-shrink: 0; padding-top: 6px; }
+      color: var(--maroon); width: 28px; text-align: center; flex-shrink: 0; padding-top: 4px; }
     .ci-num.dim { color: var(--gray-light); }
     .ci-info { flex: 1; min-width: 0; }
     .ci-name { font-size: 1.05rem; font-weight: 700; }
@@ -254,8 +204,10 @@
     .ci-tags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
     .ci-time { font-size: 0.72rem; color: var(--green); margin-top: 4px; font-weight: 600; }
     .ci-reason-show { font-size: 0.8rem; color: var(--red); margin-top: 3px; }
+    .ci-status { flex-shrink: 0; padding-top: 4px; }
 
-    .ci-reason-row { display: none; gap: 6px; margin-top: 10px; }
+    /* 原因輸入（領隊模式） */
+    .ci-reason-row { display: none; gap: 6px; padding: 0 14px 12px; }
     .ci-reason-row.show { display: flex; }
     .ci-reason-input {
       flex: 1; padding: 10px 12px; border: 1.5px solid var(--gray-light); border-radius: 10px;
@@ -270,23 +222,114 @@
     }
 
     .freeze-btn {
-      display: inline-block; margin-top: 8px; padding: 5px 12px;
-      border-radius: 10px; border: 1.5px solid #ccc;
-      background: #f5f5f5; color: #888; font-size: 0.8rem; font-weight: 600;
+      display: inline-block; margin: 4px 0 2px; padding: 4px 10px;
+      border-radius: 8px; border: 1.5px solid #ccc;
+      background: #f5f5f5; color: #888; font-size: 0.76rem; font-weight: 600;
       cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
     .freeze-btn.is-frozen { background: #ffe0e0; border-color: var(--red); color: var(--red); }
 
+    /* ══ Modal / Bottom Sheet ══ */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 500;
+      align-items: flex-end; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-sheet {
+      background: #fff; border-radius: 24px 24px 0 0;
+      padding: 0 20px 36px; width: 100%; max-width: 480px;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+      animation: slideUp 0.22s ease; max-height: 92vh; overflow-y: auto;
+    }
+    @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 14px auto 18px; }
+    .sheet-title {
+      font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 700;
+      color: var(--maroon); text-align: center; margin-bottom: 18px;
+    }
+
+    /* ── PIN 輸入（依規範） ── */
+    .pin-wrap { margin-bottom: 6px; }
+    .pin-label { font-size: 0.9rem; color: var(--gray); margin-bottom: 10px; }
+    .pin-field {
+      width: 100%; padding: 14px; font-size: 2rem;
+      text-align: center; letter-spacing: 0.4em;
+      border: 2px solid #c8b48a; border-radius: 12px;
+      background: var(--gold-pale); color: var(--ink);
+      font-family: 'Noto Serif TC', serif; font-weight: 700;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .pin-field:focus {
+      border-color: var(--gold) !important;
+      box-shadow: 0 0 0 4px rgba(184,134,11,0.12);
+      background: #fff !important;
+    }
+    .pin-submit {
+      width: 100%; border: none; border-radius: 50px;
+      padding: 16px; font-family: 'Noto Serif TC', serif;
+      font-size: 1.1rem; letter-spacing: 4px; font-weight: 700;
+      background: #ccc; color: #fff; cursor: pointer;
+      transition: all 0.2s; margin-top: 12px;
+    }
+    .pin-submit.ready {
+      background: linear-gradient(135deg, var(--teal), #1e4238);
+      box-shadow: 0 4px 15px rgba(45,93,79,0.35);
+    }
+    .pin-submit.ready:active { transform: scale(0.98); }
+    .pin-error { text-align: center; font-size: 0.85rem; color: var(--red);
+      min-height: 20px; margin-top: 8px; font-weight: 600; }
+
+    /* 確認身份卡 */
+    .confirm-card {
+      background: linear-gradient(135deg, #fff8f0, #fff);
+      border: 2px solid var(--gold-border); border-radius: 16px;
+      padding: 16px; margin: 12px 0; text-align: center;
+    }
+    .confirm-name   { font-size: 1.5rem; font-weight: 900; font-family: 'Noto Serif TC', serif; color: var(--maroon); }
+    .confirm-dharma { font-size: 0.92rem; color: var(--gray); margin-top: 4px; }
+    .confirm-info   { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+    .confirm-status { margin-top: 10px; font-size: 0.88rem; }
+
+    /* 自助滑動提示 */
+    .self-swipe-wrap { margin: 4px 0 12px; }
+    .self-swipe-hint { font-size: 0.8rem; color: var(--gray); text-align: center; margin-bottom: 6px; }
+
+    .reason-area { display: none; margin: 10px 0 0; }
+    .reason-area label { font-size: 0.88rem; color: var(--gray); display: block; margin-bottom: 6px; }
+    .reason-area textarea {
+      width: 100%; padding: 12px 14px; border: 2px solid var(--gray-light); border-radius: 12px;
+      font-family: 'Noto Sans TC', sans-serif; font-size: 0.95rem;
+      color: var(--ink); background: #fafafa; outline: none;
+      resize: none; min-height: 70px; transition: border-color 0.2s;
+    }
+    .reason-area textarea:focus { border-color: var(--amber); background: #fff; }
+
+    .modal-btns { display: flex; gap: 10px; margin-top: 14px; }
+    .modal-btns button { flex: 1; }
+
+    /* 領隊登入 */
+    .leader-section { margin-bottom: 16px; }
+    .leader-section-title {
+      font-family: 'Noto Serif TC', serif; font-size: 0.95rem; font-weight: 700;
+      color: var(--maroon); margin-bottom: 10px; padding-bottom: 8px;
+      border-bottom: 1.5px solid #f5e6cc;
+    }
+    .admin-summary { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
+    .sum-box { background: #fffaf5; border-radius: 14px; padding: 14px; text-align: center; border: 1.5px solid #ffe0b2; }
+    .sum-box .s-num { font-size: 2rem; font-weight: 700; font-family: 'Noto Serif TC', serif; line-height: 1; }
+    .sum-box .s-lbl { font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
+
     /* ── 通用按鈕 ── */
     .btn {
-      display: inline-block; padding: 14px 18px; border-radius: 14px; border: none;
-      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 1rem;
+      display: inline-block; padding: 13px 18px; border-radius: 14px; border: none;
+      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.95rem;
       cursor: pointer; transition: opacity 0.15s; text-align: center;
       -webkit-tap-highlight-color: transparent;
     }
     .btn:active { opacity: 0.72; }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .btn-maroon  { background: var(--maroon); color: #fff; }
     .btn-green   { background: var(--green); color: #fff; }
     .btn-red     { background: var(--red); color: #fff; }
@@ -294,14 +337,6 @@
     .btn-amber   { background: var(--amber); color: #fff; }
     .btn-outline { background: var(--white); border: 2px solid var(--maroon); color: var(--maroon); }
     .btn-full    { width: 100%; display: block; }
-    .btn-big     { padding: 16px 20px; font-size: 1.05rem; }
-
-    /* 唯讀模式覆蓋提示 */
-    #readonly-bar {
-      display: none; background: linear-gradient(135deg,#fff8e1,#fffde7);
-      border-bottom: 2px solid var(--gold-border);
-      padding: 10px 14px; text-align: center; font-size: 0.85rem; color: #78350f; font-weight: 600;
-    }
 
     .flex-gap { display: flex; gap: 8px; flex-wrap: wrap; }
     .mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 16px; }
@@ -310,7 +345,6 @@
     .hint { color: var(--gray); font-size: 0.83rem; text-align: center; margin-top: 8px; }
     .err-txt { color: var(--red); font-size: 0.85rem; text-align: center; min-height: 20px; margin-top: 6px; }
 
-    /* Toast */
     #toast {
       position: fixed; bottom: 28px; left: 50%;
       transform: translateX(-50%) translateY(120px);
@@ -326,7 +360,7 @@
 <body>
 <div id="loading-bar"></div>
 
-<!-- ══ 置頂區 ══ -->
+<!-- ══ 置頂 ══ -->
 <div id="sticky-top">
   <header>
     <h1>☸ 0524 浴佛法會</h1>
@@ -337,7 +371,12 @@
     <div class="top-stat-box"><div class="num num-red"   id="ts-pending">—</div><div class="lbl">未到</div></div>
     <div class="top-stat-box"><div class="num num-gray"  id="ts-total">—</div><div class="lbl">應到</div></div>
   </div>
-  <!-- 兩大入口按鈕 -->
+</div>
+
+<!-- ══ 主體（含兩大按鈕，隨頁捲動） ══ -->
+<div id="main-body">
+
+  <!-- 兩大入口 -->
   <div id="entry-bar">
     <button class="entry-btn entry-btn-self" id="self-entry-btn" onclick="openSelfSheet()">
       <span class="eb-icon">🙋</span>義工自助報到
@@ -346,20 +385,17 @@
       <span class="eb-icon">🌿</span>領隊專區
     </button>
   </div>
-</div>
 
-<!-- 唯讀模式提示條 -->
-<div id="readonly-bar">👁 唯讀模式・僅供查閱</div>
-
-<!-- ══ 主體：出席總表 ══ -->
-<div id="main-body">
   <div id="self-disabled-note">⛔ 領隊已關閉自助報到功能</div>
+  <div id="readonly-bar">👁 唯讀模式・僅供查閱</div>
 
+  <!-- 名單區 -->
   <div class="section-header">
     <h2>📋 出席名單</h2>
-    <div style="display:flex;gap:6px;">
-      <button class="btn-sm" id="btn-pending" onclick="togglePending()">⏳ 未到</button>
-      <button class="btn-sm" onclick="refreshMain()">🔄 更新</button>
+    <div class="filter-bar">
+      <button class="filter-btn active" id="filter-all"    onclick="setFilter('all')">全部</button>
+      <button class="filter-btn"        id="filter-pending" onclick="setFilter('pending')">未到</button>
+      <button class="filter-btn refresh"                    onclick="refreshMain()">🔄 更新</button>
     </div>
   </div>
   <div id="cards" class="cards-grid"></div>
@@ -369,91 +405,99 @@
 <div id="toast"></div>
 
 
-<!-- ════════════════════════════════════
+<!-- ════════════════════════════════
      自助報到 Bottom Sheet
-════════════════════════════════════ -->
+════════════════════════════════ -->
 <div class="modal-overlay" id="self-sheet">
   <div class="modal-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">🙋 義工自助報到</div>
 
-    <!-- 步驟1：輸入PIN -->
+    <!-- 步驟1：PIN -->
     <div id="self-step1">
-      <div class="modal-label">請輸入手機號碼後四碼（PIN）</div>
-      <input type="tel" class="pin-input" id="pin-input" maxlength="4" inputmode="numeric"
-        placeholder="●●●●" onkeydown="if(event.key==='Enter') checkPin()">
-      <div class="modal-error" id="pin-error"></div>
-      <div class="modal-btns mt-3">
-        <button class="btn btn-gray" onclick="closeSelfSheet()">取消</button>
-        <button class="btn btn-maroon btn-big" onclick="checkPin()">確認</button>
+      <div class="pin-wrap">
+        <div class="pin-label">請輸入手機號碼後四碼（PIN）</div>
+        <input type="tel" class="pin-field" id="pin-input"
+          maxlength="4" inputmode="numeric" pattern="[0-9]*"
+          autocomplete="off" placeholder="••••"
+          oninput="onPinInput(this)"
+          onkeydown="if(event.key==='Enter' && !document.getElementById('pin-submit').disabled) checkPin()">
+        <button class="pin-submit" id="pin-submit" disabled onclick="checkPin()">確　認</button>
+        <div class="pin-error" id="pin-error"></div>
       </div>
+      <button class="btn btn-gray btn-full mt-3" onclick="closeSelfSheet()">取消</button>
     </div>
 
-    <!-- 步驟2：確認身份 & 操作 -->
+    <!-- 步驟2：確認身份 + 滑動操作 -->
     <div id="self-step2" class="hidden">
       <div class="confirm-card" id="confirm-card"></div>
+
+      <!-- 單人滑動卡（自助） -->
+      <div class="self-swipe-wrap" id="self-swipe-wrap"></div>
+
       <div id="reason-area" class="reason-area">
         <label>請輸入取消原因（選填）</label>
         <textarea id="reason-input" placeholder="例：身體不適、臨時有事…" maxlength="60"></textarea>
       </div>
-      <div class="modal-btns mt-3" id="confirm-btns"></div>
+      <button class="btn btn-gray btn-full mt-3" onclick="closeSelfSheet()">關閉</button>
     </div>
   </div>
 </div>
 
 
-<!-- ════════════════════════════════════
+<!-- ════════════════════════════════
      領隊專區 Bottom Sheet
-════════════════════════════════════ -->
+════════════════════════════════ -->
 <div class="modal-overlay" id="leader-sheet">
   <div class="modal-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">🌿 領隊專區</div>
 
-    <!-- 登入面板 -->
+    <!-- 登入 -->
     <div id="leader-login-panel">
-      <div class="leader-section-title">請輸入領隊代碼</div>
-      <div class="leader-pin-row">
-        <input type="password" id="leader-pin-input" maxlength="8" placeholder="代碼" inputmode="numeric"
-          onkeydown="if(event.key==='Enter') doLeaderLogin()">
-        <button class="btn btn-amber btn-big" onclick="doLeaderLogin()">進入</button>
+      <div class="pin-wrap">
+        <div class="pin-label">請輸入領隊代碼</div>
+        <input type="tel" class="pin-field" id="leader-pin-input"
+          maxlength="4" inputmode="numeric" pattern="[0-9]*"
+          autocomplete="off" placeholder="••••"
+          oninput="onLeaderPinInput(this)"
+          onkeydown="if(event.key==='Enter' && !document.getElementById('leader-pin-submit').disabled) doLeaderLogin()">
+        <button class="pin-submit" id="leader-pin-submit" disabled onclick="doLeaderLogin()">進　入</button>
+        <div class="pin-error" id="leader-login-err"></div>
       </div>
-      <div class="err-txt" id="leader-login-err"></div>
       <button class="btn btn-gray btn-full mt-3" onclick="closeLeaderSheet()">取消</button>
     </div>
 
-    <!-- 後台面板 -->
+    <!-- 後台 -->
     <div id="leader-panel" class="hidden">
 
-      <!-- 系統控制 -->
       <div class="leader-section">
         <div class="leader-section-title">⚙ 系統控制</div>
         <div class="flex-gap">
-          <button class="btn btn-outline" style="flex:1;font-size:0.88rem;padding:11px 8px;"
+          <button class="btn btn-outline" style="flex:1;font-size:0.85rem;padding:11px 8px;"
             id="toggle-self-btn" onclick="toggleSelfCheckin()">🔒 關閉自助報到</button>
-          <button class="btn btn-outline" style="flex:1;font-size:0.88rem;padding:11px 8px;"
+          <button class="btn btn-outline" style="flex:1;font-size:0.85rem;padding:11px 8px;"
             onclick="shareReadonly()">🔗 分享唯讀</button>
         </div>
       </div>
 
-      <!-- 報到管理 -->
       <div class="leader-section">
         <div class="leader-section-title">⚡ 報到管理</div>
         <div class="admin-summary">
           <div class="sum-box"><div class="s-num num-green" id="adm-present">—</div><div class="s-lbl">已報到</div></div>
           <div class="sum-box"><div class="s-num num-red"   id="adm-pending">—</div><div class="s-lbl">未到</div></div>
         </div>
-        <button class="btn btn-outline btn-full mb-3" style="font-size:0.9rem;" onclick="leaderRefresh()">🔄 重新整理</button>
-        <div id="checkin-list" class="checkin-list"></div>
+        <button class="btn btn-outline btn-full mb-3" style="font-size:0.88rem;" onclick="leaderRefresh()">🔄 重新整理</button>
+        <div class="swipe-hint">← 右滑報到・左滑取消 →</div>
+        <div id="checkin-list"></div>
         <div class="flex-gap mt-4">
-          <button class="btn btn-green" style="flex:1;font-size:0.9rem;" onclick="exportCSV()">📥 匯出 CSV</button>
-          <button class="btn btn-red"   style="flex:1;font-size:0.9rem;" onclick="clearAllData()">🗑 清除記錄</button>
+          <button class="btn btn-green" style="flex:1;font-size:0.88rem;" onclick="exportCSV()">📥 匯出</button>
+          <button class="btn btn-red"   style="flex:1;font-size:0.88rem;" onclick="clearAllData()">🗑 清除</button>
         </div>
       </div>
 
       <button class="btn btn-gray btn-full" onclick="leaderLogout()">退出領隊後台</button>
     </div>
-
   </div>
 </div>
 
@@ -464,6 +508,8 @@
 // ══════════════════════════════════════════
 const API         = 'https://script.google.com/macros/s/AKfycbz_i1spdxXnPJmx7tZUtIfBn9ybdrJdtaBNjjGaVBpViFrED01sFYWwIviiB3tH6yB3Fw/exec';
 const LEADER_CODE = '7777';
+const SWIPE_THRESHOLD = 72;   // px，超過即觸發
+const SWIPE_MAX       = 100;  // px，最大位移
 
 // ══════════════════════════════════════════
 // 狀態
@@ -471,8 +517,8 @@ const LEADER_CODE = '7777';
 let data = { students: [], statuses: {}, frozen: [] };
 let isLeader           = false;
 let selfCheckinEnabled = true;
-let showPendingFirst   = false;
-let isReadonly         = false;   // URL hash #readonly
+let filterMode         = 'all';   // 'all' | 'pending'
+let isReadonly         = false;
 let pinStudent         = null;
 
 // ══════════════════════════════════════════
@@ -481,440 +527,503 @@ let pinStudent         = null;
 function nCode(raw) { return String(raw || '').padStart(3, '0'); }
 function isFrozen(code) { return data.frozen.includes(nCode(code)); }
 function getSt(s)    { return data.statuses[nCode(s.code)] || null; }
-function isPresent(s){ const st = getSt(s); return st && st.type === 'present'; }
-function isAbsent(s) { const st = getSt(s); return st && st.type === 'absent';  }
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function isPresent(s){ const st=getSt(s); return st&&st.type==='present'; }
+function isAbsent(s) { const st=getSt(s); return st&&st.type==='absent';  }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function setLoading(on){ document.getElementById('loading-bar').style.display = on?'block':'none'; }
+let _tt;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),2800);
 }
-function setLoading(on) { document.getElementById('loading-bar').style.display = on ? 'block' : 'none'; }
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// 統計（凍結排除）
-function calcStats() {
-  const active  = data.students.filter(s => !isFrozen(s.code));
-  const present = active.filter(s => isPresent(s)).length;
-  return { total: active.length, present, pending: active.length - present };
+function calcStats(){
+  const active=data.students.filter(s=>!isFrozen(s.code));
+  const present=active.filter(s=>isPresent(s)).length;
+  return { total:active.length, present, pending:active.length-present };
 }
 
 // ══════════════════════════════════════════
 // API
 // ══════════════════════════════════════════
-async function apiCall(params) {
-  const res = await fetch(API + '?' + new URLSearchParams(params));
+async function apiCall(params){
+  const res=await fetch(API+'?'+new URLSearchParams(params));
   return res.json();
 }
-async function loadData() {
+async function loadData(){
   setLoading(true);
   try {
-    const r = await apiCall({ action: 'getAll' });
-    if (r && r.ok) {
-      const norm = {};
-      Object.entries(r.statuses || {}).forEach(([k,v]) => { norm[nCode(k)] = v; });
-      r.statuses = norm;
-      r.frozen   = (r.frozen || []).map(c => nCode(c));
-      data = r;
+    const r=await apiCall({action:'getAll'});
+    if(r&&r.ok){
+      const norm={};
+      Object.entries(r.statuses||{}).forEach(([k,v])=>{ norm[nCode(k)]=v; });
+      r.statuses=norm;
+      r.frozen=(r.frozen||[]).map(c=>nCode(c));
+      data=r;
     }
-  } catch(e) { showToast('⚠ 無法連線雲端'); }
+  } catch(e){ showToast('⚠ 無法連線雲端'); }
   setLoading(false);
 }
 
 // ══════════════════════════════════════════
-// 統計渲染
+// 統計
 // ══════════════════════════════════════════
-function renderStats() {
-  const { total, present, pending } = calcStats();
-  ['ts-present','adm-present'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=present; });
-  ['ts-pending','adm-pending'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=pending; });
-  document.getElementById('ts-total').textContent = total;
+function renderStats(){
+  const {total,present,pending}=calcStats();
+  ['ts-present','adm-present'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=present;});
+  ['ts-pending','adm-pending'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=pending;});
+  const t=document.getElementById('ts-total'); if(t) t.textContent=total;
 }
 
 // ══════════════════════════════════════════
 // 標籤
 // ══════════════════════════════════════════
-function tagHtml(s) {
-  let h = '';
-  if (s.gender) h += `<span class="tag tag-${s.gender==='女'?'f':'m'}">${esc(s.gender)}</span>`;
-  if (s.unit)   h += `<span class="tag tag-unit">${esc(s.unit)}</span>`;
-  if (s.room)   h += `<span class="tag tag-room">🛏${esc(s.room)}</span>`;
-  if (s.group)  h += `<span class="tag tag-group">${esc(s.group)}</span>`;
+function tagHtml(s){
+  let h='';
+  if(s.gender) h+=`<span class="tag tag-${s.gender==='女'?'f':'m'}">${esc(s.gender)}</span>`;
+  if(s.unit)   h+=`<span class="tag tag-unit">${esc(s.unit)}</span>`;
+  if(s.room)   h+=`<span class="tag tag-room">🛏${esc(s.room)}</span>`;
+  if(s.group)  h+=`<span class="tag tag-group">${esc(s.group)}</span>`;
   return h;
 }
 
 // ══════════════════════════════════════════
-// 主體總表
+// 主體渲染
 // ══════════════════════════════════════════
-function renderMain() {
+function renderMain(){
   renderStats();
-
-  // 自助報到按鈕 & 提示
-  const selfBtn  = document.getElementById('self-entry-btn');
-  const selfNote = document.getElementById('self-disabled-note');
-  if (isReadonly) {
+  // 入口按鈕 & 提示
+  const selfBtn=document.getElementById('self-entry-btn');
+  const selfNote=document.getElementById('self-disabled-note');
+  const roBar=document.getElementById('readonly-bar');
+  if(isReadonly){
     selfBtn.classList.add('hidden');
-    selfNote.style.display = 'none';
-  } else if (selfCheckinEnabled) {
+    document.querySelector('.entry-btn-leader').classList.add('hidden');
+    roBar.style.display='block';
+    selfNote.style.display='none';
+  } else if(selfCheckinEnabled){
     selfBtn.classList.remove('hidden');
-    selfNote.style.display = 'none';
+    selfNote.style.display='none';
+    roBar.style.display='none';
   } else {
-    selfBtn.classList.remove('hidden');   // 保留按鈕，點了顯示關閉提示
-    selfNote.style.display = 'block';
+    selfBtn.classList.remove('hidden');
+    selfNote.style.display='block';
+    roBar.style.display='none';
   }
+  renderCards();
+}
+async function refreshMain(){ await loadData(); renderMain(); showToast('✅ 已更新'); }
 
-  // 唯讀提示條
-  document.getElementById('readonly-bar').style.display = isReadonly ? 'block' : 'none';
-
+// 篩選切換
+function setFilter(mode){
+  filterMode=mode;
+  document.getElementById('filter-all').classList.toggle('active', mode==='all');
+  document.getElementById('filter-pending').classList.toggle('active', mode==='pending');
   renderCards();
 }
 
-async function refreshMain() { await loadData(); renderMain(); showToast('✅ 已更新'); }
-
-function togglePending() {
-  showPendingFirst = !showPendingFirst;
-  document.getElementById('btn-pending').classList.toggle('active', showPendingFirst);
-  renderCards();
-}
-
-function renderCards() {
-  const c = document.getElementById('cards');
-  if (!data.students.length) {
-    c.innerHTML = '<div style="text-align:center;color:var(--gray);padding:40px;">尚未載入名單</div>';
+function renderCards(){
+  const c=document.getElementById('cards');
+  if(!data.students.length){
+    c.innerHTML='<div style="text-align:center;color:var(--gray);padding:40px;">尚未載入名單</div>';
     return;
   }
-  c.innerHTML = '';
-  let sorted = [...data.students].sort((a,b) => Number(a.order)-Number(b.order));
-  if (showPendingFirst) {
-    const pending = sorted.filter(s => !isPresent(s) && !isFrozen(s.code));
-    const present = sorted.filter(s => isPresent(s));
-    const frozen  = sorted.filter(s => isFrozen(s.code));
-    sorted = [...pending, ...present, ...frozen];
+  c.innerHTML='';
+  let sorted=[...data.students].sort((a,b)=>Number(a.order)-Number(b.order));
+  if(filterMode==='pending'){
+    sorted=sorted.filter(s=>!isPresent(s)&&!isFrozen(s.code));
   }
-  sorted.forEach(s => {
-    const fr   = isFrozen(s.code);
-    const st   = getSt(s);
-    const pres = isPresent(s);
-    const abs  = isAbsent(s);
-    const el   = document.createElement('div');
-    el.className = 'card' + (fr ? ' frozen' : pres ? ' present' : abs ? ' absent' : '');
-    el.innerHTML = `
-      <div class="card-num ${(!pres && !fr) ? 'dim' : ''}">${s.order}</div>
+  sorted.forEach(s=>{
+    const fr=isFrozen(s.code), st=getSt(s), pres=isPresent(s), abs=isAbsent(s);
+    const el=document.createElement('div');
+    el.className='card'+(fr?' frozen':pres?' present':abs?' absent':'');
+    el.innerHTML=`
+      <div class="card-num ${(!pres&&!fr)?'dim':''}">${s.order}</div>
       <div class="card-info">
-        <div class="card-name">${esc(s.name)}${s.dharma ? ` <span class="card-dharma">${esc(s.dharma)}</span>` : ''}</div>
+        <div class="card-name">${esc(s.name)}${s.dharma?` <span class="card-dharma">${esc(s.dharma)}</span>`:''}</div>
         <div class="card-row2">
           ${tagHtml(s)}
-          ${st && st.reason ? `<span style="font-size:0.76rem;color:var(--red);margin-left:2px;">📝${esc(st.reason)}</span>` : ''}
+          ${st&&st.reason?`<span style="font-size:0.76rem;color:var(--red);margin-left:2px;">📝${esc(st.reason)}</span>`:''}
         </div>
       </div>
       <div class="card-status">
-        ${fr   ? '<span class="badge badge-frozen">豁免</span>'
-        : pres ? '<span class="badge badge-present">已報到</span>'
-        : abs  ? '<span class="badge badge-absent">取消</span>'
-               : '<span class="badge badge-none">未到</span>'}
+        ${fr  ?'<span class="badge badge-frozen">豁免</span>'
+        :pres ?'<span class="badge badge-present">已報到</span>'
+        :abs  ?'<span class="badge badge-absent">取消</span>'
+               :'<span class="badge badge-none">未到</span>'}
       </div>`;
     c.appendChild(el);
   });
 }
 
 // ══════════════════════════════════════════
+// PIN 輸入行為（依規範）
+// ══════════════════════════════════════════
+function onPinInput(el){
+  let v=el.value.replace(/\D/g,'').slice(0,4);
+  el.value=v;
+  document.getElementById('pin-error').textContent='';
+  const btn=document.getElementById('pin-submit');
+  const ready=v.length===4;
+  btn.disabled=!ready;
+  btn.className='pin-submit'+(ready?' ready':'');
+}
+function onLeaderPinInput(el){
+  let v=el.value.replace(/\D/g,'').slice(0,4);
+  el.value=v;
+  document.getElementById('leader-login-err').textContent='';
+  const btn=document.getElementById('leader-pin-submit');
+  const ready=v.length>=4;
+  btn.disabled=!ready;
+  btn.className='pin-submit'+(ready?' ready':'');
+}
+
+// ══════════════════════════════════════════
 // 自助報到 Sheet
 // ══════════════════════════════════════════
-function openSelfSheet() {
-  if (isReadonly) return;
-  if (!selfCheckinEnabled) { showToast('⛔ 自助報到已關閉'); return; }
-  pinStudent = null;
-  document.getElementById('pin-input').value    = '';
-  document.getElementById('pin-error').textContent = '';
-  document.getElementById('reason-input').value = '';
-  document.getElementById('reason-area').style.display = 'none';
+function openSelfSheet(){
+  if(isReadonly) return;
+  if(!selfCheckinEnabled){ showToast('⛔ 自助報到已關閉'); return; }
+  pinStudent=null;
+  document.getElementById('pin-input').value='';
+  document.getElementById('pin-error').textContent='';
+  const btn=document.getElementById('pin-submit');
+  btn.disabled=true; btn.className='pin-submit';
+  document.getElementById('reason-input').value='';
+  document.getElementById('reason-area').style.display='none';
   document.getElementById('self-step1').classList.remove('hidden');
   document.getElementById('self-step2').classList.add('hidden');
   document.getElementById('self-sheet').classList.add('show');
-  setTimeout(() => document.getElementById('pin-input').focus(), 120);
+  setTimeout(()=>document.getElementById('pin-input').focus(),120);
 }
-function closeSelfSheet() {
-  document.getElementById('self-sheet').classList.remove('show');
-}
+function closeSelfSheet(){ document.getElementById('self-sheet').classList.remove('show'); }
 
-function checkPin() {
-  const pin = document.getElementById('pin-input').value.trim();
-  if (pin.length < 4) { document.getElementById('pin-error').textContent = '⚠ 請輸入四位 PIN'; return; }
-  const found = data.students.find(s => s.pin === pin);
-  if (!found) { document.getElementById('pin-error').textContent = '⚠ PIN 不符，請確認後再試'; return; }
-  if (isFrozen(found.code)) { document.getElementById('pin-error').textContent = '⚠ 此名單已設為豁免，無需報到'; return; }
-  pinStudent = found;
-  showPinStep2(found);
+function checkPin(){
+  const pin=document.getElementById('pin-input').value.trim();
+  const found=data.students.find(s=>s.pin===pin);
+  if(!found){ document.getElementById('pin-error').textContent='⚠ PIN 不符，請確認後再試'; return; }
+  if(isFrozen(found.code)){ document.getElementById('pin-error').textContent='⚠ 此名單已設為豁免，無需報到'; return; }
+  pinStudent=found;
+  showSelfStep2(found);
 }
 
-function showPinStep2(s) {
-  const st   = getSt(s);
-  const pres = isPresent(s);
-  const abs  = isAbsent(s);
-
-  document.getElementById('confirm-card').innerHTML = `
+function showSelfStep2(s){
+  const st=getSt(s), pres=isPresent(s), abs=isAbsent(s);
+  document.getElementById('confirm-card').innerHTML=`
     <div class="confirm-name">${esc(s.name)}</div>
-    ${s.dharma ? `<div class="confirm-dharma">${esc(s.dharma)}</div>` : ''}
+    ${s.dharma?`<div class="confirm-dharma">${esc(s.dharma)}</div>`:''}
     <div class="confirm-info">
-      ${s.gender ? `<span class="tag tag-${s.gender==='女'?'f':'m'}">${esc(s.gender)}</span>` : ''}
-      ${s.unit   ? `<span class="tag tag-unit">${esc(s.unit)}</span>` : ''}
-      ${s.room   ? `<span class="tag tag-room">🛏${esc(s.room)}</span>` : ''}
-      ${s.group  ? `<span class="tag tag-group">${esc(s.group)}</span>` : ''}
+      ${s.gender?`<span class="tag tag-${s.gender==='女'?'f':'m'}">${esc(s.gender)}</span>`:''}
+      ${s.unit?`<span class="tag tag-unit">${esc(s.unit)}</span>`:''}
+      ${s.room?`<span class="tag tag-room">🛏${esc(s.room)}</span>`:''}
+      ${s.group?`<span class="tag tag-group">${esc(s.group)}</span>`:''}
     </div>
     <div class="confirm-status" style="color:${pres?'var(--green)':abs?'var(--red)':'var(--gray)'}">
-      目前：${pres ? '✅ 已報到' : abs ? `❌ 已取消${st&&st.reason?' ('+st.reason+')':''}` : '⬜ 未登記'}
+      目前：${pres?'✅ 已報到':abs?`❌ 已取消${st&&st.reason?' ('+st.reason+')':''}` :'⬜ 未登記'}
     </div>`;
 
-  const btns = document.getElementById('confirm-btns');
-  if (pres) {
-    document.getElementById('reason-area').style.display = 'block';
-    btns.innerHTML = `
-      <button class="btn btn-gray" onclick="closeSelfSheet()">返回</button>
-      <button class="btn btn-red btn-big" onclick="selfAbsent()">取消報到</button>`;
-  } else {
-    document.getElementById('reason-area').style.display = 'none';
-    btns.innerHTML = `
-      <button class="btn btn-gray" onclick="closeSelfSheet()">返回</button>
-      <button class="btn btn-green btn-big" onclick="selfPresent()">✅ 確認報到</button>`;
-  }
+  // 建立單張可滑動卡（自助）
+  const wrap=document.getElementById('self-swipe-wrap');
+  wrap.innerHTML=`<div class="self-swipe-hint">← 左滑取消・右滑報到 →</div>`;
+  const card=buildSwipeCard(s, true);
+  wrap.appendChild(card);
+  attachSwipe(card, nCode(s.code), true);
+
+  // 取消原因欄：若目前已報到，顯示原因欄供填寫
+  document.getElementById('reason-area').style.display=pres?'block':'none';
 
   document.getElementById('self-step1').classList.add('hidden');
   document.getElementById('self-step2').classList.remove('hidden');
 }
 
-async function selfPresent() {
-  if (!pinStudent) return;
-  const code = nCode(pinStudent.code);
-  data.statuses[code] = { type: 'present', reason: '', timestamp: new Date().toLocaleString('zh-TW') };
-  closeSelfSheet();
-  renderMain();
-  showToast(`✅ ${pinStudent.name} 報到成功！`);
-  apiCall({ action: 'checkin', code, type: 'present', reason: '', source: 'student' })
-    .catch(() => showToast('⚠ 同步失敗'));
+// ══════════════════════════════════════════
+// 滑動邏輯（共用）
+// ══════════════════════════════════════════
+function buildSwipeCard(s, selfMode){
+  const code=nCode(s.code);
+  const fr=isFrozen(code), st=getSt(s), pres=isPresent(s), abs=isAbsent(s);
+  const reason=st?st.reason||'':'';
+
+  const card=document.createElement('div');
+  card.className='swipe-card'+(fr?' frozen':pres?' present':abs?' absent':'');
+  card.dataset.code=code;
+  card.innerHTML=`
+    <div class="swipe-bg swipe-bg-left"  id="bg-l-${code}"><span>✅ 報到</span></div>
+    <div class="swipe-bg swipe-bg-right" id="bg-r-${code}"><span>取消 ↩</span></div>
+    <div class="swipe-front" id="sf-${code}">
+      <div class="ci-num ${(!pres&&!fr)?'dim':''}">${s.order}</div>
+      <div class="ci-info">
+        <div class="ci-name">${esc(s.name)}${s.dharma?` <span class="ci-dharma">${esc(s.dharma)}</span>`:''}</div>
+        <div class="ci-tags">${tagHtml(s)}</div>
+        ${st&&st.timestamp?`<div class="ci-time">⏱ ${st.timestamp}</div>`:''}
+        ${reason?`<div class="ci-reason-show">📝 ${esc(reason)}</div>`:''}
+        ${!selfMode&&!fr?`<button class="freeze-btn${fr?' is-frozen':''}" onclick="toggleFreeze('${code}')">${fr?'🔓 解除豁免':'🔒 設為豁免'}</button>`:''}
+      </div>
+      <div class="ci-status">
+        ${fr  ?'<span class="badge badge-frozen">豁免</span>'
+        :pres ?'<span class="badge badge-present">已報到</span>'
+        :abs  ?'<span class="badge badge-absent">取消</span>'
+               :'<span class="badge badge-none">未到</span>'}
+      </div>
+    </div>
+    ${!selfMode&&!fr?`<div class="ci-reason-row ${(pres||abs)?'show':''}" id="rr-${code}">
+      <input class="ci-reason-input" id="ri-${code}" type="text"
+        value="${esc(reason)}" placeholder="原因（選填）" maxlength="60">
+      <button class="ci-reason-save" onclick="saveReason('${code}')">存</button>
+    </div>`:''}`;
+  return card;
 }
-async function selfAbsent() {
-  if (!pinStudent) return;
-  const code   = nCode(pinStudent.code);
-  const reason = document.getElementById('reason-input').value.trim();
-  data.statuses[code] = { type: 'absent', reason, timestamp: new Date().toLocaleString('zh-TW') };
-  closeSelfSheet();
-  renderMain();
-  showToast(`↩ ${pinStudent.name} 已取消報到`);
-  apiCall({ action: 'checkin', code, type: 'absent', reason, source: 'student' })
-    .catch(() => showToast('⚠ 同步失敗'));
+
+function attachSwipe(card, code, selfMode){
+  const front=card.querySelector('.swipe-front');
+  const bgL  =card.querySelector('.swipe-bg-left');
+  const bgR  =card.querySelector('.swipe-bg-right');
+  if(!front) return;
+
+  // 凍結狀態不掛滑動
+  if(isFrozen(code)) return;
+
+  let startX=0, startY=0, dx=0, dragging=false, blocked=false;
+
+  function onStart(e){
+    const t=e.touches?e.touches[0]:e;
+    startX=t.clientX; startY=t.clientY; dx=0; dragging=true; blocked=false;
+  }
+  function onMove(e){
+    if(!dragging||blocked) return;
+    const t=e.touches?e.touches[0]:e;
+    dx=t.clientX-startX;
+    const dy=Math.abs(t.clientY-startY);
+    // 垂直滾動優先
+    if(dy>Math.abs(dx)*1.2){ blocked=true; resetPos(); return; }
+    if(Math.abs(dx)>6) e.preventDefault();
+    const clamped=Math.max(-SWIPE_MAX, Math.min(SWIPE_MAX, dx));
+    front.style.transition='none';
+    front.style.transform=`translateX(${clamped}px)`;
+    const ratio=Math.min(Math.abs(clamped)/SWIPE_THRESHOLD,1);
+    if(clamped>0){ bgL.style.opacity=ratio; bgR.style.opacity=0; }
+    else         { bgR.style.opacity=ratio; bgL.style.opacity=0; }
+  }
+  function onEnd(){
+    if(!dragging||blocked){ dragging=false; return; }
+    dragging=false;
+    if(dx>SWIPE_THRESHOLD){
+      triggerPresent(code, selfMode, card);
+    } else if(dx<-SWIPE_THRESHOLD){
+      triggerAbsent(code, selfMode, card);
+    } else {
+      resetPos();
+    }
+  }
+  function resetPos(){
+    front.style.transition='transform 0.25s ease';
+    front.style.transform='translateX(0)';
+    bgL.style.opacity=0; bgR.style.opacity=0;
+  }
+
+  card.addEventListener('touchstart', onStart, {passive:true});
+  card.addEventListener('touchmove',  onMove,  {passive:false});
+  card.addEventListener('touchend',   onEnd);
+  card.addEventListener('mousedown',  onStart);
+  card.addEventListener('mousemove',  onMove);
+  card.addEventListener('mouseup',    onEnd);
+  card.addEventListener('mouseleave', ()=>{ if(dragging){ dragging=false; resetPos(); }});
+}
+
+function triggerPresent(code, selfMode, card){
+  const c=nCode(code);
+  // 彈回動畫
+  const front=card.querySelector('.swipe-front');
+  const bgL  =card.querySelector('.swipe-bg-left');
+  front.style.transition='transform 0.18s ease';
+  front.style.transform='translateX(0)';
+  bgL.style.opacity=0;
+
+  data.statuses[c]={type:'present',reason:'',timestamp:new Date().toLocaleString('zh-TW')};
+  renderStats(); renderCards();
+  if(selfMode){
+    document.getElementById('reason-area').style.display='none';
+    refreshSwipeCard(c, selfMode);
+    showToast(`✅ ${pinStudent?pinStudent.name:''} 報到成功！`);
+    closeSelfSheet();
+  } else {
+    refreshSwipeCard(c, selfMode);
+    showToast('✅ 已報到！');
+  }
+  apiCall({action:'checkin',code:c,type:'present',reason:'',source:selfMode?'student':'leader'})
+    .catch(()=>showToast('⚠ 同步失敗'));
+}
+
+function triggerAbsent(code, selfMode, card){
+  const c=nCode(code);
+  const front=card.querySelector('.swipe-front');
+  const bgR  =card.querySelector('.swipe-bg-right');
+  front.style.transition='transform 0.18s ease';
+  front.style.transform='translateX(0)';
+  bgR.style.opacity=0;
+
+  const reason=selfMode?(document.getElementById('reason-input')?document.getElementById('reason-input').value.trim():''):'';
+  data.statuses[c]={type:'absent',reason,timestamp:new Date().toLocaleString('zh-TW')};
+  renderStats(); renderCards();
+  if(selfMode){
+    document.getElementById('reason-area').style.display='block';
+    refreshSwipeCard(c, selfMode);
+    showToast(`↩ 已取消報到`);
+    closeSelfSheet();
+  } else {
+    refreshSwipeCard(c, selfMode);
+    showToast('↩ 已取消報到');
+  }
+  apiCall({action:'checkin',code:c,type:'absent',reason,source:selfMode?'student':'leader'})
+    .catch(()=>showToast('⚠ 同步失敗'));
+}
+
+// 滑動後更新單張卡片（不重繪整個列表）
+function refreshSwipeCard(code, selfMode){
+  const c=nCode(code);
+  const s=data.students.find(s=>nCode(s.code)===c);
+  if(!s) return;
+  const oldCard=document.getElementById('sf-'+c)?.closest('.swipe-card');
+  if(!oldCard) return;
+  const newCard=buildSwipeCard(s, selfMode);
+  oldCard.replaceWith(newCard);
+  attachSwipe(newCard, c, selfMode);
 }
 
 // ══════════════════════════════════════════
-// 領隊專區 Sheet
+// 領隊 Sheet
 // ══════════════════════════════════════════
-function openLeaderSheet() {
-  if (isLeader) {
+function openLeaderSheet(){
+  if(isLeader){
     document.getElementById('leader-login-panel').classList.add('hidden');
     document.getElementById('leader-panel').classList.remove('hidden');
-    renderStats();
-    renderCheckinList();
+    renderStats(); renderCheckinList();
   } else {
     document.getElementById('leader-login-panel').classList.remove('hidden');
     document.getElementById('leader-panel').classList.add('hidden');
-    document.getElementById('leader-pin-input').value = '';
-    document.getElementById('leader-login-err').textContent = '';
+    document.getElementById('leader-pin-input').value='';
+    document.getElementById('leader-login-err').textContent='';
+    const btn=document.getElementById('leader-pin-submit');
+    btn.disabled=true; btn.className='pin-submit';
   }
   document.getElementById('leader-sheet').classList.add('show');
-  if (!isLeader) setTimeout(() => document.getElementById('leader-pin-input').focus(), 120);
+  if(!isLeader) setTimeout(()=>document.getElementById('leader-pin-input').focus(),120);
 }
-function closeLeaderSheet() {
-  document.getElementById('leader-sheet').classList.remove('show');
-}
+function closeLeaderSheet(){ document.getElementById('leader-sheet').classList.remove('show'); }
 
-function doLeaderLogin() {
-  const val = document.getElementById('leader-pin-input').value;
-  if (val === LEADER_CODE) {
-    isLeader = true;
-    document.getElementById('leader-login-err').textContent = '';
+function doLeaderLogin(){
+  const val=document.getElementById('leader-pin-input').value;
+  if(val===LEADER_CODE){
+    isLeader=true;
+    document.getElementById('leader-login-err').textContent='';
     document.getElementById('leader-login-panel').classList.add('hidden');
     document.getElementById('leader-panel').classList.remove('hidden');
     leaderRefresh();
   } else {
-    document.getElementById('leader-login-err').textContent = '⚠ 代碼錯誤';
+    document.getElementById('leader-login-err').textContent='⚠ 代碼錯誤';
+    document.getElementById('leader-pin-input').value='';
+    const btn=document.getElementById('leader-pin-submit');
+    btn.disabled=true; btn.className='pin-submit';
   }
 }
-function leaderLogout() {
-  isLeader = false;
+function leaderLogout(){
+  isLeader=false;
   document.getElementById('leader-panel').classList.add('hidden');
   document.getElementById('leader-login-panel').classList.remove('hidden');
-  document.getElementById('leader-pin-input').value = '';
   closeLeaderSheet();
   showToast('已退出領隊後台');
 }
-async function leaderRefresh() {
-  await loadData();
-  renderStats();
-  renderCheckinList();
-  showToast('✅ 已同步');
-}
+async function leaderRefresh(){ await loadData(); renderStats(); renderCheckinList(); showToast('✅ 已同步'); }
 
-// 開關自助報到
-function toggleSelfCheckin() {
-  selfCheckinEnabled = !selfCheckinEnabled;
-  const btn = document.getElementById('toggle-self-btn');
-  btn.textContent = selfCheckinEnabled ? '🔒 關閉自助報到' : '🔓 開啟自助報到';
+function toggleSelfCheckin(){
+  selfCheckinEnabled=!selfCheckinEnabled;
+  document.getElementById('toggle-self-btn').textContent=selfCheckinEnabled?'🔒 關閉自助報到':'🔓 開啟自助報到';
   renderMain();
-  showToast(selfCheckinEnabled ? '✅ 自助報到已開啟' : '🔒 自助報到已關閉');
+  showToast(selfCheckinEnabled?'✅ 自助報到已開啟':'🔒 自助報到已關閉');
+}
+function shareReadonly(){
+  const url=window.location.href.split('#')[0]+'#readonly';
+  if(navigator.share) navigator.share({title:'0524浴佛法會第12車',url});
+  else if(navigator.clipboard) navigator.clipboard.writeText(url).then(()=>showToast('🔗 連結已複製'));
+  else prompt('複製連結：',url);
 }
 
-// 分享唯讀連結
-function shareReadonly() {
-  const url = window.location.href.split('#')[0] + '#readonly';
-  if (navigator.share) {
-    navigator.share({ title: '0524浴佛法會第12車 出席狀況', url });
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(() => showToast('🔗 唯讀連結已複製'));
-  } else {
-    prompt('複製此連結：', url);
-  }
-}
-
-// ── 領隊報到列表 ──
-function renderCheckinList() {
-  const container = document.getElementById('checkin-list');
-  container.innerHTML = '';
-  const sorted = [...data.students].sort((a,b) => Number(a.order)-Number(b.order));
-  sorted.forEach(s => {
-    const code   = nCode(s.code);
-    const fr     = isFrozen(code);
-    const st     = getSt(s);
-    const pres   = isPresent(s);
-    const abs    = isAbsent(s);
-    const reason = st ? (st.reason || '') : '';
-
-    const el = document.createElement('div');
-    el.className = 'checkin-item' + (fr ? ' frozen' : pres ? ' present' : abs ? ' absent' : '');
-    el.innerHTML = `
-      <div class="ci-top">
-        <button class="checkin-btn ${fr ? 'frozen-btn' : pres ? 'is-present' : abs ? 'is-absent' : ''}"
-          onclick="${fr ? '' : `leaderToggle('${code}')`}" ${fr ? 'disabled' : ''}>
-          <span class="cb-icon">${fr ? '⛔' : pres ? '✅' : abs ? '❌' : '　'}</span>
-          <span>${fr ? '豁免' : pres ? '已到' : abs ? '取消' : '報到'}</span>
-        </button>
-        <div class="ci-num ${(!pres && !fr) ? 'dim' : ''}">${s.order}</div>
-        <div class="ci-info">
-          <div class="ci-name">${esc(s.name)}${s.dharma ? ` <span class="ci-dharma">${esc(s.dharma)}</span>` : ''}</div>
-          <div class="ci-tags">${tagHtml(s)}</div>
-          ${st && st.timestamp ? `<div class="ci-time">⏱ ${st.timestamp}</div>` : ''}
-          ${reason ? `<div class="ci-reason-show">📝 ${esc(reason)}</div>` : ''}
-          ${!fr ? `<button class="freeze-btn" onclick="toggleFreeze('${code}')">🔒 設為豁免</button>` :
-                  `<button class="freeze-btn is-frozen" onclick="toggleFreeze('${code}')">🔓 解除豁免</button>`}
-        </div>
-      </div>
-      ${!fr ? `<div class="ci-reason-row ${(abs || pres) ? 'show' : ''}" id="rr-${code}">
-        <input class="ci-reason-input" id="ri-${code}" type="text"
-          value="${esc(reason)}" placeholder="原因（選填）" maxlength="60">
-        <button class="ci-reason-save" onclick="saveReason('${code}')">存</button>
-      </div>` : ''}`;
-    container.appendChild(el);
+function renderCheckinList(){
+  const container=document.getElementById('checkin-list');
+  container.innerHTML='';
+  const sorted=[...data.students].sort((a,b)=>Number(a.order)-Number(b.order));
+  sorted.forEach(s=>{
+    const card=buildSwipeCard(s,false);
+    container.appendChild(card);
+    attachSwipe(card,nCode(s.code),false);
   });
 }
 
-function leaderToggle(code) {
-  const c    = nCode(code);
-  const st   = data.statuses[c];
-  const pres = st && st.type === 'present';
-  if (pres) {
-    data.statuses[c] = { type: 'absent', reason: st.reason || '', timestamp: new Date().toLocaleString('zh-TW') };
-    renderStats(); renderCheckinList(); renderCards();
-    showToast('↩ 已取消報到');
-    apiCall({ action: 'checkin', code: c, type: 'absent', reason: data.statuses[c].reason, source: 'leader' })
-      .catch(() => showToast('⚠ 同步失敗'));
-  } else {
-    data.statuses[c] = { type: 'present', reason: '', timestamp: new Date().toLocaleString('zh-TW') };
-    renderStats(); renderCheckinList(); renderCards();
-    showToast('✅ 已報到！');
-    apiCall({ action: 'checkin', code: c, type: 'present', reason: '', source: 'leader' })
-      .catch(() => showToast('⚠ 同步失敗'));
-  }
-}
-
-function saveReason(code) {
-  const c     = nCode(code);
-  const input = document.getElementById('ri-' + c);
-  if (!input) return;
-  const txt = input.value.trim();
-  if (!data.statuses[c]) { showToast('⚠ 請先設定狀態'); return; }
-  data.statuses[c].reason = txt;
-  renderCheckinList(); renderCards();
+function saveReason(code){
+  const c=nCode(code);
+  const input=document.getElementById('ri-'+c);
+  if(!input) return;
+  const txt=input.value.trim();
+  if(!data.statuses[c]){ showToast('⚠ 請先設定狀態'); return; }
+  data.statuses[c].reason=txt;
+  renderCards(); renderCheckinList();
   showToast('📝 原因已儲存');
-  const st = data.statuses[c];
-  apiCall({ action: 'checkin', code: c, type: st.type, reason: txt, source: 'leader' })
-    .catch(() => showToast('⚠ 同步失敗'));
+  const st=data.statuses[c];
+  apiCall({action:'checkin',code:c,type:st.type,reason:txt,source:'leader'})
+    .catch(()=>showToast('⚠ 同步失敗'));
 }
 
-async function toggleFreeze(code) {
-  const c  = nCode(code);
-  const fr = isFrozen(c);
+async function toggleFreeze(code){
+  const c=nCode(code), fr=isFrozen(c);
   setLoading(true);
-  try {
-    const r = await apiCall({ action: fr ? 'unfreezeOne' : 'freezeOne', code: c });
-    if (r.ok) {
-      if (fr) { data.frozen = data.frozen.filter(f => f !== c); showToast('🔓 已解除豁免'); }
-      else    { data.frozen.push(c); showToast('⛔ 已設為豁免'); }
-      renderStats(); renderCheckinList(); renderCards();
+  try{
+    const r=await apiCall({action:fr?'unfreezeOne':'freezeOne',code:c});
+    if(r.ok){
+      if(fr){ data.frozen=data.frozen.filter(f=>f!==c); showToast('🔓 已解除豁免'); }
+      else  { data.frozen.push(c); showToast('⛔ 已設為豁免'); }
+      renderStats(); renderCards(); renderCheckinList();
     }
-  } catch(e) { showToast('⚠ 操作失敗'); }
+  } catch(e){ showToast('⚠ 操作失敗'); }
   setLoading(false);
 }
 
-async function clearAllData() {
-  if (!confirm('確定清除所有出席記錄？\n（名單與豁免設定保留）')) return;
+async function clearAllData(){
+  if(!confirm('確定清除所有出席記錄？\n（名單與豁免設定保留）')) return;
   setLoading(true);
-  try {
-    const r = await apiCall({ action: 'clearStatus' });
-    if (r.ok) { data.statuses = {}; renderStats(); renderCheckinList(); renderCards(); showToast('🗑 記錄已清除'); }
-  } catch(e) { showToast('⚠ 清除失敗'); }
+  try{
+    const r=await apiCall({action:'clearStatus'});
+    if(r.ok){ data.statuses={}; renderStats(); renderCards(); renderCheckinList(); showToast('🗑 記錄已清除'); }
+  } catch(e){ showToast('⚠ 清除失敗'); }
   setLoading(false);
 }
 
-function exportCSV() {
-  const header = ['序號','姓名','法名','性別','出坡單位','寮房','代碼','狀態','原因','時間'];
-  const rows   = data.students.map(s => {
-    const code = nCode(s.code); const st = data.statuses[code]; const fr = isFrozen(code);
-    return [s.order, s.name, s.dharma, s.gender||'', s.unit||'', s.room||'', code,
-      fr ? '豁免' : st&&st.type==='present' ? '已報到' : st&&st.type==='absent' ? '取消' : '未到',
-      st ? (st.reason||'') : '', st ? st.timestamp : ''];
+function exportCSV(){
+  const header=['序號','姓名','法名','性別','出坡單位','寮房','代碼','狀態','原因','時間'];
+  const rows=data.students.map(s=>{
+    const code=nCode(s.code), st=data.statuses[code], fr=isFrozen(code);
+    return [s.order,s.name,s.dharma,s.gender||'',s.unit||'',s.room||'',code,
+      fr?'豁免':st&&st.type==='present'?'已報到':st&&st.type==='absent'?'取消':'未到',
+      st?(st.reason||''):'', st?st.timestamp:''];
   });
-  const csv = [header,...rows].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a   = document.createElement('a');
-  a.href    = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'}));
-  a.download = `0524浴佛第12車_${new Date().toLocaleDateString('zh-TW').replace(/\//g,'-')}.csv`;
+  const csv=[header,...rows].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download=`0524浴佛第12車_${new Date().toLocaleDateString('zh-TW').replace(/\//g,'-')}.csv`;
   a.click(); showToast('📥 CSV 已下載');
 }
 
-// 點擊遮罩關閉
-document.getElementById('self-sheet').addEventListener('click', function(e) {
-  if (e.target === this) closeSelfSheet();
-});
-document.getElementById('leader-sheet').addEventListener('click', function(e) {
-  if (e.target === this) closeLeaderSheet();
-});
+// 點遮罩關閉
+document.getElementById('self-sheet').addEventListener('click',function(e){ if(e.target===this) closeSelfSheet(); });
+document.getElementById('leader-sheet').addEventListener('click',function(e){ if(e.target===this) closeLeaderSheet(); });
 
 // ══════════════════════════════════════════
 // 初始化
 // ══════════════════════════════════════════
-window.onload = async () => {
-  isReadonly = (window.location.hash === '#readonly');
+window.onload=async()=>{
+  isReadonly=(window.location.hash==='#readonly');
   await loadData();
   renderMain();
-  // 唯讀模式隱藏領隊入口
-  if (isReadonly) {
-    document.querySelector('.entry-btn-leader').classList.add('hidden');
-  }
-  // 自動輪詢
-  setInterval(async () => {
-    await loadData();
-    renderMain();
-  }, 30000);
+  setInterval(async()=>{ await loadData(); renderMain(); }, 30000);
 };
 </script>
 </body>
