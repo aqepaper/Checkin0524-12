@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>0524浴佛法會 第12車 義工報到</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #1a1a2e;
@@ -14,303 +14,296 @@
       --gold-border: #e8c84a;
       --maroon: #7b1d1d;
       --cream: #faf7f2;
-      --gray: #6c757d;
-      --gray-light: #e9ecef;
+      --gray: #444444;       /* 加深灰色以符合長輩高對比需求 */
+      --gray-light: #dcdcdc; /* 加深邊框灰 */
       --white: #fff;
-      --green: #2d6a4f;
-      --green-pale: #d8f3dc;
+      --green: #1a5c38;      /* 提高綠色對比度 */
+      --green-pale: #e8f5e9;
       --green-border: #74c69d;
       --red: #c1121f;
       --red-pale: #fff0f0;
       --red-border: #ffb3b3;
       --amber: #d4790a;
-      --teal: #2D5D4F;
+      --teal: #1e4238;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    
+    /* 核心長輩友善調整：放大整體基準字體與加大行高 */
+    html { font-size: 18px; -webkit-text-size-adjust: 100%; }
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--cream); color: var(--ink);
       min-height: 100vh; max-width: 480px; margin: 0 auto;
       box-shadow: 0 0 40px rgba(0,0,0,0.12);
+      line-height: 1.6;
     }
+    
     #loading-bar {
-      display: none; position: fixed; top: 0; left: 0; right: 0; height: 4px;
+      display: none; position: fixed; top: 0; left: 0; right: 0; height: 5px;
       background: linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));
       background-size: 200% 100%; animation: shimmer 1.2s infinite; z-index: 9999;
     }
     @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-    /* 置頂 */
+    /* 置頂區優化 */
     #sticky-top { position: sticky; top: 0; z-index: 100; }
     header {
-      background: #fdf8f0; padding: 7px 14px 6px; text-align: center;
-      border-bottom: 1px solid #e8d9c0;
+      background: #fdf8f0; padding: 12px 14px 10px; text-align: center;
+      border-bottom: 2px solid #e8d9c0;
     }
-    header h1 { font-family: 'Noto Serif TC',serif; font-size: 0.88rem; font-weight: 700;
-      letter-spacing: .1em; color: var(--maroon); display: inline; }
-    header .sub { font-size: .78rem; color: #a09080; display: inline; margin-left: 6px; }
+    header h1 { 
+      font-family: 'Noto Serif TC',serif; font-size: 1.25rem; font-weight: 900;
+      letter-spacing: .05em; color: var(--maroon); display: block; margin-bottom: 4px;
+    }
+    header .sub { font-size: 1rem; color: #5a4020; font-weight: 700; display: block; }
 
     #top-stats {
       display: grid; grid-template-columns: repeat(3,1fr);
-      background: #faf7f2; padding: 5px 10px 6px; gap: 6px;
-      border-bottom: 1px solid #e8d9c0;
+      background: #faf7f2; padding: 8px 10px; gap: 8px;
+      border-bottom: 2px solid #e8d9c0;
     }
-    .top-stat-box { background: #fff; border-radius: 8px; padding: 4px 4px 5px;
-      text-align: center; border: 1px solid #ede0cc; }
-    .top-stat-box .num { font-size: 1.5rem; font-weight: 700;
-      font-family: 'Noto Serif TC',serif; line-height: 1; }
-    .top-stat-box .lbl { font-size: .66rem; color: #a09080; margin-top: 2px; }
-    .num-green { color: #2a7a56; }
+    .top-stat-box { 
+      background: #fff; border-radius: 10px; padding: 8px 4px;
+      text-align: center; border: 2px solid #ede0cc; 
+    }
+    .top-stat-box .num { 
+      font-size: 1.6rem; font-weight: 900;
+      font-family: 'Noto Serif TC',serif; line-height: 1; 
+    }
+    .top-stat-box .lbl { font-size: .85rem; color: #5a4020; margin-top: 4px; font-weight: 700; }
+    .num-green { color: #1a5c38; }
     .num-red   { color: #b03030; }
     .num-gray  { color: #5a4020; }
 
     /* 主體 */
-    #main-body { padding: 12px 14px 60px; }
+    #main-body { padding: 14px 14px 60px; }
 
-    /* 兩大入口 */
-    #entry-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    /* 兩大入口按鈕優化 */
+    #entry-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     .entry-btn {
-      padding: 13px 8px; border-radius: 16px; border: 2.5px solid transparent;
-      font-family: 'Noto Sans TC',sans-serif; font-weight: 700; font-size: .9rem;
-      cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; line-height: 1.5;
+      padding: 18px 10px; border-radius: 16px; border: 3px solid transparent;
+      font-family: 'Noto Sans TC',sans-serif; font-weight: 900; font-size: 1.1rem;
+      cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; line-height: 1.4;
     }
-    .entry-btn .eb-icon { font-size: 1.3rem; display: block; margin-bottom: 3px; }
+    .entry-btn .eb-icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
     .entry-btn-self   { background: linear-gradient(135deg,#fff8f0,#fef3c7); border-color: var(--gold-border); color: #92400e; }
     .entry-btn-leader { background: linear-gradient(135deg,#f0f9f4,#d8f3dc); border-color: var(--green-border); color: var(--teal); }
     .entry-btn:active { opacity: .75; }
 
     #self-disabled-note {
-      display: none; background: var(--red-pale); border: 1.5px solid var(--red-border);
-      border-radius: 10px; padding: 9px 14px; font-size: .83rem;
-      color: var(--red); text-align: center; margin-bottom: 12px;
+      display: none; background: var(--red-pale); border: 2px solid var(--red-border);
+      border-radius: 12px; padding: 12px; font-size: .95rem; font-weight: 700;
+      color: var(--red); text-align: center; margin-bottom: 14px;
     }
     #readonly-bar {
       display: none; background: linear-gradient(135deg,#fff8e1,#fffde7);
-      border: 1.5px solid var(--gold-border); border-radius: 10px;
-      padding: 9px 14px; text-align: center; font-size: .83rem;
-      color: #78350f; font-weight: 600; margin-bottom: 12px;
+      border: 2px solid var(--gold-border); border-radius: 12px;
+      padding: 12px; text-align: center; font-size: .95rem;
+      color: #78350f; font-weight: 700; margin-bottom: 14px;
     }
 
-    /* 篩選列 */
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .section-header h2 { font-family: 'Noto Serif TC',serif; font-size: 1rem; font-weight: 700; }
-    .filter-bar { display: flex; gap: 5px; }
+    /* 區塊標題與篩選列 */
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .section-header h2 { font-family: 'Noto Serif TC',serif; font-size: 1.2rem; font-weight: 900; }
+    .filter-bar { display: flex; gap: 6px; }
     .filter-btn {
-      padding: 7px 11px; font-size: .8rem; border-radius: 9px;
-      border: 2px solid var(--gray-light); background: var(--white); color: var(--gray);
-      font-family: 'Noto Sans TC',sans-serif; font-weight: 600;
+      padding: 10px 16px; font-size: .95rem; border-radius: 10px;
+      border: 2px solid #b8a080; background: var(--white); color: var(--ink);
+      font-family: 'Noto Sans TC',sans-serif; font-weight: 700;
       cursor: pointer; -webkit-tap-highlight-color: transparent; white-space: nowrap;
     }
     .filter-btn.active { border-color: var(--maroon); background: #fff5f5; color: var(--maroon); }
 
-    /* 快速跳轉 */
-    .jump-bar { margin-bottom: 12px; position: relative; }
+    /* 快速跳轉優化 */
+    .jump-bar { margin-bottom: 16px; position: relative; }
     .jump-select {
-      width: 100%; padding: 9px 36px 9px 14px;
-      border: 1.5px solid #d8c8a8; border-radius: 10px;
+      width: 100%; padding: 14px 36px 14px 16px;
+      border: 2px solid #b8a080; border-radius: 12px;
       background: #fff; font-family: 'Noto Sans TC',sans-serif;
-      font-size: .88rem; color: var(--ink); appearance: none;
-      -webkit-appearance: none; cursor: pointer; outline: none;
+      font-size: 1.05rem; color: var(--ink); appearance: none;
+      -webkit-appearance: none; cursor: pointer; outline: none; font-weight: 600;
     }
-    .jump-select:focus { border-color: var(--gold); }
-    .jump-arrow { position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-      font-size: .8rem; color: var(--gray); pointer-events: none; }
+    .jump-select:focus { border-color: var(--gold); border-width: 2.5px; }
+    .jump-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; color: var(--gray); pointer-events: none; }
 
-    /* 主頁名單卡片（唯讀） */
-    .cards-grid { display: flex; flex-direction: column; gap: 8px; }
+    /* 主頁名單卡片優化 */
+    .cards-grid { display: flex; flex-direction: column; gap: 10px; }
     .card {
-      background: var(--white); border-radius: 12px; padding: 10px 14px;
-      box-shadow: 0 1px 6px rgba(0,0,0,.07); border: 2px solid transparent;
+      background: var(--white); border-radius: 14px; padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08); border: 2.5px solid #ede0cc;
     }
-    .card.present { border-color: #1a5c38; border-width: 2.5px; background: linear-gradient(135deg,#fff,#edf7f1); }
-    .card.frozen  { border-color: #9b1c1c; border-width: 2.5px; background: #fff5f5; opacity: .78; }
+    .card.present { border-color: #1a5c38; border-width: 3px; background: linear-gradient(135deg,#fff,#edf7f1); }
+    .card.frozen  { border-color: #9b1c1c; border-width: 3px; background: #fff5f5; opacity: .78; }
 
-    .card-row1 { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-    .card-order  { font-family: 'Noto Serif TC',serif; font-size: 1rem; font-weight: 900; color: #3a2010; min-width: 22px; }
-    .card-name   { font-size: 1rem; font-weight: 700; }
-    .card-dharma { font-size: .82rem; color: var(--gray); }
-    .card-row2   { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+    .card-row1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .card-order  { font-family: 'Noto Serif TC',serif; font-size: 1.25rem; font-weight: 900; color: var(--maroon); min-width: 28px; }
+    .card-name   { font-size: 1.2rem; font-weight: 700; }
+    .card-dharma { font-size: .95rem; color: #555; font-weight: 500; }
+    .card-row2   { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 
-    .badge { display: inline-block; padding: 4px 10px; border-radius: 18px; font-size: .78rem; font-weight: 700; }
-    .badge-present { background: var(--green-pale); color: var(--green); }
-    .badge-none    { background: var(--gray-light); color: var(--gray); }
-    .badge-frozen  { background: #ffd6d6; color: #a03030; }
+    /* 狀態徽章優化 */
+    .badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: .9rem; font-weight: 900; }
+    .badge-present { background: var(--green-pale); color: var(--green); border: 1px solid var(--green-border); }
+    .badge-none    { background: #f0f0f0; color: #444; border: 1px solid #ccc; }
+    .badge-frozen  { background: #ffd6d6; color: #a03030; border: 1px solid #e07070; }
 
-    .tag { display: inline-block; font-size: .7rem; padding: 2px 7px; border-radius: 8px; font-weight: 600; }
+    /* 標籤小幅優化 */
+    .tag { display: inline-block; font-size: .8rem; padding: 4px 8px; border-radius: 8px; font-weight: 700; }
     .tag-m    { background: #e3f2fd; color: #0d47a1; }
     .tag-f    { background: #fce4ec; color: #880e4f; }
     .tag-unit { background: #f3e8ff; color: #5b21b6; }
     .tag-room { background: #e8f5e9; color: #2e7d32; }
 
     /* ══════════════════════════════
-       報到卡片（領隊＋自助）
+       報到卡片區優化（領隊＋自助）
     ══════════════════════════════ */
     .sw-outer {
-      background: var(--white); border-radius: 14px;
-      border: 2px solid var(--gray-light); margin-bottom: 8px; overflow: hidden;
+      background: var(--white); border-radius: 16px;
+      border: 2.5px solid var(--gray-light); margin-bottom: 10px; overflow: hidden;
     }
-    .sw-outer.present { border-color: #1a5c38; border-width: 2.5px; background: #edf7f1; }
-    .sw-outer.frozen  { border-color: #9b1c1c; border-width: 2.5px; background: #fff5f5; }
+    .sw-outer.present { border-color: #1a5c38; border-width: 3px; background: #edf7f1; }
+    .sw-outer.frozen  { border-color: #9b1c1c; border-width: 3px; background: #fff5f5; }
 
-    .sw-card-info { display: flex; flex-direction: column; padding: 10px 14px 6px; gap: 3px; }
-    .sw-row1 { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
-    .sw-order  { font-family: 'Noto Serif TC',serif; font-size: 1rem; font-weight: 900; color: #3a2010; min-width: 22px; }
-    .sw-name   { font-size: .98rem; font-weight: 700; }
-    .sw-dharma { font-size: .8rem; color: var(--gray); }
-    .sw-phone  { font-size: .92rem; color: #1a4a8a; margin-left: auto; font-weight: 600;
-      text-decoration: none; letter-spacing: 0.02em; }
+    .sw-card-info { display: flex; flex-direction: column; padding: 14px 16px 8px; gap: 6px; }
+    .sw-row1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .sw-order  { font-family: 'Noto Serif TC',serif; font-size: 1.25rem; font-weight: 900; color: var(--maroon); min-width: 28px; }
+    .sw-name   { font-size: 1.18rem; font-weight: 700; }
+    .sw-dharma { font-size: .95rem; color: #555; }
+    .sw-phone  { font-size: 1.05rem; color: #1a4a8a; margin-left: auto; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.02em; padding: 4px 0; }
     .sw-phone:hover { text-decoration: underline; }
-    .sw-row2   { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
-    .sw-time   { font-size: .7rem; color: var(--green); font-weight: 600; margin-left: auto; }
+    .sw-row2   { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .sw-time   { font-size: .8rem; color: var(--green); font-weight: 700; margin-left: auto; }
     .sw-badge-wrap { margin-left: auto; }
 
-    /* ── 長按操作按鈕區 ── */
-    .sw-action-row {
-      display: flex; gap: 8px; padding: 4px 14px 10px;
-    }
+    /* ── 長按操作按鈕區優化（防手指遮擋進度） ── */
+    .sw-action-row { display: flex; gap: 10px; padding: 4px 16px 14px; }
 
-    /* 長按鈕共用 */
     .hold-btn {
       flex: 1; position: relative; overflow: hidden;
-      padding: 12px 8px; border-radius: 12px; border: none;
-      font-family: 'Noto Sans TC',sans-serif; font-weight: 700; font-size: .82rem;
+      padding: 16px 10px; border-radius: 14px; border: none;
+      font-family: 'Noto Sans TC',sans-serif; font-weight: 900; font-size: .88rem;
       cursor: pointer; -webkit-tap-highlight-color: transparent;
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      user-select: none; touch-action: manipulation;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      user-select: none; touch-action: manipulation; min-height: 68px;
     }
-    .hold-btn .hb-icon { font-size: 1.3rem; line-height: 1; }
-    .hold-btn .hb-label { font-size: .72rem; line-height: 1.3; text-align: center; }
+    .hold-btn .hb-icon { font-size: 1.5rem; line-height: 1; }
+    .hold-btn .hb-label { font-size: .85rem; line-weight: 1.4; text-align: center; font-weight: 800; }
 
-    /* 進度條（長按填充） */
+    /* 進度條提高識別度 */
     .hold-progress {
       position: absolute; inset: 0; width: 0%;
-      pointer-events: none; transition: none;
-      border-radius: 12px;
+      pointer-events: none; transition: none; border-radius: 14px;
     }
     .hold-btn .hb-content { position: relative; z-index: 1;
       display: flex; flex-direction: column; align-items: center; gap: 4px; }
 
-    /* 報到按鈕（米白，不用綠色） */
-    .hb-checkin {
-      background: #f8f5f0; color: #5a4a3a;
-      border: 1.5px solid #d8c8b0;
-    }
-    .hb-checkin .hold-progress { background: #b8a080; opacity: .20; }
+    /* 報到按鈕優化 */
+    .hb-checkin { background: #f8f5f0; color: #5a4a3a; border: 2px solid #d8c8b0; }
+    .hb-checkin .hold-progress { background: #b8a080; opacity: .35; } /* 調高透明度，戶外看更清 */
     .hb-checkin.holding { border-color: #a09070; }
 
     /* 取消報到按鈕 */
-    .hb-undo {
-      background: #fff0f0; color: var(--red);
-      border: 1.5px solid var(--red-border);
-    }
-    .hb-undo .hold-progress { background: var(--red); opacity: .18; }
+    .hb-undo { background: #fff0f0; color: var(--red); border: 2px solid var(--red-border); }
+    .hb-undo .hold-progress { background: var(--red); opacity: .25; }
     .hb-undo.holding { border-color: var(--red); }
 
     /* 凍結按鈕 */
-    .hb-freeze {
-      background: #f5f5f5; color: #666;
-      border: 1.5px solid #ccc;
-    }
-    .hb-freeze .hold-progress { background: #888; opacity: .15; }
+    .hb-freeze { background: #f5f5f5; color: #444; border: 2px solid #ccc; }
+    .hb-freeze .hold-progress { background: #888; opacity: .20; }
     .hb-freeze.is-frozen { background: #fff0f0; color: #a03030; border-color: #e07070; }
-    .hb-freeze.is-frozen .hold-progress { background: #e07070; opacity: .15; }
+    .hb-freeze.is-frozen .hold-progress { background: #e07070; opacity: .25; }
 
-    /* 禁用（凍結時報到/取消鈕） */
-    .hb-disabled {
-      background: #f5f5f5; color: #bbb; border: 1.5px solid #e0e0e0; cursor: not-allowed;
-    }
+    .hb-disabled { background: #f5f5f5; color: #999; border: 2px solid #e0e0e0; cursor: not-allowed; }
 
-    /* ══ Modal / Bottom Sheet ══ */
+    /* ══ Modal / Bottom Sheet 優化 ══ */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,.55); z-index: 500;
+      background: rgba(0,0,0,.6); z-index: 500;
       align-items: flex-end; justify-content: center;
     }
     .modal-overlay.show { display: flex; }
     .modal-sheet {
       background: #fff; border-radius: 24px 24px 0 0;
-      padding: 0 18px 32px; width: 100%; max-width: 480px;
-      box-shadow: 0 -8px 40px rgba(0,0,0,.18);
+      padding: 0 18px 36px; width: 100%; max-width: 480px;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.25);
       animation: slideUp .22s ease; max-height: 92vh; overflow-y: auto;
     }
     @keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
-    .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 14px auto 16px; }
+    .sheet-handle { width: 50px; height: 6px; background: #ccc; border-radius: 4px; margin: 16px auto 20px; }
     .sheet-title {
-      font-family: 'Noto Serif TC',serif; font-size: 1.15rem; font-weight: 700;
-      color: var(--maroon); text-align: center; margin-bottom: 16px;
+      font-family: 'Noto Serif TC',serif; font-size: 1.35rem; font-weight: 900;
+      color: var(--maroon); text-align: center; margin-bottom: 20px;
     }
 
-    /* PIN */
-    .pin-label { font-size: .88rem; color: var(--gray); margin-bottom: 9px; }
+    /* PIN碼與大鍵盤優化 */
+    .pin-label { font-size: 1.05rem; color: var(--ink); margin-bottom: 12px; font-weight: 700; text-align: center; }
     .pin-field {
-      width: 100%; padding: 13px; font-size: 2rem; text-align: center; letter-spacing: .4em;
-      border: 2px solid #c8b48a; border-radius: 12px;
+      width: 100%; padding: 16px; font-size: 2.5rem; text-align: center; letter-spacing: .4em;
+      border: 2.5px solid #c8b48a; border-radius: 14px;
       background: var(--gold-pale); color: var(--ink);
-      font-family: 'Noto Serif TC',serif; font-weight: 700;
-      outline: none; -webkit-appearance: none;
+      font-family: 'Noto Serif TC',serif; font-weight: 900; outline: none; -webkit-appearance: none;
     }
-    .pin-field:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(184,134,11,.12); background: #fff; }
+    .pin-field:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(184,134,11,.15); background: #fff; }
     .pin-submit {
-      width: 100%; border: none; border-radius: 50px; padding: 15px;
-      font-family: 'Noto Serif TC',serif; font-size: 1.05rem; letter-spacing: 4px; font-weight: 700;
-      background: #ccc; color: #fff; cursor: pointer; transition: all .2s; margin-top: 11px;
+      width: 100%; border: none; border-radius: 14px; padding: 16px;
+      font-family: 'Noto Serif TC',serif; font-size: 1.2rem; letter-spacing: 4px; font-weight: 900;
+      background: #ccc; color: #fff; cursor: pointer; transition: all .2s; margin-top: 14px;
     }
     .pin-submit.ready { background: linear-gradient(135deg,var(--teal),#1e4238); box-shadow: 0 4px 15px rgba(45,93,79,.3); }
     .pin-submit.ready:active { transform: scale(.98); }
-    .pin-error { text-align: center; font-size: .84rem; color: var(--red); min-height: 20px; margin-top: 7px; font-weight: 600; }
+    .pin-error { text-align: center; font-size: .95rem; color: var(--red); min-height: 24px; margin-top: 10px; font-weight: 700; }
 
-    /* 確認身份卡 */
+    /* 確認身份大卡片 */
     .confirm-card {
       background: linear-gradient(135deg,#fff8f0,#fff);
-      border: 2px solid var(--gold-border); border-radius: 14px;
-      padding: 14px; margin: 10px 0; text-align: center;
+      border: 3px solid var(--gold-border); border-radius: 16px;
+      padding: 18px; margin: 12px 0; text-align: center;
     }
-    .confirm-name   { font-size: 1.4rem; font-weight: 900; font-family: 'Noto Serif TC',serif; color: var(--maroon); }
-    .confirm-dharma { font-size: .9rem; color: var(--gray); margin-top: 3px; }
-    .confirm-status { margin-top: 9px; font-size: .86rem; }
+    .confirm-name   { font-size: 1.6rem; font-weight: 900; font-family: 'Noto Serif TC',serif; color: var(--maroon); }
+    .confirm-dharma { font-size: 1.05rem; color: #555; margin-top: 4px; font-weight: 700; }
+    .confirm-status { margin-top: 12px; font-size: 1.05rem; font-weight: 700; }
 
-    /* 領隊 */
-    .leader-section { margin-bottom: 14px; }
+    /* 領隊後台 */
+    .leader-section { margin-bottom: 16px; }
     .leader-section-title {
-      font-family: 'Noto Serif TC',serif; font-size: .92rem; font-weight: 700;
-      color: var(--maroon); margin-bottom: 9px; padding-bottom: 7px;
-      border-bottom: 1.5px solid #f5e6cc;
+      font-family: 'Noto Serif TC',serif; font-size: 1.05rem; font-weight: 900;
+      color: var(--maroon); margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 2px solid #f5e6cc;
     }
-    .admin-summary { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 12px; }
-    .sum-box { background: #fffaf5; border-radius: 12px; padding: 12px; text-align: center; border: 1.5px solid #ffe0b2; }
-    .sum-box .s-num { font-size: 1.8rem; font-weight: 700; font-family: 'Noto Serif TC',serif; line-height: 1; }
-    .sum-box .s-lbl { font-size: .78rem; color: var(--gray); margin-top: 3px; }
+    .admin-summary { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
+    .sum-box { background: #fffaf5; border-radius: 14px; padding: 14px; text-align: center; border: 2px solid #ffe0b2; }
+    .sum-box .s-num { font-size: 2rem; font-weight: 900; font-family: 'Noto Serif TC',serif; line-height: 1; }
+    .sum-box .s-lbl { font-size: .85rem; color: #5a4020; margin-top: 4px; font-weight: 700; }
 
     .btn {
-      display: inline-block; padding: 12px 16px; border-radius: 13px; border: none;
-      font-family: 'Noto Sans TC',sans-serif; font-weight: 700; font-size: .92rem;
+      display: inline-block; padding: 14px 18px; border-radius: 14px; border: none;
+      font-family: 'Noto Sans TC',sans-serif; font-weight: 900; font-size: 1rem;
       cursor: pointer; transition: opacity .15s; text-align: center;
       -webkit-tap-highlight-color: transparent;
     }
     .btn:active { opacity: .72; }
     .btn-green   { background: var(--green); color: #fff; }
     .btn-red     { background: var(--red); color: #fff; }
-    .btn-gray    { background: var(--gray); color: #fff; }
-    .btn-outline { background: var(--white); border: 2px solid var(--maroon); color: var(--maroon); }
+    .btn-gray    { background: #666; color: #fff; }
+    .btn-outline { background: var(--white); border: 2.5px solid var(--maroon); color: var(--maroon); }
     .btn-full    { width: 100%; display: block; }
 
-
-
-    .flex-gap { display: flex; gap: 8px; }
-    .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 14px; } .mb-3 { margin-bottom: 12px; }
+    .flex-gap { display: flex; gap: 10px; }
+    .mt-3 { margin-top: 14px; } .mt-4 { margin-top: 16px; } .mb-3 { margin-bottom: 14px; }
     .hidden { display: none !important; }
 
     #toast {
-      position: fixed; bottom: 28px; left: 50%;
+      position: fixed; bottom: 36px; left: 50%;
       transform: translateX(-50%) translateY(120px);
-      background: #222; color: #fff; padding: 12px 22px;
-      border-radius: 40px; font-size: .92rem; font-weight: 600;
+      background: #222; color: #fff; padding: 14px 26px;
+      border-radius: 40px; font-size: 1rem; font-weight: 700;
       z-index: 9999; transition: transform .28s;
       white-space: nowrap; box-shadow: 0 8px 28px rgba(0,0,0,.35);
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
-    footer { text-align: center; padding: 18px 0 36px; color: #bbb; font-size: .68rem; }
+    footer { text-align: center; padding: 24px 0 40px; color: #888; font-size: .8rem; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -361,7 +354,6 @@
 <footer>AQE@2026 · 0524浴佛法會 第12車</footer>
 <div id="toast"></div>
 
-<!-- ════ 自助報到 Sheet ════ -->
 <div class="modal-overlay" id="self-sheet">
   <div class="modal-sheet">
     <div class="sheet-handle"></div>
@@ -384,7 +376,6 @@
   </div>
 </div>
 
-<!-- ════ 領隊專區 Sheet ════ -->
 <div class="modal-overlay" id="leader-sheet">
   <div class="modal-sheet">
     <div class="sheet-handle"></div>
@@ -408,7 +399,7 @@
           <div class="sum-box"><div class="s-num num-green" id="adm-present">—</div><div class="s-lbl">已報到</div></div>
           <div class="sum-box"><div class="s-num num-red"   id="adm-pending">—</div><div class="s-lbl">未到</div></div>
         </div>
-        <button class="btn btn-outline btn-full mb-3" style="font-size:.86rem;" onclick="leaderRefresh()">🔄 重新整理</button>
+        <button class="btn btn-outline btn-full mb-3" style="font-size:1rem;" onclick="leaderRefresh()">🔄 重新整理</button>
         <div class="jump-bar">
           <select class="jump-select" id="jump-leader" onchange="jumpToCard(this,'swo-')">
             <option value="">⬇ 快速跳轉至姓名…</option>
@@ -422,14 +413,15 @@
       </div>
       <button class="btn btn-gray btn-full mt-3" onclick="leaderLogout()">退出領隊後台</button>
       <div class="flex-gap mt-3">
-        <button class="btn btn-outline" style="flex:1;font-size:.84rem;padding:10px 8px;"
+        <button class="btn btn-outline" style="flex:1;font-size:.9rem;padding:12px 8px;"
           id="toggle-self-btn" onclick="toggleSelfCheckin()">🔒 關閉自助報到</button>
-        <button class="btn btn-outline" style="flex:1;font-size:.84rem;padding:10px 8px;"
+        <button class="btn btn-outline" style="flex:1;font-size:.9rem;padding:12px 8px;"
           onclick="shareReadonly()">🔗 分享唯讀</button>
       </div>
     </div>
   </div>
 </div>
+
 
 <script>
 const API         = 'https://script.google.com/macros/s/AKfycbz_i1spdxXnPJmx7tZUtIfBn9ybdrJdtaBNjjGaVBpViFrED01sFYWwIviiB3tH6yB3Fw/exec';
@@ -458,6 +450,9 @@ function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   clearTimeout(_tt); _tt = setTimeout(()=>t.classList.remove('show'), 2800);
+}
+function triggerVibrate(){
+  if(navigator.vibrate) navigator.vibrate(120);
 }
 function calcStats(){
   const active  = data.students.filter(s => !isFrozen(s.code));
@@ -713,6 +708,7 @@ function makeHoldBtn(cls, icon, label){
 function doPresent(code, selfMode, outer){
   const c = nCode(code);
   data.statuses[c] = { type: 'present', timestamp: new Date().toLocaleString('zh-TW') };
+  triggerVibrate();
   renderStats(); renderCards(); buildJumpSelect('jump-home');
   rebuildCard(c, selfMode, outer);
   if(isLeader) buildJumpSelect('jump-leader');
@@ -724,6 +720,7 @@ function doPresent(code, selfMode, outer){
 function doUndo(code, selfMode, outer){
   const c = nCode(code);
   delete data.statuses[c];
+  triggerVibrate();
   renderStats(); renderCards(); buildJumpSelect('jump-home');
   rebuildCard(c, selfMode, outer);
   if(isLeader) buildJumpSelect('jump-leader');
