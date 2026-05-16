@@ -19,21 +19,21 @@
       --white: #ffffff;
       --green: #2d6a4f;
       --green-pale: #d8f3dc;
+      --green-border: #74c69d;
       --red: #c1121f;
+      --red-pale: #fff0f0;
+      --red-border: #ffb3b3;
       --amber: #d4790a;
       --teal: #2D5D4F;
-      --frozen-bg: #f0f0f0;
-      --frozen-border: #b0b0b0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--cream); color: var(--ink);
       min-height: 100vh; max-width: 480px; margin: 0 auto;
       box-shadow: 0 0 40px rgba(0,0,0,0.12);
     }
-
     #loading-bar {
       display: none; position: fixed; top: 0; left: 0; right: 0; height: 4px;
       background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
@@ -47,9 +47,9 @@
       background: #fdf8f0; padding: 7px 14px 6px; text-align: center;
       border-bottom: 1px solid #e8d9c0;
     }
-    header h1 { font-family: 'Noto Serif TC', serif; font-size: 0.9rem; font-weight: 700;
+    header h1 { font-family: 'Noto Serif TC', serif; font-size: 0.88rem; font-weight: 700;
       letter-spacing: 0.1em; color: var(--maroon); display: inline; }
-    header .sub { font-size: 0.8rem; color: #a09080; display: inline; margin-left: 6px; }
+    header .sub { font-size: 0.78rem; color: #a09080; display: inline; margin-left: 6px; }
 
     #top-stats {
       display: grid; grid-template-columns: repeat(3,1fr);
@@ -60,166 +60,183 @@
       text-align: center; border: 1px solid #ede0cc; }
     .top-stat-box .num { font-size: 1.5rem; font-weight: 700;
       font-family: 'Noto Serif TC', serif; line-height: 1; }
-    .top-stat-box .lbl { font-size: 0.68rem; color: #a09080; margin-top: 2px; }
-    .num-green { color: #3a8f68; }
-    .num-red   { color: #b84040; }
-    .num-gray  { color: #7b5c3a; }
+    .top-stat-box .lbl { font-size: 0.66rem; color: #a09080; margin-top: 2px; }
+    .num-green { color: #2a7a56; }
+    .num-red   { color: #b03030; }
+    .num-gray  { color: #5a4020; }
 
     /* ── 主體 ── */
     #main-body { padding: 12px 14px 60px; }
 
-    /* 兩大入口（隨頁捲動） */
-    #entry-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    /* 兩大入口 */
+    #entry-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
     .entry-btn {
-      padding: 14px 8px; border-radius: 16px; border: 2.5px solid transparent;
-      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.92rem;
+      padding: 13px 8px; border-radius: 16px; border: 2.5px solid transparent;
+      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.9rem;
       cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; line-height: 1.5;
     }
-    .entry-btn .eb-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
-    .entry-btn-self   { background: linear-gradient(135deg,#fff8f0,#fef3c7);
-      border-color: var(--gold-border); color: #92400e; }
-    .entry-btn-leader { background: linear-gradient(135deg,#f0f9f4,#d8f3dc);
-      border-color: #74c69d; color: var(--teal); }
+    .entry-btn .eb-icon { font-size: 1.3rem; display: block; margin-bottom: 3px; }
+    .entry-btn-self   { background: linear-gradient(135deg,#fff8f0,#fef3c7); border-color: var(--gold-border); color: #92400e; }
+    .entry-btn-leader { background: linear-gradient(135deg,#f0f9f4,#d8f3dc); border-color: var(--green-border); color: var(--teal); }
     .entry-btn:active { opacity: 0.75; }
 
     #self-disabled-note {
-      display: none; background: #fff0f0; border: 1.5px solid #ffcccc;
-      border-radius: 12px; padding: 10px 14px; font-size: 0.85rem;
+      display: none; background: var(--red-pale); border: 1.5px solid var(--red-border);
+      border-radius: 10px; padding: 9px 14px; font-size: 0.83rem;
       color: var(--red); text-align: center; margin-bottom: 12px;
     }
     #readonly-bar {
       display: none; background: linear-gradient(135deg,#fff8e1,#fffde7);
-      border: 1.5px solid var(--gold-border); border-radius: 12px;
-      padding: 10px 14px; text-align: center; font-size: 0.85rem;
+      border: 1.5px solid var(--gold-border); border-radius: 10px;
+      padding: 9px 14px; text-align: center; font-size: 0.83rem;
       color: #78350f; font-weight: 600; margin-bottom: 12px;
     }
 
     /* 篩選列 */
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .section-header h2 { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; }
-    .filter-bar { display: flex; gap: 6px; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .section-header h2 { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 700; }
+    .filter-bar { display: flex; gap: 5px; }
     .filter-btn {
-      padding: 8px 12px; font-size: 0.82rem; border-radius: 10px;
+      padding: 7px 11px; font-size: 0.8rem; border-radius: 9px;
       border: 2px solid var(--gray-light); background: var(--white); color: var(--gray);
       font-family: 'Noto Sans TC', sans-serif; font-weight: 600;
       cursor: pointer; -webkit-tap-highlight-color: transparent; white-space: nowrap;
     }
     .filter-btn.active { border-color: var(--maroon); background: #fff5f5; color: var(--maroon); }
 
-    /* ── 總表名單卡片 ── */
-    .cards-grid { display: flex; flex-direction: column; gap: 10px; }
-    .card {
-      background: var(--white); border-radius: 14px; padding: 14px 16px;
-      display: flex; align-items: center; gap: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 2px solid transparent;
+    /* 快速跳轉下拉 */
+    .jump-bar { margin-bottom: 12px; position: relative; }
+    .jump-select {
+      width: 100%; padding: 9px 36px 9px 14px;
+      border: 1.5px solid #d8c8a8; border-radius: 10px;
+      background: #fff; font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.88rem; color: var(--ink); appearance: none;
+      -webkit-appearance: none; cursor: pointer; outline: none;
     }
-    .card.present { border-color: #74c69d; background: linear-gradient(135deg,#fff,#f0faf4); }
-    .card.frozen  { border-color: var(--frozen-border); background: var(--frozen-bg); opacity: 0.6; }
-    .card-num { font-family: 'Noto Serif TC', serif; font-size: 1.8rem; font-weight: 900;
-      color: var(--maroon); width: 38px; text-align: center; flex-shrink: 0; }
-    .card-num.dim { color: var(--gray-light); }
-    .card-info { flex: 1; min-width: 0; }
-    .card-name { font-size: 1.05rem; font-weight: 700; }
-    .card-dharma { font-size: 0.85rem; color: var(--gray); }
-    .card-row2 { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px; }
-    .card-status { flex-shrink: 0; }
+    .jump-select:focus { border-color: var(--gold); }
+    .jump-arrow {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      font-size: 0.8rem; color: var(--gray); pointer-events: none;
+    }
 
-    .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+    /* ── 主頁名單卡片 ── */
+    .cards-grid { display: flex; flex-direction: column; gap: 8px; }
+    .card {
+      background: var(--white); border-radius: 12px; padding: 10px 14px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 2px solid transparent;
+    }
+    .card.present { border-color: var(--green-border); background: linear-gradient(135deg,#fff,#f2fbf5); }
+    .card.frozen  { border-color: #e0a0a0; background: #fff5f5; opacity: 0.75; }
+
+    /* 卡片第一列：序號＋姓名＋法名＋電話 */
+    .card-row1 { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .card-order { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 900;
+      color: #3a2010; min-width: 24px; }
+    .card-name   { font-size: 1rem; font-weight: 700; }
+    .card-dharma { font-size: 0.82rem; color: var(--gray); }
+    .card-phone  { font-size: 0.78rem; color: #8a7060; margin-left: auto; }
+
+    /* 卡片第二列：出坡單位＋寮房＋badge */
+    .card-row2 { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 18px; font-size: 0.78rem; font-weight: 700; }
     .badge-present { background: var(--green-pale); color: var(--green); }
     .badge-none    { background: var(--gray-light); color: var(--gray); }
-    .badge-frozen  { background: #ddd; color: #666; }
+    .badge-frozen  { background: #ffd6d6; color: #a03030; }
 
-    .tag { display: inline-block; font-size: 0.72rem; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+    .tag { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 8px; font-weight: 600; }
     .tag-m    { background: #e3f2fd; color: #0d47a1; }
     .tag-f    { background: #fce4ec; color: #880e4f; }
     .tag-unit { background: #f3e8ff; color: #5b21b6; }
     .tag-room { background: #e8f5e9; color: #2e7d32; }
-    .tag-group { background: #fff3e0; color: #e65100; }
 
     /* ══════════════════════════════════
-       滑動報到軌道
+       滑動軌道（高度 62px）
     ══════════════════════════════════ */
-
-    /* 卡片外框 */
     .sw-outer {
-      background: var(--white); border-radius: 16px;
-      border: 2px solid var(--gray-light); margin-bottom: 8px;
-      overflow: hidden; transition: border-color 0.2s, background 0.2s;
+      background: var(--white); border-radius: 14px;
+      border: 2px solid var(--gray-light); margin-bottom: 8px; overflow: hidden;
     }
-    .sw-outer.present { border-color: #74c69d; background: #f8fdf9; }
-    .sw-outer.frozen  { border-color: var(--frozen-border); background: var(--frozen-bg); }
+    .sw-outer.present { border-color: var(--green-border); background: #f2fbf5; }
+    .sw-outer.frozen  { border-color: #e0a0a0; background: #fff5f5; }
 
-    /* 資訊列 */
-    .sw-card-info {
-      display: flex; align-items: center; gap: 10px; padding: 10px 14px 6px;
-    }
-    .sw-num { font-family: 'Noto Serif TC', serif; font-size: 1.35rem; font-weight: 900;
-      color: var(--maroon); width: 28px; text-align: center; flex-shrink: 0; }
-    .sw-num.dim { color: var(--gray-light); }
-    .sw-info { flex: 1; min-width: 0; }
-    .sw-name { font-size: 1rem; font-weight: 700; }
-    .sw-dharma { font-size: 0.82rem; color: var(--gray); }
-    .sw-tags { margin-top: 3px; display: flex; flex-wrap: wrap; gap: 4px; }
-    .sw-time { font-size: 0.7rem; color: var(--green); margin-top: 3px; font-weight: 600; }
-    .sw-badge-wrap { flex-shrink: 0; }
+    .sw-card-info { display: flex; flex-direction: column; padding: 10px 14px 4px; gap: 3px; }
+
+    /* 資訊第一列 */
+    .sw-row1 { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+    .sw-order  { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 900; color: #3a2010; min-width: 22px; }
+    .sw-name   { font-size: 0.98rem; font-weight: 700; }
+    .sw-dharma { font-size: 0.8rem; color: var(--gray); }
+    .sw-phone  { font-size: 0.76rem; color: #8a7060; margin-left: auto; }
+
+    /* 資訊第二列 */
+    .sw-row2 { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+    .sw-time  { font-size: 0.7rem; color: var(--green); font-weight: 600; margin-left: auto; }
+
+    .sw-badge-wrap { margin-left: auto; }
 
     /* 軌道 */
     .sw-track {
-      position: relative; height: 48px; margin: 0 14px 8px;
-      border-radius: 24px; background: #f0ece4;
+      position: relative; height: 62px; margin: 4px 14px 8px;
+      border-radius: 31px; background: #f0ece4;
       border: 1.5px solid #ddd5c0; overflow: hidden;
       cursor: grab; user-select: none; touch-action: pan-y;
     }
     .sw-track:active { cursor: grabbing; }
-    .sw-track.is-frozen { cursor: not-allowed; opacity: 0.45; }
+    .sw-track.is-frozen { cursor: not-allowed; opacity: 0.4; }
 
-    /* 填色 */
     .sw-fill {
-      position: absolute; inset: 0; border-radius: 24px;
+      position: absolute; inset: 0; border-radius: 31px;
       pointer-events: none; width: 0%;
-      transition: background 0.15s;
     }
     .sw-fill.to-present { background: var(--green); }
     .sw-fill.to-undo    { background: #c0392b; }
 
-    /* 提示文字 */
     .sw-hint-l {
-      position: absolute; left: 54px; top: 50%; transform: translateY(-50%);
-      font-size: 0.75rem; color: #a0907a; pointer-events: none; white-space: nowrap;
+      position: absolute; left: 62px; top: 50%; transform: translateY(-50%);
+      font-size: 0.76rem; color: #a0907a; pointer-events: none; white-space: nowrap;
     }
     .sw-hint-r {
-      position: absolute; right: 54px; top: 50%; transform: translateY(-50%);
-      font-size: 0.75rem; color: #a0907a; pointer-events: none; white-space: nowrap;
+      position: absolute; right: 62px; top: 50%; transform: translateY(-50%);
+      font-size: 0.76rem; color: #a0907a; pointer-events: none; white-space: nowrap;
     }
 
-    /* 拇指 */
+    /* 拇指 62px 軌道：高 62-6*2=50 → thumb 50px */
     .sw-thumb {
-      position: absolute; top: 4px; left: 4px;
-      width: 40px; height: 40px; border-radius: 50%;
+      position: absolute; top: 6px; left: 6px;
+      width: 50px; height: 50px; border-radius: 50%;
       background: var(--white); border: 1.5px solid #ddd5c0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; z-index: 2;
+      font-size: 1.4rem; z-index: 2;
       box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     }
 
     /* 凍結按鈕列 */
     .sw-freeze-row {
-      display: flex; align-items: center; gap: 8px;
-      padding: 0 14px 10px;
+      display: flex; align-items: center; gap: 8px; padding: 0 14px 10px;
     }
     .freeze-btn {
-      padding: 5px 14px; border-radius: 10px;
-      border: 1.5px solid #ccc; background: #f5f5f5; color: #888;
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 10px;
+      border: 1.5px solid #ccc; background: #f5f5f5; color: #666;
       font-size: 0.8rem; font-weight: 600; cursor: pointer;
       font-family: 'Noto Sans TC', sans-serif;
       -webkit-tap-highlight-color: transparent;
+      user-select: none; position: relative; overflow: hidden;
     }
     .freeze-btn.is-frozen {
       background: #ffeaea; border-color: #e07070; color: #a03030;
     }
-    .sw-freeze-hint {
-      font-size: 0.75rem; color: #aaa;
+    /* 長按進度條 */
+    .freeze-btn-progress {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+      background: rgba(180,60,60,0.15); pointer-events: none;
+      transition: none;
     }
+    .freeze-btn.is-frozen .freeze-btn-progress {
+      background: rgba(60,120,60,0.15);
+    }
+    .freeze-hint { font-size: 0.72rem; color: #b0a090; }
 
     /* ══ Modal / Bottom Sheet ══ */
     .modal-overlay {
@@ -230,74 +247,64 @@
     .modal-overlay.show { display: flex; }
     .modal-sheet {
       background: #fff; border-radius: 24px 24px 0 0;
-      padding: 0 20px 36px; width: 100%; max-width: 480px;
+      padding: 0 18px 32px; width: 100%; max-width: 480px;
       box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
       animation: slideUp 0.22s ease; max-height: 92vh; overflow-y: auto;
     }
     @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
-    .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 14px auto 18px; }
+    .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 4px; margin: 14px auto 16px; }
     .sheet-title {
-      font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 700;
-      color: var(--maroon); text-align: center; margin-bottom: 18px;
+      font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--maroon); text-align: center; margin-bottom: 16px;
     }
 
-    /* PIN（依規範） */
-    .pin-label { font-size: 0.9rem; color: var(--gray); margin-bottom: 10px; }
+    /* PIN */
+    .pin-label { font-size: 0.88rem; color: var(--gray); margin-bottom: 9px; }
     .pin-field {
-      width: 100%; padding: 14px; font-size: 2rem;
+      width: 100%; padding: 13px; font-size: 2rem;
       text-align: center; letter-spacing: 0.4em;
       border: 2px solid #c8b48a; border-radius: 12px;
       background: var(--gold-pale); color: var(--ink);
       font-family: 'Noto Serif TC', serif; font-weight: 700;
-      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-      -webkit-appearance: none;
+      outline: none; -webkit-appearance: none;
     }
-    .pin-field:focus {
-      border-color: var(--gold) !important;
-      box-shadow: 0 0 0 4px rgba(184,134,11,0.12);
-      background: #fff !important;
-    }
+    .pin-field:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(184,134,11,0.12); background: #fff; }
     .pin-submit {
-      width: 100%; border: none; border-radius: 50px; padding: 16px;
-      font-family: 'Noto Serif TC', serif; font-size: 1.1rem;
-      letter-spacing: 4px; font-weight: 700;
-      background: #ccc; color: #fff; cursor: pointer; transition: all 0.2s; margin-top: 12px;
+      width: 100%; border: none; border-radius: 50px; padding: 15px;
+      font-family: 'Noto Serif TC', serif; font-size: 1.05rem; letter-spacing: 4px; font-weight: 700;
+      background: #ccc; color: #fff; cursor: pointer; transition: all 0.2s; margin-top: 11px;
     }
-    .pin-submit.ready {
-      background: linear-gradient(135deg, var(--teal), #1e4238);
-      box-shadow: 0 4px 15px rgba(45,93,79,0.35);
-    }
+    .pin-submit.ready { background: linear-gradient(135deg, var(--teal), #1e4238); box-shadow: 0 4px 15px rgba(45,93,79,0.3); }
     .pin-submit.ready:active { transform: scale(0.98); }
-    .pin-error { text-align: center; font-size: 0.85rem; color: var(--red);
-      min-height: 20px; margin-top: 8px; font-weight: 600; }
+    .pin-error { text-align: center; font-size: 0.84rem; color: var(--red); min-height: 20px; margin-top: 7px; font-weight: 600; }
 
     /* 確認身份卡 */
     .confirm-card {
       background: linear-gradient(135deg,#fff8f0,#fff);
-      border: 2px solid var(--gold-border); border-radius: 16px;
-      padding: 16px; margin: 12px 0; text-align: center;
+      border: 2px solid var(--gold-border); border-radius: 14px;
+      padding: 14px; margin: 10px 0; text-align: center;
     }
-    .confirm-name   { font-size: 1.5rem; font-weight: 900; font-family: 'Noto Serif TC', serif; color: var(--maroon); }
-    .confirm-dharma { font-size: 0.92rem; color: var(--gray); margin-top: 4px; }
-    .confirm-info   { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-    .confirm-status { margin-top: 10px; font-size: 0.88rem; }
+    .confirm-name   { font-size: 1.4rem; font-weight: 900; font-family: 'Noto Serif TC', serif; color: var(--maroon); }
+    .confirm-dharma { font-size: 0.9rem; color: var(--gray); margin-top: 3px; }
+    .confirm-info   { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+    .confirm-status { margin-top: 9px; font-size: 0.86rem; }
 
     /* 領隊 */
-    .leader-section { margin-bottom: 16px; }
+    .leader-section { margin-bottom: 14px; }
     .leader-section-title {
-      font-family: 'Noto Serif TC', serif; font-size: 0.95rem; font-weight: 700;
-      color: var(--maroon); margin-bottom: 10px; padding-bottom: 8px;
+      font-family: 'Noto Serif TC', serif; font-size: 0.92rem; font-weight: 700;
+      color: var(--maroon); margin-bottom: 9px; padding-bottom: 7px;
       border-bottom: 1.5px solid #f5e6cc;
     }
-    .admin-summary { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
-    .sum-box { background: #fffaf5; border-radius: 14px; padding: 14px; text-align: center; border: 1.5px solid #ffe0b2; }
-    .sum-box .s-num { font-size: 2rem; font-weight: 700; font-family: 'Noto Serif TC', serif; line-height: 1; }
-    .sum-box .s-lbl { font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
+    .admin-summary { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 12px; }
+    .sum-box { background: #fffaf5; border-radius: 12px; padding: 12px; text-align: center; border: 1.5px solid #ffe0b2; }
+    .sum-box .s-num { font-size: 1.8rem; font-weight: 700; font-family: 'Noto Serif TC', serif; line-height: 1; }
+    .sum-box .s-lbl { font-size: 0.78rem; color: var(--gray); margin-top: 3px; }
 
     /* 通用按鈕 */
     .btn {
-      display: inline-block; padding: 13px 18px; border-radius: 14px; border: none;
-      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.95rem;
+      display: inline-block; padding: 12px 16px; border-radius: 13px; border: none;
+      font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.92rem;
       cursor: pointer; transition: opacity 0.15s; text-align: center;
       -webkit-tap-highlight-color: transparent;
     }
@@ -308,27 +315,34 @@
     .btn-outline { background: var(--white); border: 2px solid var(--maroon); color: var(--maroon); }
     .btn-full    { width: 100%; display: block; }
 
+    /* 底部控制列（領隊） */
+    .leader-bottom {
+      position: sticky; bottom: 0;
+      background: #fdf8f0; border-top: 1px solid #e8d9c0;
+      padding: 10px 18px 16px;
+      margin: 12px -18px -32px;
+    }
+    .leader-bottom-btns { display: flex; gap: 8px; }
+
     .flex-gap { display: flex; gap: 8px; }
-    .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 16px; }
-    .mb-3 { margin-bottom: 12px; }
+    .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 14px; } .mb-3 { margin-bottom: 12px; }
     .hidden { display: none !important; }
 
     #toast {
       position: fixed; bottom: 28px; left: 50%;
       transform: translateX(-50%) translateY(120px);
-      background: #222; color: #fff; padding: 13px 24px;
-      border-radius: 40px; font-size: 0.95rem; font-weight: 600;
+      background: #222; color: #fff; padding: 12px 22px;
+      border-radius: 40px; font-size: 0.92rem; font-weight: 600;
       z-index: 9999; transition: transform 0.28s;
       white-space: nowrap; box-shadow: 0 8px 28px rgba(0,0,0,0.35);
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
-    footer { text-align: center; padding: 20px 0 40px; color: #bbb; font-size: 0.7rem; }
+    footer { text-align: center; padding: 18px 0 36px; color: #bbb; font-size: 0.68rem; }
   </style>
 </head>
 <body>
 <div id="loading-bar"></div>
 
-<!-- ══ 置頂 ══ -->
 <div id="sticky-top">
   <header>
     <h1>☸ 0524 浴佛法會</h1>
@@ -341,7 +355,6 @@
   </div>
 </div>
 
-<!-- ══ 主體 ══ -->
 <div id="main-body">
   <div id="entry-bar">
     <button class="entry-btn entry-btn-self" id="self-entry-btn" onclick="openSelfSheet()">
@@ -354,6 +367,14 @@
 
   <div id="self-disabled-note">⛔ 領隊已關閉自助報到功能</div>
   <div id="readonly-bar">👁 唯讀模式・僅供查閱</div>
+
+  <!-- 快速跳轉（主頁） -->
+  <div class="jump-bar">
+    <select class="jump-select" id="jump-home" onchange="jumpToCard(this.value,'cards')">
+      <option value="">⬇ 快速跳轉至姓名…</option>
+    </select>
+    <span class="jump-arrow">▼</span>
+  </div>
 
   <div class="section-header">
     <h2>📋 出席名單</h2>
@@ -375,7 +396,6 @@
     <div class="sheet-handle"></div>
     <div class="sheet-title">🙋 義工自助報到</div>
 
-    <!-- 步驟1：PIN -->
     <div id="self-step1">
       <div class="pin-label">請輸入手機號碼後四碼（PIN）</div>
       <input type="tel" class="pin-field" id="pin-input"
@@ -387,10 +407,9 @@
       <button class="btn btn-gray btn-full mt-3" onclick="closeSelfSheet()">取消</button>
     </div>
 
-    <!-- 步驟2：確認 + 滑動 -->
     <div id="self-step2" class="hidden">
       <div class="confirm-card" id="confirm-card"></div>
-      <div style="font-size:0.78rem;color:var(--gray);text-align:center;margin:8px 0 4px;" id="self-swipe-hint"></div>
+      <div style="font-size:0.76rem;color:var(--gray);text-align:center;margin:6px 0 2px;" id="self-swipe-hint"></div>
       <div id="self-swipe-area"></div>
       <button class="btn btn-gray btn-full mt-3" onclick="closeSelfSheet()">關閉</button>
     </div>
@@ -403,7 +422,6 @@
     <div class="sheet-handle"></div>
     <div class="sheet-title">🌿 領隊專區</div>
 
-    <!-- 登入 -->
     <div id="leader-login-panel">
       <div class="pin-label">請輸入領隊代碼</div>
       <input type="tel" class="pin-field" id="leader-pin-input"
@@ -415,18 +433,7 @@
       <button class="btn btn-gray btn-full mt-3" onclick="closeLeaderSheet()">取消</button>
     </div>
 
-    <!-- 後台 -->
     <div id="leader-panel" class="hidden">
-
-      <div class="leader-section">
-        <div class="leader-section-title">⚙ 系統控制</div>
-        <div class="flex-gap">
-          <button class="btn btn-outline" style="flex:1;font-size:0.85rem;padding:11px 8px;"
-            id="toggle-self-btn" onclick="toggleSelfCheckin()">🔒 關閉自助報到</button>
-          <button class="btn btn-outline" style="flex:1;font-size:0.85rem;padding:11px 8px;"
-            onclick="shareReadonly()">🔗 分享唯讀</button>
-        </div>
-      </div>
 
       <div class="leader-section">
         <div class="leader-section-title">⚡ 報到管理</div>
@@ -434,32 +441,46 @@
           <div class="sum-box"><div class="s-num num-green" id="adm-present">—</div><div class="s-lbl">已報到</div></div>
           <div class="sum-box"><div class="s-num num-red"   id="adm-pending">—</div><div class="s-lbl">未到</div></div>
         </div>
-        <button class="btn btn-outline btn-full mb-3" style="font-size:0.88rem;" onclick="leaderRefresh()">🔄 重新整理</button>
+        <button class="btn btn-outline btn-full mb-3" style="font-size:0.86rem;" onclick="leaderRefresh()">🔄 重新整理</button>
+
+        <!-- 快速跳轉（領隊） -->
+        <div class="jump-bar">
+          <select class="jump-select" id="jump-leader" onchange="jumpToCard(this.value,'checkin-list')">
+            <option value="">⬇ 快速跳轉至姓名…</option>
+          </select>
+          <span class="jump-arrow">▼</span>
+        </div>
+
         <div id="checkin-list"></div>
         <div class="flex-gap mt-4">
-          <button class="btn btn-green" style="flex:1;font-size:0.88rem;" onclick="exportCSV()">📥 匯出</button>
-          <button class="btn btn-red"   style="flex:1;font-size:0.88rem;" onclick="clearAllData()">🗑 清除</button>
+          <button class="btn btn-green" style="flex:1;font-size:0.86rem;" onclick="exportCSV()">📥 匯出</button>
+          <button class="btn btn-red"   style="flex:1;font-size:0.86rem;" onclick="clearAllData()">🗑 清除</button>
         </div>
       </div>
 
-      <button class="btn btn-gray btn-full" onclick="leaderLogout()">退出領隊後台</button>
+      <button class="btn btn-gray btn-full mt-3" onclick="leaderLogout()">退出領隊後台</button>
+
+      <!-- 底部固定：關閉自助 + 分享唯讀 -->
+      <div class="leader-bottom">
+        <div class="leader-bottom-btns">
+          <button class="btn btn-outline" style="flex:1;font-size:0.84rem;padding:10px 8px;"
+            id="toggle-self-btn" onclick="toggleSelfCheckin()">🔒 關閉自助報到</button>
+          <button class="btn btn-outline" style="flex:1;font-size:0.84rem;padding:10px 8px;"
+            onclick="shareReadonly()">🔗 分享唯讀</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// 設定
-// ══════════════════════════════════════════
 const API         = 'https://script.google.com/macros/s/AKfycbz_i1spdxXnPJmx7tZUtIfBn9ybdrJdtaBNjjGaVBpViFrED01sFYWwIviiB3tH6yB3Fw/exec';
 const LEADER_CODE = '7777';
 const SW_THRESH   = 0.55;
-const THUMB_W     = 40;
-const THUMB_PAD   = 4;
+const THUMB_W     = 50;  // 配合 62px 軌道
+const THUMB_PAD   = 6;
 
-// ══════════════════════════════════════════
-// 狀態
-// ══════════════════════════════════════════
 let data               = { students: [], statuses: {}, frozen: [] };
 let isLeader           = false;
 let selfCheckinEnabled = true;
@@ -467,36 +488,37 @@ let filterMode         = 'all';
 let isReadonly         = false;
 let pinStudent         = null;
 
-// ══════════════════════════════════════════
-// 工具
-// ══════════════════════════════════════════
+// ── 工具 ──
 function nCode(r){ return String(r||'').padStart(3,'0'); }
-
-// 狀態判斷
-// 凍結與報到互斥：凍結優先
-function isFrozen(code)  { return data.frozen.includes(nCode(code)); }
-function getSt(s)        { return data.statuses[nCode(s.code)] || null; }
-function isPresent(s)    { const st=getSt(s); return !isFrozen(s.code) && st && st.type==='present'; }
-
+function isFrozen(code){ return data.frozen.includes(nCode(code)); }
+function getSt(s){ return data.statuses[nCode(s.code)] || null; }
+function isPresent(s){
+  const c = nCode(s.code||s);
+  if(isFrozen(c)) return false;
+  const st = data.statuses[c];
+  return !!st && st.type === 'present';
+}
+function isPresentByCode(code){
+  const c = nCode(code);
+  if(isFrozen(c)) return false;
+  const st = data.statuses[c];
+  return !!st && st.type === 'present';
+}
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function setLoading(on){ document.getElementById('loading-bar').style.display=on?'block':'none'; }
+function setLoading(on){ document.getElementById('loading-bar').style.display = on?'block':'none'; }
 let _tt;
 function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),2800);
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(_tt); _tt = setTimeout(()=>t.classList.remove('show'), 2800);
 }
-
-// 統計：凍結排除
 function calcStats(){
   const active  = data.students.filter(s => !isFrozen(s.code));
-  const present = active.filter(s => isPresent(s)).length;
+  const present = active.filter(s => isPresentByCode(s.code)).length;
   return { total: active.length, present, pending: active.length - present };
 }
 
-// ══════════════════════════════════════════
-// API
-// ══════════════════════════════════════════
+// ── API ──
 async function apiCall(p){
   const res = await fetch(API + '?' + new URLSearchParams(p));
   return res.json();
@@ -507,40 +529,59 @@ async function loadData(){
     const r = await apiCall({ action: 'getAll' });
     if(r && r.ok){
       const norm = {};
-      Object.entries(r.statuses || {}).forEach(([k,v]) => { norm[nCode(k)] = v; });
+      Object.entries(r.statuses||{}).forEach(([k,v]) => { norm[nCode(k)] = v; });
       r.statuses = norm;
-      r.frozen   = (r.frozen || []).map(c => nCode(c));
+      r.frozen   = (r.frozen||[]).map(c => nCode(c));
       data = r;
     }
   } catch(e){ showToast('⚠ 無法連線雲端'); }
   setLoading(false);
 }
 
-// ══════════════════════════════════════════
-// 統計渲染
-// ══════════════════════════════════════════
+// ── 統計 ──
 function renderStats(){
   const { total, present, pending } = calcStats();
-  ['ts-present','adm-present'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=present; });
-  ['ts-pending','adm-pending'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=pending; });
+  ['ts-present','adm-present'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=present; });
+  ['ts-pending','adm-pending'].forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent=pending; });
   const t = document.getElementById('ts-total'); if(t) t.textContent=total;
 }
 
-// ══════════════════════════════════════════
-// 標籤
-// ══════════════════════════════════════════
+// ── 標籤 ──
 function tagHtml(s){
   let h = '';
   if(s.gender) h += `<span class="tag tag-${s.gender==='女'?'f':'m'}">${esc(s.gender)}</span>`;
-  if(s.unit)   h += `<span class="tag tag-unit">${esc(s.unit)}</span>`;
-  if(s.room)   h += `<span class="tag tag-room">🛏${esc(s.room)}</span>`;
-  if(s.group)  h += `<span class="tag tag-group">${esc(s.group)}</span>`;
+  if(s.unit && s.unit !== '出坡單位未定') h += `<span class="tag tag-unit">${esc(s.unit)}</span>`;
+  if(s.room && s.room !== '寮房未定')     h += `<span class="tag tag-room">🛏${esc(s.room)}</span>`;
   return h;
 }
 
-// ══════════════════════════════════════════
-// 主體渲染
-// ══════════════════════════════════════════
+// ── 快速跳轉 ──
+function buildJumpSelect(selectId){
+  const sel = document.getElementById(selectId);
+  if(!sel) return;
+  while(sel.options.length > 1) sel.remove(1);
+  data.students.sort((a,b)=>Number(a.order)-Number(b.order)).forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = nCode(s.code);
+    const fr   = isFrozen(s.code);
+    const pres = isPresentByCode(s.code);
+    const icon = fr ? '❄' : pres ? '✅' : '⬜';
+    opt.textContent = `${icon} ${s.order}. ${s.name}${s.dharma?' '+s.dharma:''}`;
+    sel.appendChild(opt);
+  });
+}
+function jumpToCard(code, containerId){
+  if(!code) return;
+  const el = document.getElementById('card-'+code) || document.getElementById('swo-'+code);
+  if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // 重設選單
+  const sel = containerId === 'cards'
+    ? document.getElementById('jump-home')
+    : document.getElementById('jump-leader');
+  if(sel) sel.value = '';
+}
+
+// ── 主體渲染 ──
 function renderMain(){
   renderStats();
   const selfBtn  = document.getElementById('self-entry-btn');
@@ -549,14 +590,14 @@ function renderMain(){
   if(isReadonly){
     selfBtn.classList.add('hidden');
     document.querySelector('.entry-btn-leader').classList.add('hidden');
-    roBar.style.display = 'block';
-    selfNote.style.display = 'none';
+    roBar.style.display = 'block'; selfNote.style.display = 'none';
   } else {
     selfBtn.classList.remove('hidden');
     roBar.style.display = 'none';
     selfNote.style.display = selfCheckinEnabled ? 'none' : 'block';
   }
   renderCards();
+  buildJumpSelect('jump-home');
 }
 async function refreshMain(){ await loadData(); renderMain(); showToast('✅ 已更新'); }
 
@@ -570,81 +611,94 @@ function setFilter(mode){
 function renderCards(){
   const c = document.getElementById('cards');
   if(!data.students.length){
-    c.innerHTML = '<div style="text-align:center;color:var(--gray);padding:40px;">尚未載入名單</div>';
+    c.innerHTML = '<div style="text-align:center;color:var(--gray);padding:36px;">尚未載入名單</div>';
     return;
   }
   c.innerHTML = '';
-  let sorted = [...data.students].sort((a,b) => Number(a.order) - Number(b.order));
-  // 未到篩選：排除已報到與凍結
-  if(filterMode === 'pending') sorted = sorted.filter(s => !isPresent(s) && !isFrozen(s.code));
+  let sorted = [...data.students].sort((a,b)=>Number(a.order)-Number(b.order));
+  if(filterMode === 'pending') sorted = sorted.filter(s => !isPresentByCode(s.code) && !isFrozen(s.code));
 
   sorted.forEach(s => {
     const fr   = isFrozen(s.code);
-    const pres = isPresent(s);
+    const pres = isPresentByCode(s.code);
     const el   = document.createElement('div');
     el.className = 'card' + (fr ? ' frozen' : pres ? ' present' : '');
+    el.id = 'card-' + nCode(s.code);
+
+    const phone = s.phone ? `<span class="card-phone">${esc(s.phone)}</span>` : '';
+    const unit  = (s.unit && s.unit!=='出坡單位未定') ? `<span class="tag tag-unit">${esc(s.unit)}</span>` : '';
+    const room  = (s.room && s.room!=='寮房未定')     ? `<span class="tag tag-room">🛏${esc(s.room)}</span>` : '';
+
     el.innerHTML = `
-      <div class="card-num ${(!pres && !fr) ? 'dim' : ''}">${s.order}</div>
-      <div class="card-info">
-        <div class="card-name">${esc(s.name)}${s.dharma ? ` <span class="card-dharma">${esc(s.dharma)}</span>` : ''}</div>
-        <div class="card-row2">${tagHtml(s)}</div>
+      <div class="card-row1">
+        <span class="card-order">${s.order}</span>
+        <span class="card-name">${esc(s.name)}</span>
+        ${s.dharma ? `<span class="card-dharma">${esc(s.dharma)}</span>` : ''}
+        ${phone}
       </div>
-      <div class="card-status">
-        ${fr   ? '<span class="badge badge-frozen">凍結</span>'
-        : pres ? '<span class="badge badge-present">已報到</span>'
-               : '<span class="badge badge-none">未到</span>'}
+      <div class="card-row2">
+        ${unit}${room}
+        <span class="card-status" style="margin-left:auto;">
+          ${fr   ? '<span class="badge badge-frozen">❄ 凍結</span>'
+          : pres ? '<span class="badge badge-present">已報到</span>'
+                 : '<span class="badge badge-none">未到</span>'}
+        </span>
       </div>`;
     c.appendChild(el);
   });
 }
 
-// ══════════════════════════════════════════
-// PIN 輸入（依規範）
-// ══════════════════════════════════════════
+// ── PIN ──
 function onPinInput(el){
   el.value = el.value.replace(/\D/g,'').slice(0,4);
   document.getElementById('pin-error').textContent = '';
   const ready = el.value.length === 4;
   const btn = document.getElementById('pin-submit');
-  btn.disabled = !ready;
-  btn.className = 'pin-submit' + (ready ? ' ready' : '');
+  btn.disabled = !ready; btn.className = 'pin-submit' + (ready ? ' ready' : '');
 }
 function onLeaderPinInput(el){
   el.value = el.value.replace(/\D/g,'').slice(0,4);
   document.getElementById('leader-login-err').textContent = '';
   const ready = el.value.length >= 4;
   const btn = document.getElementById('leader-pin-submit');
-  btn.disabled = !ready;
-  btn.className = 'pin-submit' + (ready ? ' ready' : '');
+  btn.disabled = !ready; btn.className = 'pin-submit' + (ready ? ' ready' : '');
 }
 
 // ══════════════════════════════════════════
-// 滑動報到軌道
+// 滑動軌道（修正版核心）
 // ══════════════════════════════════════════
 function buildSwipeOuter(s, selfMode){
   const code = nCode(s.code);
   const fr   = isFrozen(code);
-  const pres = isPresent(s);
+  const pres = isPresentByCode(code);
   const st   = getSt(s);
 
   const outer = document.createElement('div');
   outer.className = 'sw-outer' + (fr ? ' frozen' : pres ? ' present' : '');
   outer.id = 'swo-' + code;
 
-  // ── 資訊列 ──
+  // ── 資訊 ──
+  const phone = s.phone ? `<span class="sw-phone">${esc(s.phone)}</span>` : '';
+  const unit  = (s.unit && s.unit!=='出坡單位未定') ? `<span class="tag tag-unit">${esc(s.unit)}</span>` : '';
+  const room  = (s.room && s.room!=='寮房未定')     ? `<span class="tag tag-room">🛏${esc(s.room)}</span>` : '';
+
   const info = document.createElement('div');
   info.className = 'sw-card-info';
   info.innerHTML = `
-    <div class="sw-num ${(!pres && !fr) ? 'dim' : ''}">${s.order}</div>
-    <div class="sw-info">
-      <div class="sw-name">${esc(s.name)}${s.dharma ? ` <span class="sw-dharma">${esc(s.dharma)}</span>` : ''}</div>
-      <div class="sw-tags">${tagHtml(s)}</div>
-      ${st && st.timestamp && !fr ? `<div class="sw-time">⏱ ${st.timestamp}</div>` : ''}
+    <div class="sw-row1">
+      <span class="sw-order">${s.order}</span>
+      <span class="sw-name">${esc(s.name)}</span>
+      ${s.dharma ? `<span class="sw-dharma">${esc(s.dharma)}</span>` : ''}
+      ${phone}
     </div>
-    <div class="sw-badge-wrap">
-      ${fr   ? '<span class="badge badge-frozen">凍結</span>'
-      : pres ? '<span class="badge badge-present">已報到</span>'
-             : '<span class="badge badge-none">未到</span>'}
+    <div class="sw-row2">
+      ${unit}${room}
+      <span class="sw-badge-wrap">
+        ${fr   ? '<span class="badge badge-frozen">❄ 凍結</span>'
+        : pres ? '<span class="badge badge-present">已報到</span>'
+               : '<span class="badge badge-none">未到</span>'}
+      </span>
+      ${st && st.timestamp && !fr ? `<span class="sw-time">⏱${st.timestamp}</span>` : ''}
     </div>`;
   outer.appendChild(info);
 
@@ -653,7 +707,7 @@ function buildSwipeOuter(s, selfMode){
   track.className = 'sw-track' + (fr ? ' is-frozen' : '');
   track.id = 'swt-' + code;
 
-  const fill = document.createElement('div');
+  const fill  = document.createElement('div');
   fill.className = 'sw-fill' + (pres ? ' to-present' : '');
   fill.id = 'swf-' + code;
   fill.style.width = pres ? '100%' : '0%';
@@ -668,8 +722,8 @@ function buildSwipeOuter(s, selfMode){
 
   const thumb = document.createElement('div');
   thumb.className = 'sw-thumb'; thumb.id = 'swth-' + code;
-  thumb.textContent = fr ? '🔒' : pres ? '✅' : '👆';
-  thumb.style.left  = pres ? `calc(100% - ${THUMB_W + THUMB_PAD}px)` : `${THUMB_PAD}px`;
+  thumb.textContent = fr ? '🔒' : pres ? '✅' : '👉';
+  thumb.style.left = pres ? `calc(100% - ${THUMB_W + THUMB_PAD}px)` : `${THUMB_PAD}px`;
 
   track.appendChild(fill); track.appendChild(hintL);
   track.appendChild(hintR); track.appendChild(thumb);
@@ -679,160 +733,181 @@ function buildSwipeOuter(s, selfMode){
   if(!selfMode){
     const frow = document.createElement('div');
     frow.className = 'sw-freeze-row';
+
     const fbtn = document.createElement('button');
     fbtn.className = 'freeze-btn' + (fr ? ' is-frozen' : '');
-    fbtn.textContent = fr ? '🔓 解除凍結' : '🔒 凍結此人';
-    fbtn.onclick = () => toggleFreeze(code);
+
+    const prog = document.createElement('div');
+    prog.className = 'freeze-btn-progress';
+    fbtn.appendChild(prog);
+
+    const ico = document.createElement('span');
+    ico.textContent = '❄';
+    fbtn.appendChild(ico);
+
+    const lbl = document.createElement('span');
+    lbl.textContent = fr ? '按三秒解凍此人' : '按三秒凍結此人';
+    fbtn.appendChild(lbl);
+
+    attachLongPress(fbtn, prog, () => toggleFreeze(code));
+
+    const hint = document.createElement('span');
+    hint.className = 'freeze-hint';
+    hint.textContent = fr ? '凍結中・不計入應到人數' : '';
     frow.appendChild(fbtn);
-    if(fr){
-      const hint = document.createElement('span');
-      hint.className = 'sw-freeze-hint';
-      hint.textContent = '凍結中・不計入應到人數';
-      frow.appendChild(hint);
-    }
+    frow.appendChild(hint);
     outer.appendChild(frow);
   }
 
-  // ── 掛載滑動（非凍結） ──
+  // ── 滑動（非凍結） ──
   if(!fr) attachSwipe(track, code, selfMode, outer);
 
   return outer;
 }
 
+// ── 長按凍結 ──
+function attachLongPress(btn, prog, callback){
+  const DURATION = 3000;
+  let timer = null, startT = 0, raf = null;
+
+  function startHold(){
+    startT = Date.now();
+    function tick(){
+      const elapsed = Date.now() - startT;
+      const pct = Math.min(100, (elapsed / DURATION) * 100);
+      prog.style.width = pct + '%';
+      if(elapsed < DURATION){ raf = requestAnimationFrame(tick); }
+      else { prog.style.width = '0%'; callback(); }
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function cancelHold(){
+    cancelAnimationFrame(raf);
+    prog.style.width = '0%';
+  }
+
+  btn.addEventListener('mousedown',  startHold);
+  btn.addEventListener('touchstart', startHold, { passive: true });
+  btn.addEventListener('mouseup',    cancelHold);
+  btn.addEventListener('mouseleave', cancelHold);
+  btn.addEventListener('touchend',   cancelHold, { passive: true });
+  btn.addEventListener('touchcancel',cancelHold, { passive: true });
+}
+
+// ── 滑動核心（乾淨重寫） ──
 function attachSwipe(track, code, selfMode, outer){
   const fill  = document.getElementById('swf-' + code);
   const thumb = document.getElementById('swth-' + code);
   const hintL = document.getElementById('swhl-' + code);
   const hintR = document.getElementById('swhr-' + code);
 
-  // Bug 修正：用 code 查 statuses，不用 isPresent({code}) 物件字面量
-  function curPresent(){ const st = data.statuses[nCode(code)]; return !!st && st.type === 'present'; }
+  function pres(){ return isPresentByCode(code); }
+  function tw()  { return track.getBoundingClientRect().width || track.offsetWidth; }
+  function maxL(){ return tw() - THUMB_W - THUMB_PAD; }
+  function ratio(nx){ return Math.max(0, Math.min(1, (nx - THUMB_PAD) / Math.max(1, maxL() - THUMB_PAD))); }
 
-  let startX = 0, startY = 0, dragging = false, blocked = false;
+  let dragging = false, startX = 0, startY = 0, initLeft = 0, moved = false;
 
-  function getTrackW(){ return track.getBoundingClientRect().width || track.offsetWidth; }
-  function thumbLeft(){ return parseFloat(thumb.style.left) || THUMB_PAD; }
-  function maxPos(tw) { return tw - THUMB_W - THUMB_PAD; }
-  function ratio(nx, tw){ return Math.max(0, Math.min(1, (nx - THUMB_PAD) / Math.max(1, maxPos(tw) - THUMB_PAD))); }
+  function getThumbLeft(){ return parseFloat(thumb.style.left) || THUMB_PAD; }
 
-  function onStart(e){
-    const t = e.touches ? e.touches[0] : e;
-    startX = t.clientX; startY = t.clientY;
-    dragging = true; blocked = false;
+  function onStart(cx, cy){
+    dragging = true; moved = false;
+    startX = cx; startY = cy;
+    initLeft = pres() ? maxL() : THUMB_PAD;
     thumb.style.transition = 'none';
     fill.style.transition  = 'none';
   }
-
-  function onMove(e){
-    if(!dragging || blocked) return;
-    const t  = e.touches ? e.touches[0] : e;
-    const dx = t.clientX - startX;
-    const dy = Math.abs(t.clientY - startY);
-    // 垂直優先：若縱向移動超過橫向，取消
-    if(dy > Math.abs(dx) * 1.5 && dy > 6){ blocked = true; resetPos(); return; }
-    if(e.cancelable && Math.abs(dx) > 6) e.preventDefault();
-
-    const tw  = getTrackW();
-    const pres = curPresent();
-    // 計算新位置：從 thumb 初始位置偏移
-    const initLeft = pres ? maxPos(tw) : THUMB_PAD;
-    let nx = Math.max(THUMB_PAD, Math.min(maxPos(tw), initLeft + dx));
+  function onMove(cx, cy){
+    if(!dragging) return;
+    const dx = cx - startX;
+    const dy = Math.abs(cy - startY);
+    if(!moved && dy > Math.abs(dx) && dy > 5){
+      dragging = false; snap(); return;
+    }
+    moved = true;
+    const nx = Math.max(THUMB_PAD, Math.min(maxL(), initLeft + dx));
     thumb.style.left = nx + 'px';
-
-    const r = ratio(nx, tw);
-    if(!pres){
+    const r = ratio(nx);
+    if(!pres()){
       fill.className = 'sw-fill to-present';
       fill.style.width = (r * 100) + '%';
-      thumb.textContent = r >= SW_THRESH ? '✅' : '👆';
+      thumb.textContent = r >= SW_THRESH ? '✅' : '👉';
       hintL.textContent = r >= SW_THRESH ? '' : '右滑報到 →';
     } else {
-      const backR = 1 - r;
-      fill.className = 'sw-fill' + (backR > 0.1 ? ' to-undo' : ' to-present');
+      const br = 1 - r;
+      fill.className = 'sw-fill' + (br > 0.1 ? ' to-undo' : ' to-present');
       fill.style.width = (r * 100) + '%';
-      thumb.textContent = backR >= SW_THRESH ? '↩' : '✅';
-      hintR.textContent = backR >= SW_THRESH ? '' : '← 左滑復原';
+      thumb.textContent = br >= SW_THRESH ? '↩' : '✅';
+      hintR.textContent = br >= SW_THRESH ? '' : '← 左滑復原';
     }
   }
-
   function onEnd(){
-    if(!dragging){ return; }
+    if(!dragging) return;
     dragging = false;
-    if(blocked){ resetPos(); return; }
-    const tw   = getTrackW();
-    const nx   = thumbLeft();
-    const r    = ratio(nx, tw);
-    const pres = curPresent();
-    if(!pres){
-      if(r >= SW_THRESH) doPresent(code, selfMode, outer);
-      else resetPos();
+    if(!moved){ snap(); return; }
+    const nx = getThumbLeft();
+    const r  = ratio(nx);
+    if(!pres()){
+      r >= SW_THRESH ? doPresent(code, selfMode, outer) : snap();
     } else {
-      if(1 - r >= SW_THRESH) doUndo(code, selfMode, outer);
-      else resetPos();
+      (1 - r) >= SW_THRESH ? doUndo(code, selfMode, outer) : snap();
     }
   }
-
-  function resetPos(){
+  function snap(){
     thumb.style.transition = 'left 0.22s ease';
     fill.style.transition  = 'width 0.22s ease';
-    const pres = curPresent();
-    const tw   = getTrackW();
-    thumb.style.left  = pres ? (maxPos(tw) + 'px') : (THUMB_PAD + 'px');
-    fill.style.width  = pres ? '100%' : '0%';
-    fill.className    = 'sw-fill' + (pres ? ' to-present' : '');
-    thumb.textContent = pres ? '✅' : '👆';
-    hintL.textContent = pres ? '' : '右滑報到 →';
-    hintR.textContent = pres ? '← 左滑復原' : '';
+    thumb.style.left  = pres() ? (maxL() + 'px') : (THUMB_PAD + 'px');
+    fill.style.width  = pres() ? '100%' : '0%';
+    fill.className    = 'sw-fill' + (pres() ? ' to-present' : '');
+    thumb.textContent = pres() ? '✅' : '👉';
+    hintL.textContent = pres() ? '' : '右滑報到 →';
+    hintR.textContent = pres() ? '← 左滑復原' : '';
   }
 
   // touch
-  track.addEventListener('touchstart', onStart, { passive: true });
-  track.addEventListener('touchmove',  onMove,  { passive: false });
-  track.addEventListener('touchend',   onEnd,   { passive: true });
-  track.addEventListener('touchcancel',()=>{ dragging=false; resetPos(); }, { passive: true });
+  track.addEventListener('touchstart', e => {
+    const t = e.touches[0]; onStart(t.clientX, t.clientY);
+  }, { passive: true });
+  track.addEventListener('touchmove', e => {
+    if(dragging && e.cancelable) e.preventDefault();
+    const t = e.touches[0]; onMove(t.clientX, t.clientY);
+  }, { passive: false });
+  track.addEventListener('touchend', e => {
+    const t = e.changedTouches[0]; onEnd();
+  }, { passive: true });
+  track.addEventListener('touchcancel', () => { dragging = false; snap(); }, { passive: true });
 
-  // mouse — 掛在 track，用 setPointerCapture 確保跨元素追蹤
-  track.addEventListener('pointerdown', e => {
-    if(e.pointerType === 'mouse'){
-      track.setPointerCapture(e.pointerId);
-      onStart(e);
-    }
+  // mouse（pointer capture）
+  track.addEventListener('mousedown', e => {
+    onStart(e.clientX, e.clientY); e.preventDefault();
   });
-  track.addEventListener('pointermove', e => {
-    if(e.pointerType === 'mouse' && dragging) onMove(e);
-  });
-  track.addEventListener('pointerup', e => {
-    if(e.pointerType === 'mouse' && dragging) onEnd(e);
-  });
-  track.addEventListener('pointercancel', () => { dragging=false; resetPos(); });
+  document.addEventListener('mousemove', e => { if(dragging) onMove(e.clientX, e.clientY); });
+  document.addEventListener('mouseup',   e => { if(dragging) onEnd(); });
 }
 
-// 右滑 → 報到
 function doPresent(code, selfMode, outer){
   const c = nCode(code);
   data.statuses[c] = { type: 'present', timestamp: new Date().toLocaleString('zh-TW') };
-  renderStats(); renderCards();
+  renderStats(); renderCards(); buildJumpSelect('jump-home');
   rebuildOuter(c, selfMode, outer);
+  if(isLeader) buildJumpSelect('jump-leader');
   if(selfMode){
     showToast(`✅ ${pinStudent ? pinStudent.name : ''} 報到成功！`);
     setTimeout(() => closeSelfSheet(), 800);
-  } else {
-    showToast('✅ 已報到！');
-  }
+  } else { showToast('✅ 已報到！'); }
   apiCall({ action: 'checkin', code: c, type: 'present', source: selfMode ? 'student' : 'leader' })
     .catch(() => showToast('⚠ 同步失敗'));
 }
-
-// 左滑 → 復原未到（清除報到記錄）
 function doUndo(code, selfMode, outer){
   const c = nCode(code);
   delete data.statuses[c];
-  renderStats(); renderCards();
+  renderStats(); renderCards(); buildJumpSelect('jump-home');
   rebuildOuter(c, selfMode, outer);
+  if(isLeader) buildJumpSelect('jump-leader');
   showToast('↩ 已復原為未到');
   apiCall({ action: 'resetOne', code: c })
     .catch(() => showToast('⚠ 同步失敗'));
 }
-
 function rebuildOuter(code, selfMode, oldOuter){
   const c = nCode(code);
   const s = data.students.find(s => nCode(s.code) === c);
@@ -841,9 +916,7 @@ function rebuildOuter(code, selfMode, oldOuter){
   oldOuter.parentNode.replaceChild(newOuter, oldOuter);
 }
 
-// ══════════════════════════════════════════
-// 自助報到 Sheet
-// ══════════════════════════════════════════
+// ── 自助報到 Sheet ──
 function openSelfSheet(){
   if(isReadonly) return;
   if(!selfCheckinEnabled){ showToast('⛔ 自助報到已關閉'); return; }
@@ -862,56 +935,39 @@ function closeSelfSheet(){ document.getElementById('self-sheet').classList.remov
 function checkPin(){
   const pin   = document.getElementById('pin-input').value.trim();
   const found = data.students.find(s => s.pin === pin);
-  if(!found){
-    document.getElementById('pin-error').textContent = '⚠ PIN 不符，請確認後再試';
-    return;
-  }
-  if(isFrozen(found.code)){
-    document.getElementById('pin-error').textContent = '⚠ 您的名單已凍結，請洽領隊';
-    return;
-  }
+  if(!found){ document.getElementById('pin-error').textContent = '⚠ PIN 不符，請確認後再試'; return; }
+  if(isFrozen(found.code)){ document.getElementById('pin-error').textContent = '⚠ 您的名單已凍結，請洽領隊'; return; }
   pinStudent = found;
   showSelfStep2(found);
 }
 
 function showSelfStep2(s){
-  const pres = isPresent(s);
-
-  // 確認卡
+  const pres = isPresentByCode(s.code);
+  // 確認卡（不重複顯示標籤，只顯示姓名法名與狀態）
   document.getElementById('confirm-card').innerHTML = `
     <div class="confirm-name">${esc(s.name)}</div>
     ${s.dharma ? `<div class="confirm-dharma">${esc(s.dharma)}</div>` : ''}
-    <div class="confirm-info">
-      ${s.gender ? `<span class="tag tag-${s.gender==='女'?'f':'m'}">${esc(s.gender)}</span>` : ''}
-      ${s.unit   ? `<span class="tag tag-unit">${esc(s.unit)}</span>` : ''}
-      ${s.room   ? `<span class="tag tag-room">🛏${esc(s.room)}</span>` : ''}
-    </div>
     <div class="confirm-status" style="color:${pres ? 'var(--green)' : 'var(--gray)'}">
       目前：${pres ? '✅ 已報到' : '⬜ 未到'}
     </div>`;
 
-  // 提示文字
   document.getElementById('self-swipe-hint').textContent =
     pres ? '← 左滑可復原為未到' : '右滑確認報到 →';
 
-  // 滑動卡
   const area = document.getElementById('self-swipe-area');
   area.innerHTML = '';
-  const outer = buildSwipeOuter(s, true);
-  area.appendChild(outer);
+  area.appendChild(buildSwipeOuter(s, true));
 
   document.getElementById('self-step1').classList.add('hidden');
   document.getElementById('self-step2').classList.remove('hidden');
 }
 
-// ══════════════════════════════════════════
-// 領隊 Sheet
-// ══════════════════════════════════════════
+// ── 領隊 Sheet ──
 function openLeaderSheet(){
   if(isLeader){
     document.getElementById('leader-login-panel').classList.add('hidden');
     document.getElementById('leader-panel').classList.remove('hidden');
-    renderStats(); renderCheckinList();
+    renderStats(); renderCheckinList(); buildJumpSelect('jump-leader');
   } else {
     document.getElementById('leader-login-panel').classList.remove('hidden');
     document.getElementById('leader-panel').classList.add('hidden');
@@ -944,19 +1000,18 @@ function leaderLogout(){
   isLeader = false;
   document.getElementById('leader-panel').classList.add('hidden');
   document.getElementById('leader-login-panel').classList.remove('hidden');
-  closeLeaderSheet();
-  showToast('已退出領隊後台');
+  closeLeaderSheet(); showToast('已退出領隊後台');
 }
 async function leaderRefresh(){
-  await loadData(); renderStats(); renderCheckinList(); showToast('✅ 已同步');
+  await loadData(); renderStats(); renderCheckinList();
+  buildJumpSelect('jump-leader'); showToast('✅ 已同步');
 }
 
 function toggleSelfCheckin(){
   selfCheckinEnabled = !selfCheckinEnabled;
   document.getElementById('toggle-self-btn').textContent =
     selfCheckinEnabled ? '🔒 關閉自助報到' : '🔓 開啟自助報到';
-  renderMain();
-  showToast(selfCheckinEnabled ? '✅ 自助報到已開啟' : '🔒 自助報到已關閉');
+  renderMain(); showToast(selfCheckinEnabled ? '✅ 自助報到已開啟' : '🔒 自助報到已關閉');
 }
 function shareReadonly(){
   const url = window.location.href.split('#')[0] + '#readonly';
@@ -968,30 +1023,38 @@ function shareReadonly(){
 function renderCheckinList(){
   const container = document.getElementById('checkin-list');
   container.innerHTML = '';
-  const sorted = [...data.students].sort((a,b) => Number(a.order) - Number(b.order));
-  sorted.forEach(s => {
-    const outer = buildSwipeOuter(s, false);
-    container.appendChild(outer);
+  [...data.students].sort((a,b)=>Number(a.order)-Number(b.order)).forEach(s => {
+    container.appendChild(buildSwipeOuter(s, false));
   });
 }
 
-// 凍結 / 解凍（修正：直接操作，不依賴外層 fr 變數）
+// 凍結（長按觸發，解凍同時清除報到記錄）
 async function toggleFreeze(code){
   const c  = nCode(code);
   const fr = isFrozen(c);
   setLoading(true);
   try {
-    const r = await apiCall({ action: fr ? 'unfreezeOne' : 'freezeOne', code: c });
-    if(r.ok){
-      if(fr){
+    if(fr){
+      // 解凍：同時清除報到記錄
+      const [r1] = await Promise.all([
+        apiCall({ action: 'unfreezeOne', code: c }),
+        apiCall({ action: 'resetOne',    code: c })
+      ]);
+      if(r1.ok){
         data.frozen = data.frozen.filter(f => f !== c);
-        showToast('🔓 已解除凍結');
-      } else {
-        data.frozen.push(c);
-        showToast('🔒 已凍結・不計入應到人數');
+        delete data.statuses[c];
+        showToast('🔓 已解凍・恢復未到狀態');
       }
-      renderStats(); renderCards(); renderCheckinList();
+    } else {
+      // 凍結
+      const r = await apiCall({ action: 'freezeOne', code: c });
+      if(r.ok){
+        data.frozen.push(c);
+        showToast('❄ 已凍結・不計入應到人數');
+      }
     }
+    renderStats(); renderCards(); renderCheckinList();
+    buildJumpSelect('jump-home'); buildJumpSelect('jump-leader');
   } catch(e){ showToast('⚠ 操作失敗'); }
   setLoading(false);
 }
@@ -1004,6 +1067,7 @@ async function clearAllData(){
     if(r.ok){
       data.statuses = {};
       renderStats(); renderCards(); renderCheckinList();
+      buildJumpSelect('jump-home'); buildJumpSelect('jump-leader');
       showToast('🗑 記錄已清除');
     }
   } catch(e){ showToast('⚠ 清除失敗'); }
@@ -1011,34 +1075,23 @@ async function clearAllData(){
 }
 
 function exportCSV(){
-  const header = ['序號','姓名','法名','性別','出坡單位','寮房','代碼','狀態','時間'];
+  const header = ['序號','姓名','法名','性別','電話','出坡單位','寮房','代碼','狀態','時間'];
   const rows   = data.students.map(s => {
-    const code = nCode(s.code);
-    const st   = data.statuses[code];
-    const fr   = isFrozen(code);
-    return [
-      s.order, s.name, s.dharma, s.gender||'', s.unit||'', s.room||'', code,
-      fr ? '凍結' : st && st.type === 'present' ? '已報到' : '未到',
-      st && !fr ? st.timestamp : ''
-    ];
+    const code = nCode(s.code), st = data.statuses[code], fr = isFrozen(code);
+    return [s.order, s.name, s.dharma, s.gender||'', s.phone||'', s.unit||'', s.room||'', code,
+      fr ? '凍結' : st&&st.type==='present' ? '已報到' : '未到',
+      st && !fr ? st.timestamp : ''];
   });
-  const csv = [header, ...rows]
-    .map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(','))
-    .join('\n');
+  const csv = [header,...rows].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }));
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
   a.download = `0524浴佛第12車_${new Date().toLocaleDateString('zh-TW').replace(/\//g,'-')}.csv`;
-  a.click();
-  showToast('📥 CSV 已下載');
+  a.click(); showToast('📥 CSV 已下載');
 }
 
-// 點遮罩關閉
 document.getElementById('self-sheet').addEventListener('click', function(e){ if(e.target===this) closeSelfSheet(); });
 document.getElementById('leader-sheet').addEventListener('click', function(e){ if(e.target===this) closeLeaderSheet(); });
 
-// ══════════════════════════════════════════
-// 初始化
-// ══════════════════════════════════════════
 window.onload = async () => {
   isReadonly = (window.location.hash === '#readonly');
   await loadData();
