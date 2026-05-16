@@ -48,14 +48,14 @@
     /* 置頂區優化 */
     #sticky-top { position: sticky; top: 0; z-index: 100; }
     header {
-      background: #fdf8f0; padding: 12px 14px 10px; text-align: center;
+      background: #fdf8f0; padding: 8px 14px; text-align: center;
       border-bottom: 2px solid #e8d9c0;
     }
     header h1 { 
-      font-family: 'Noto Serif TC',serif; font-size: 1.25rem; font-weight: 900;
-      letter-spacing: .05em; color: var(--maroon); display: block; margin-bottom: 4px;
+      font-family: 'Noto Serif TC',serif; font-size: 1.125rem; font-weight: 900;
+      letter-spacing: .05em; color: var(--maroon); display: inline;
     }
-    header .sub { font-size: 1rem; color: #5a4020; font-weight: 700; display: block; }
+    header .sub { display: none; }
 
     #top-stats {
       display: grid; grid-template-columns: repeat(3,1fr);
@@ -303,6 +303,27 @@
       white-space: nowrap; box-shadow: 0 8px 28px rgba(0,0,0,.35);
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* 回頂按鈕 */
+    #back-to-top {
+      display: none; position: fixed; bottom: 28px; right: 18px;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--maroon); color: #fff;
+      border: none; font-size: 1.3rem; font-weight: 900;
+      cursor: pointer; z-index: 600;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      -webkit-tap-highlight-color: transparent;
+    }
+    #back-to-top.show { display: flex; align-items: center; justify-content: center; }
+
+    /* 領隊底部按鈕區 */
+    .leader-bottom-btns {
+      display: flex; flex-direction: column; gap: 10px; margin-top: 16px; padding-bottom: 8px;
+    }
+
+    /* amber 按鈕 */
+    .btn-amber { background: #b85c00; color: #fff; }
+
     footer { text-align: center; padding: 24px 0 40px; color: #888; font-size: .8rem; font-weight: 600; }
   </style>
 </head>
@@ -311,8 +332,7 @@
 
 <div id="sticky-top">
   <header>
-    <h1>☸ 0524 浴佛法會</h1>
-    <span class="sub">第 12 車 義工報到</span>
+    <h1>☸ 0524浴佛12車義工報到</h1>
   </header>
   <div id="top-stats">
     <div class="top-stat-box"><div class="num num-green" id="ts-present">—</div><div class="lbl">已報到</div></div>
@@ -341,7 +361,7 @@
   </div>
 
   <div class="section-header">
-    <h2>📋 出席名單</h2>
+    <h2>📋 名單</h2>
     <div class="filter-bar">
       <button class="filter-btn active" id="filter-all"     onclick="setFilter('all')">全部</button>
       <button class="filter-btn"        id="filter-pending" onclick="setFilter('pending')">未到</button>
@@ -353,6 +373,7 @@
 
 <footer>AQE@2026 · 0524浴佛法會 第12車</footer>
 <div id="toast"></div>
+<button id="back-to-top" onclick="document.querySelector('.modal-sheet').scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <div class="modal-overlay" id="self-sheet">
   <div class="modal-sheet">
@@ -407,16 +428,12 @@
           <span class="jump-arrow">▼</span>
         </div>
         <div id="checkin-list"></div>
-        <div class="mt-4">
-          <button class="btn btn-red btn-full" onclick="clearAllData()">🗑 清除所有記錄</button>
-        </div>
       </div>
-      <button class="btn btn-gray btn-full mt-3" onclick="leaderLogout()">退出領隊後台</button>
-      <div class="flex-gap mt-3">
-        <button class="btn btn-outline" style="flex:1;font-size:.9rem;padding:12px 8px;"
-          id="toggle-self-btn" onclick="toggleSelfCheckin()">🔒 關閉自助報到</button>
-        <button class="btn btn-outline" style="flex:1;font-size:.9rem;padding:12px 8px;"
-          onclick="shareReadonly()">🔗 分享唯讀</button>
+      <!-- 底部三個全寬按鈕 -->
+      <div class="leader-bottom-btns">
+        <button class="btn btn-gray btn-full" onclick="leaderLogout()">退出領隊後台</button>
+        <button class="btn btn-amber btn-full" id="toggle-self-btn" onclick="toggleSelfCheckinConfirm()">🔒 關閉自助報到</button>
+        <button class="btn btn-red btn-full" onclick="clearAllData()">🗑 清除所有記錄</button>
       </div>
     </div>
   </div>
@@ -797,7 +814,10 @@ function openLeaderSheet(){
   document.getElementById('leader-sheet').classList.add('show');
   if(!isLeader) setTimeout(()=>document.getElementById('leader-pin-input').focus(), 120);
 }
-function closeLeaderSheet(){ document.getElementById('leader-sheet').classList.remove('show'); }
+function closeLeaderSheet(){
+  document.getElementById('leader-sheet').classList.remove('show');
+  document.getElementById('back-to-top').classList.remove('show');
+}
 function onLeaderPinInput(el){
   el.value = el.value.replace(/\D/g,'').slice(0,4);
   document.getElementById('leader-login-err').textContent = '';
@@ -830,10 +850,18 @@ async function leaderRefresh(){
   await loadData(); renderStats(); renderCheckinList();
   buildJumpSelect('jump-leader'); showToast('✅ 已同步');
 }
+function toggleSelfCheckinConfirm(){
+  // 關閉時需二階段確認；開啟直接執行
+  if(selfCheckinEnabled){
+    if(!confirm('確定關閉自助報到功能？\n義工將無法自行操作。')) return;
+    if(!confirm('再次確認：關閉後義工無法自助報到，需領隊代為操作。\n確定關閉？')) return;
+  }
+  toggleSelfCheckin();
+}
 function toggleSelfCheckin(){
   selfCheckinEnabled = !selfCheckinEnabled;
   document.getElementById('toggle-self-btn').textContent =
-    selfCheckinEnabled ? '🔒 關閉自助報到' : '🔓 開啟自助報到';
+    selfCheckinEnabled ? '🔒 關閉自助報到' : '🔓 開啟自助報到 (已關閉)';
   renderMain(); showToast(selfCheckinEnabled ? '✅ 自助報到已開啟' : '🔒 自助報到已關閉');
 }
 function shareReadonly(){
@@ -895,6 +923,21 @@ async function clearAllData(){
 
 
 document.getElementById('self-sheet').addEventListener('click', function(e){ if(e.target===this) closeSelfSheet(); });
+
+// 領隊專區滾動時顯示回頂按鈕
+document.getElementById('leader-sheet').addEventListener('scroll', function(){
+  const btn = document.getElementById('back-to-top');
+  const sheet = this.querySelector('.modal-sheet');
+  if(sheet && sheet.scrollTop > 120) btn.classList.add('show');
+  else btn.classList.remove('show');
+}, true);
+
+// 回頂按鈕滾動目標改為 modal-sheet
+document.getElementById('back-to-top').onclick = function(){
+  const sheet = document.querySelector('#leader-sheet .modal-sheet');
+  if(sheet) sheet.scrollTo({top:0, behavior:'smooth'});
+  else window.scrollTo({top:0, behavior:'smooth'});
+};
 document.getElementById('leader-sheet').addEventListener('click', function(e){ if(e.target===this) closeLeaderSheet(); });
 
 window.onload = async () => {
