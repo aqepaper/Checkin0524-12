@@ -705,58 +705,63 @@ function attachSwipe(track, code, selfMode, outer){
   const hintL = document.getElementById('swhl-' + code);
   const hintR = document.getElementById('swhr-' + code);
 
-  let startX = 0, dragging = false, blocked = false, trackW = 0;
-  let startTouchY = 0;
+  // Bug 修正：用 code 查 statuses，不用 isPresent({code}) 物件字面量
+  function curPresent(){ const st = data.statuses[nCode(code)]; return !!st && st.type === 'present'; }
 
-  function thumbPos(){ return parseFloat(thumb.style.left) || THUMB_PAD; }
-  function maxPos()  { return trackW - THUMB_W - THUMB_PAD; }
-  function ratio(pos){ return Math.max(0, Math.min(1, (pos - THUMB_PAD) / Math.max(1, maxPos() - THUMB_PAD))); }
+  let startX = 0, startY = 0, dragging = false, blocked = false;
+
+  function getTrackW(){ return track.getBoundingClientRect().width || track.offsetWidth; }
+  function thumbLeft(){ return parseFloat(thumb.style.left) || THUMB_PAD; }
+  function maxPos(tw) { return tw - THUMB_W - THUMB_PAD; }
+  function ratio(nx, tw){ return Math.max(0, Math.min(1, (nx - THUMB_PAD) / Math.max(1, maxPos(tw) - THUMB_PAD))); }
 
   function onStart(e){
-    trackW = track.offsetWidth;
     const t = e.touches ? e.touches[0] : e;
-    startX = t.clientX - thumbPos();
-    startTouchY = t.clientY;
+    startX = t.clientX; startY = t.clientY;
     dragging = true; blocked = false;
     thumb.style.transition = 'none';
-    fill.style.transition   = 'none';
+    fill.style.transition  = 'none';
   }
+
   function onMove(e){
     if(!dragging || blocked) return;
-    const t = e.touches ? e.touches[0] : e;
-    // 垂直優先
-    if(e.touches){
-      const dy = Math.abs(t.clientY - startTouchY);
-      const dx = Math.abs(t.clientX - startX - thumbPos());
-      if(dy > dx * 1.2){ blocked = true; resetPos(); return; }
-    }
-    let nx = Math.max(THUMB_PAD, Math.min(maxPos(), t.clientX - startX));
-    thumb.style.left = nx + 'px';
-    const r = ratio(nx);
-    const pres = isPresent({ code });
+    const t  = e.touches ? e.touches[0] : e;
+    const dx = t.clientX - startX;
+    const dy = Math.abs(t.clientY - startY);
+    // 垂直優先：若縱向移動超過橫向，取消
+    if(dy > Math.abs(dx) * 1.5 && dy > 6){ blocked = true; resetPos(); return; }
+    if(e.cancelable && Math.abs(dx) > 6) e.preventDefault();
 
+    const tw  = getTrackW();
+    const pres = curPresent();
+    // 計算新位置：從 thumb 初始位置偏移
+    const initLeft = pres ? maxPos(tw) : THUMB_PAD;
+    let nx = Math.max(THUMB_PAD, Math.min(maxPos(tw), initLeft + dx));
+    thumb.style.left = nx + 'px';
+
+    const r = ratio(nx, tw);
     if(!pres){
-      // 右滑 → 報到
       fill.className = 'sw-fill to-present';
       fill.style.width = (r * 100) + '%';
       thumb.textContent = r >= SW_THRESH ? '✅' : '👆';
       hintL.textContent = r >= SW_THRESH ? '' : '右滑報到 →';
     } else {
-      // 左滑 → 復原未到
       const backR = 1 - r;
-      fill.className = 'sw-fill' + (backR > 0.05 ? ' to-undo' : ' to-present');
-      fill.style.width = ((1 - (backR > 0.05 ? backR * 0.3 : 0)) * 100) + '%';
+      fill.className = 'sw-fill' + (backR > 0.1 ? ' to-undo' : ' to-present');
+      fill.style.width = (r * 100) + '%';
       thumb.textContent = backR >= SW_THRESH ? '↩' : '✅';
       hintR.textContent = backR >= SW_THRESH ? '' : '← 左滑復原';
     }
-    if(Math.abs(t.clientX - (startX + thumbPos())) > 8 && e.cancelable) e.preventDefault();
   }
+
   function onEnd(){
-    if(!dragging || blocked){ dragging = false; return; }
+    if(!dragging){ return; }
     dragging = false;
-    const pos  = thumbPos();
-    const r    = ratio(pos);
-    const pres = isPresent({ code });
+    if(blocked){ resetPos(); return; }
+    const tw   = getTrackW();
+    const nx   = thumbLeft();
+    const r    = ratio(nx, tw);
+    const pres = curPresent();
     if(!pres){
       if(r >= SW_THRESH) doPresent(code, selfMode, outer);
       else resetPos();
@@ -765,24 +770,40 @@ function attachSwipe(track, code, selfMode, outer){
       else resetPos();
     }
   }
+
   function resetPos(){
     thumb.style.transition = 'left 0.22s ease';
     fill.style.transition  = 'width 0.22s ease';
-    const pres = isPresent({ code });
-    thumb.style.left   = pres ? `calc(100% - ${THUMB_W + THUMB_PAD}px)` : `${THUMB_PAD}px`;
-    fill.style.width   = pres ? '100%' : '0%';
-    fill.className     = 'sw-fill' + (pres ? ' to-present' : '');
-    thumb.textContent  = pres ? '✅' : '👆';
-    hintL.textContent  = pres ? '' : '右滑報到 →';
-    hintR.textContent  = pres ? '← 左滑復原' : '';
+    const pres = curPresent();
+    const tw   = getTrackW();
+    thumb.style.left  = pres ? (maxPos(tw) + 'px') : (THUMB_PAD + 'px');
+    fill.style.width  = pres ? '100%' : '0%';
+    fill.className    = 'sw-fill' + (pres ? ' to-present' : '');
+    thumb.textContent = pres ? '✅' : '👆';
+    hintL.textContent = pres ? '' : '右滑報到 →';
+    hintR.textContent = pres ? '← 左滑復原' : '';
   }
 
+  // touch
   track.addEventListener('touchstart', onStart, { passive: true });
   track.addEventListener('touchmove',  onMove,  { passive: false });
-  track.addEventListener('touchend',   onEnd);
-  track.addEventListener('mousedown',  onStart);
-  window.addEventListener('mousemove', e => { if(dragging) onMove(e); });
-  window.addEventListener('mouseup',   e => { if(dragging) onEnd(e); });
+  track.addEventListener('touchend',   onEnd,   { passive: true });
+  track.addEventListener('touchcancel',()=>{ dragging=false; resetPos(); }, { passive: true });
+
+  // mouse — 掛在 track，用 setPointerCapture 確保跨元素追蹤
+  track.addEventListener('pointerdown', e => {
+    if(e.pointerType === 'mouse'){
+      track.setPointerCapture(e.pointerId);
+      onStart(e);
+    }
+  });
+  track.addEventListener('pointermove', e => {
+    if(e.pointerType === 'mouse' && dragging) onMove(e);
+  });
+  track.addEventListener('pointerup', e => {
+    if(e.pointerType === 'mouse' && dragging) onEnd(e);
+  });
+  track.addEventListener('pointercancel', () => { dragging=false; resetPos(); });
 }
 
 // 右滑 → 報到
