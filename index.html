@@ -7,22 +7,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1a1a2e;
-      --gold: #b8860b;
+      --ink: #111122;
+      --gold: #aa7a00;
       --gold-light: #d4a017;
-      --gold-pale: #fdf6e3;
-      --gold-border: #e8c84a;
-      --maroon: #7b1d1d;
-      --cream: #faf7f2;
-      --gray: #444;
-      --gray-light: #dcdcdc;
-      --white: #fff;
-      --green: #1a5c38;
-      --green-pale: #e8f5e9;
-      --green-border: #74c69d;
-      --red: #c1121f;
-      --red-pale: #fff0f0;
-      --red-border: #ffb3b3;
+      --gold-pale: #fbf7ee;
+      --gold-border: #dfbe40;
+      --maroon: #801818;
+      --cream: #f7f4ed;
+      --gray: #333333;
+      --gray-light: #e2e2e2;
+      --white: #ffffff;
+      --green: #0f522e;
+      --green-pale: #eaf5ed;
+      --green-border: #a3d9b9;
+      --red: #b21822;
+      --red-pale: #fff2f2;
+      --red-border: #ffccd0;
       --amber: #b85c00;
       --teal: #1e4238;
     }
@@ -43,51 +43,53 @@
     @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
     /* ── 置頂 ── */
-    #sticky-top { position: sticky; top: 0; z-index: 100; }
+    #sticky-top { position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     header {
-      background: #fdf8f0; padding: 8px 60px 8px 14px; text-align: center;
+      background: #fdf8f0; padding: 12px 60px 12px 14px; text-align: center;
       border-bottom: 2px solid #e8d9c0; position: relative;
     }
     header h1 {
-      font-family: 'Noto Serif TC',serif; font-size: 1.1rem; font-weight: 900;
+      font-family: 'Noto Serif TC',serif; font-size: 1.33rem; font-weight: 900;
       letter-spacing: .04em; color: var(--maroon);
     }
 
-    /* ── 齒輪按鈕（固定右上） ── */
+    /* ── 齒輪按鈕（古典金銅圓鈕） ── */
     #leader-gear {
-      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-      width: 44px; height: 44px; border-radius: 12px;
-      background: linear-gradient(135deg,#f0f9f4,#d8f3dc);
-      border: 2px solid var(--green-border);
-      font-size: 1.4rem; cursor: pointer; display: flex;
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg,#fffbf3,#f3e5cc);
+      border: 1.5px solid var(--gold-border);
+      font-size: 1.2rem; cursor: pointer; display: flex;
       align-items: center; justify-content: center;
+      box-shadow: 0 2px 5px rgba(184,134,11,0.15);
       -webkit-tap-highlight-color: transparent; z-index: 101;
+      transition: all 0.2s;
     }
-    #leader-gear:active { opacity: .7; }
+    #leader-gear:active { transform: translateY(-50%) scale(0.9); background: #f3e5cc; }
 
     /* ── 統計 ── */
     #top-stats {
       display: grid; grid-template-columns: repeat(3,1fr);
-      background: #faf7f2; padding: 8px 10px; gap: 8px;
+      background: #faf7f2; padding: 10px; gap: 8px;
       border-bottom: 2px solid #e8d9c0;
     }
     .top-stat-box {
-      background: #fff; border-radius: 10px; padding: 8px 4px;
+      background: #fff; border-radius: 12px; padding: 8px 4px;
       text-align: center; border: 2px solid #ede0cc;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
     }
     .top-stat-box .num {
       font-size: 1.6rem; font-weight: 900;
       font-family: 'Noto Serif TC',serif; line-height: 1;
     }
     .top-stat-box .lbl { font-size: .85rem; color: #5a4020; margin-top: 4px; font-weight: 700; }
-    .num-green { color: #1a5c38; }
-    .num-red   { color: #b03030; }
+    .num-green { color: var(--green); }
+    .num-red   { color: var(--red); }
     .num-gray  { color: #5a4020; }
 
     /* ── 主體 ── */
     #main-body { padding: 14px 14px 60px; }
 
-    /* 自助報到關閉提示 */
     #self-disabled-note {
       display: none; background: var(--red-pale); border: 2px solid var(--red-border);
       border-radius: 12px; padding: 12px; font-size: .95rem; font-weight: 700;
@@ -103,45 +105,61 @@
     /* ── 快速跳轉 ── */
     .jump-bar { margin-bottom: 16px; position: relative; }
     .jump-select {
-      width: 100%; padding: 14px 36px 14px 16px;
+      width: 100%; padding: 14px 36px 14px 40px;
       border: 2px solid #b8a080; border-radius: 12px;
       background: #fff; font-family: 'Noto Sans TC',sans-serif;
       font-size: 1.05rem; color: var(--ink); appearance: none;
       -webkit-appearance: none; cursor: pointer; outline: none; font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
     .jump-select:focus { border-color: var(--gold); }
+    .jump-icon  { position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; color: #887050; pointer-events: none; }
     .jump-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
       font-size: 1rem; color: var(--gray); pointer-events: none; }
 
     /* ── 篩選列 ── */
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .section-header h2 { font-family: 'Noto Serif TC',serif; font-size: 1.2rem; font-weight: 900; }
+    .section-header h2 { font-family: 'Noto Serif TC',serif; font-size: 1.2rem; font-weight: 900; color: var(--maroon); }
     .filter-bar { display: flex; gap: 6px; }
     .filter-btn {
       padding: 10px 14px; font-size: .92rem; border-radius: 10px;
       border: 2px solid #b8a080; background: var(--white); color: var(--ink);
       font-family: 'Noto Sans TC',sans-serif; font-weight: 700;
       cursor: pointer; -webkit-tap-highlight-color: transparent; white-space: nowrap;
+      transition: all 0.2s;
     }
-    .filter-btn.active { border-color: var(--maroon); background: #fff5f5; color: var(--maroon); }
+    .filter-btn.active { border-color: var(--maroon); background: #fff5f5; color: var(--maroon);
+      box-shadow: 0 2px 6px rgba(128,24,24,0.15); }
 
     /* ── 主頁名單卡片 ── */
     .cards-grid { display: flex; flex-direction: column; gap: 10px; }
     .card {
-      background: var(--white); border-radius: 14px; padding: 12px 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08); border: 2.5px solid #ede0cc;
+      background: var(--white); border-radius: 16px; padding: 14px 16px;
+      box-shadow: 0 4px 12px rgba(90,64,32,0.06); border: 2px solid #ede0cc;
       cursor: pointer; -webkit-tap-highlight-color: transparent;
-      transition: box-shadow 0.15s;
+      transition: all 0.2s ease; display: flex; flex-direction: column; gap: 8px;
     }
-    .card:active { box-shadow: 0 1px 3px rgba(0,0,0,.1); opacity: .88; }
+    .card:active { transform: scale(0.98); box-shadow: 0 2px 6px rgba(0,0,0,.05); opacity: .9; }
     .card.frozen { cursor: default; }
-    .card.present { border-color: #1a5c38; border-width: 3px; background: linear-gradient(135deg,#fff,#edf7f1); }
-    .card.frozen  { border-color: #9b1c1c; border-width: 3px; background: #fff5f5; opacity: .78; }
-    .card-row1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-    .card-order  { font-family: 'Noto Serif TC',serif; font-size: 1.2rem; font-weight: 900; color: var(--maroon); min-width: 28px; }
-    .card-name   { font-size: 1.15rem; font-weight: 700; }
-    .card-dharma { font-size: .92rem; color: #555; font-weight: 500; }
-    .card-row2   { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+    .card.present { border-color: var(--green); border-width: 2px; background: linear-gradient(135deg,#fff,#edf7f1); }
+    .card.frozen  { border-color: var(--red); border-width: 2px; background: #fff5f5; opacity: .78; }
+    /* 前3張：核心領隊金框 */
+    .card.core-leader { border: 2px solid var(--gold-border); background: linear-gradient(135deg,#fff,#fdfbf7); }
+    .card.core-leader.present { border-color: var(--green); background: linear-gradient(135deg,#fff,#edf7f1); }
+
+    .card-row1 { display: flex; align-items: center; gap: 12px; }
+    .card-order {
+      font-family: 'Noto Serif TC',serif; font-size: 1.25rem; font-weight: 900; color: var(--maroon);
+      background: #fdf2f2; padding: 2px 8px; border-radius: 6px; min-width: 38px; text-align: center;
+    }
+    .card-name   { font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+    .card-dharma { font-size: .95rem; color: #555; font-weight: 500;
+      background: #efe8dc; padding: 2px 8px; border-radius: 4px; }
+    .card-phone  { font-family: monospace; font-size: 1rem; color: #5a4020;
+      margin-left: auto; font-weight: 700; white-space: nowrap; }
+    .card-row2 { display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+      border-top: 1px dashed #efe8dc; padding-top: 8px; }
 
     .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: .88rem; font-weight: 900; }
     .badge-present { background: var(--green-pale); color: var(--green); border: 1px solid var(--green-border); }
@@ -155,24 +173,29 @@
     .tag-room { background: #e8f5e9; color: #2e7d32; }
 
     /* ══════════════════════════════
-       報到卡片（領隊）
+       報到卡片（領隊後台）
     ══════════════════════════════ */
     .sw-outer {
       background: var(--white); border-radius: 16px;
-      border: 2.5px solid var(--gray-light); margin-bottom: 10px; overflow: hidden;
+      border: 2px solid var(--gray-light); margin-bottom: 12px; overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
     }
-    .sw-outer.present { border-color: #1a5c38; border-width: 3px; background: #edf7f1; }
-    .sw-outer.frozen  { border-color: #9b1c1c; border-width: 3px; background: #fff5f5; }
-    .sw-card-info { display: flex; flex-direction: column; padding: 12px 16px 6px; gap: 5px; }
-    .sw-row1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-    .sw-order  { font-family: 'Noto Serif TC',serif; font-size: 1.2rem; font-weight: 900; color: var(--maroon); min-width: 28px; }
-    .sw-name   { font-size: 1.12rem; font-weight: 700; }
-    .sw-dharma { font-size: .92rem; color: #555; }
+    .sw-outer.present { border-color: var(--green); border-width: 2px; background: #edf7f1; }
+    .sw-outer.frozen  { border-color: var(--red); border-width: 2px; background: #fff5f5; }
+    .sw-card-info { display: flex; flex-direction: column; padding: 14px 16px 10px; gap: 8px; }
+    .sw-row1 { display: flex; align-items: center; gap: 12px; }
+    .sw-order {
+      font-family: 'Noto Serif TC',serif; font-size: 1.25rem; font-weight: 900; color: var(--maroon);
+      background: #fdf2f2; padding: 2px 8px; border-radius: 6px; min-width: 38px; text-align: center;
+    }
+    .sw-name   { font-size: 1.2rem; font-weight: 700; }
+    .sw-dharma { font-size: .95rem; color: #555; background: #efe8dc; padding: 2px 8px; border-radius: 4px; }
     .sw-phone  { font-size: 1rem; color: #1a4a8a; margin-left: auto; font-weight: 700;
-      text-decoration: none; }
+      text-decoration: none; white-space: nowrap; }
     .sw-phone:active { opacity: .7; }
-    .sw-row2   { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-    .sw-time   { font-size: .78rem; color: var(--green); font-weight: 700; margin-left: auto; }
+    .sw-row2 { display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+      border-top: 1px dashed #e2e2e2; padding-top: 8px; }
+    .sw-time { font-size: .78rem; color: var(--green); font-weight: 700; margin-left: auto; }
     .sw-badge-wrap { margin-left: auto; }
 
     /* ── 長按按鈕 ── */
@@ -183,25 +206,31 @@
       font-family: 'Noto Sans TC',sans-serif; font-weight: 900; font-size: .88rem;
       cursor: pointer; -webkit-tap-highlight-color: transparent;
       display: flex; flex-direction: column; align-items: center; gap: 6px;
-      user-select: none; touch-action: manipulation; min-height: 68px;
+      user-select: none; touch-action: manipulation; min-height: 72px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .hold-btn .hb-icon { font-size: 1.5rem; line-height: 1; }
+    .hold-btn .hb-icon  { font-size: 1.5rem; line-height: 1; }
     .hold-btn .hb-label { font-size: .82rem; text-align: center; font-weight: 800; }
+    .hold-btn.holding   { transform: scale(0.96); animation: pulse-border 1.5s infinite alternate; }
+    @keyframes pulse-border {
+      from { box-shadow: 0 0 0 0 rgba(180,120,60,0.3); }
+      to   { box-shadow: 0 0 0 6px rgba(180,120,60,0); }
+    }
     .hold-progress {
       position: absolute; inset: 0; width: 0%;
       pointer-events: none; transition: none; border-radius: 14px;
     }
     .hold-btn .hb-content { position: relative; z-index: 1;
       display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
     .hb-checkin { background: #f8f5f0; color: #5a4a3a; border: 2px solid #d8c8b0; }
     .hb-checkin .hold-progress { background: #b8a080; opacity: .35; }
-    .hb-checkin.holding { border-color: #a09070; }
-    .hb-undo { background: #fff0f0; color: var(--red); border: 2px solid var(--red-border); }
+    .hb-undo    { background: var(--red-pale); color: var(--red); border: 2px solid var(--red-border); }
     .hb-undo .hold-progress { background: var(--red); opacity: .25; }
-    .hb-undo.holding { border-color: var(--red); }
-    .hb-freeze { background: #f5f5f5; color: #444; border: 2px solid #ccc; }
+    .hb-freeze  { background: #f5f5f5; color: #444; border: 2px solid #ccc; }
     .hb-freeze .hold-progress { background: #888; opacity: .20; }
-    .hb-freeze.is-frozen { background: #fff0f0; color: #a03030; border-color: #e07070; }
+    .hb-freeze.is-frozen { background: var(--red-pale); color: #a03030; border-color: #e07070; }
     .hb-freeze.is-frozen .hold-progress { background: #e07070; opacity: .25; }
     .hb-disabled { background: #f5f5f5; color: #999; border: 2px solid #e0e0e0; cursor: not-allowed; }
 
@@ -225,7 +254,7 @@
       color: var(--maroon); text-align: center; margin-bottom: 18px;
     }
 
-    /* PIN 相關（只用於領隊登入） */
+    /* PIN */
     .pin-label { font-size: 1rem; color: var(--ink); margin-bottom: 12px; font-weight: 700; text-align: center; }
     .pin-field {
       width: 100%; padding: 16px; font-size: 2.4rem; text-align: center; letter-spacing: .4em;
@@ -240,19 +269,11 @@
       font-family: 'Noto Serif TC',serif; font-size: 1.15rem; letter-spacing: 4px; font-weight: 900;
       background: #ccc; color: #fff; cursor: pointer; transition: all .2s; margin-top: 14px;
     }
-    .pin-submit.ready { background: linear-gradient(135deg,var(--teal),#1e4238); box-shadow: 0 4px 15px rgba(45,93,79,.3); }
+    .pin-submit.ready { background: linear-gradient(135deg,var(--teal),#1e4238);
+      box-shadow: 0 4px 15px rgba(45,93,79,.3); }
     .pin-submit.ready:active { transform: scale(.98); }
-    .pin-error { text-align: center; font-size: .95rem; color: var(--red); min-height: 24px; margin-top: 10px; font-weight: 700; }
-
-    /* 確認身份大卡片 */
-    .confirm-card {
-      background: linear-gradient(135deg,#fff8f0,#fff);
-      border: 3px solid var(--gold-border); border-radius: 16px;
-      padding: 18px; margin: 12px 0; text-align: center;
-    }
-    .confirm-name   { font-size: 1.6rem; font-weight: 900; font-family: 'Noto Serif TC',serif; color: var(--maroon); }
-    .confirm-dharma { font-size: 1.05rem; color: #555; margin-top: 4px; font-weight: 700; }
-    .confirm-status { margin-top: 12px; font-size: 1.05rem; font-weight: 700; }
+    .pin-error { text-align: center; font-size: .95rem; color: var(--red);
+      min-height: 24px; margin-top: 10px; font-weight: 700; }
 
     /* 領隊後台 */
     .leader-section { margin-bottom: 16px; }
@@ -262,7 +283,8 @@
       border-bottom: 2px solid #f5e6cc;
     }
     .admin-summary { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
-    .sum-box { background: #fffaf5; border-radius: 14px; padding: 14px; text-align: center; border: 2px solid #ffe0b2; }
+    .sum-box { background: #fffaf5; border-radius: 14px; padding: 14px; text-align: center;
+      border: 2px solid #ffe0b2; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); }
     .sum-box .s-num { font-size: 2rem; font-weight: 900; font-family: 'Noto Serif TC',serif; line-height: 1; }
     .sum-box .s-lbl { font-size: .85rem; color: #5a4020; margin-top: 4px; font-weight: 700; }
 
@@ -276,8 +298,7 @@
     .btn:active { opacity: .72; }
     .btn-green   { background: var(--green); color: #fff; }
     .btn-red     { background: var(--red); color: #fff; }
-    .btn-gray    { background: #666; color: #fff; }
-    .btn-amber   { background: var(--amber); color: #fff; }
+    .btn-gray    { background: #555; color: #fff; }
     .btn-outline { background: var(--white); border: 2.5px solid var(--maroon); color: var(--maroon); }
     .btn-full    { width: 100%; display: block; }
 
@@ -303,7 +324,7 @@
     #toast {
       position: fixed; bottom: 36px; left: 50%;
       transform: translateX(-50%) translateY(120px);
-      background: #222; color: #fff; padding: 14px 26px;
+      background: #111; color: #fff; padding: 14px 26px;
       border-radius: 40px; font-size: 1rem; font-weight: 700;
       z-index: 9999; transition: transform .28s;
       white-space: nowrap; box-shadow: 0 8px 28px rgba(0,0,0,.35);
@@ -315,7 +336,6 @@
 <body>
 <div id="loading-bar"></div>
 
-<!-- ── 置頂 ── -->
 <div id="sticky-top">
   <header>
     <h1>☸ 0524浴佛12車義工報到</h1>
@@ -328,15 +348,14 @@
   </div>
 </div>
 
-<!-- ── 主體 ── -->
 <div id="main-body">
-
+  <div id="self-disabled-note">⛔ 領隊已關閉自助報到功能</div>
   <div id="readonly-bar">👁 唯讀模式・僅供查閱</div>
 
-  <!-- 快速跳轉 -->
   <div class="jump-bar">
+    <span class="jump-icon">🔍</span>
     <select class="jump-select" id="jump-home" onchange="jumpToCard(this,'card-')">
-      <option value="">⬇ 快速跳轉至姓名…</option>
+      <option value="">快速跳轉至姓名…</option>
     </select>
     <span class="jump-arrow">▼</span>
   </div>
@@ -356,6 +375,15 @@
 <div id="toast"></div>
 <button id="back-to-top">↑</button>
 
+<!-- ════ 卡片自助報到 Sheet ════ -->
+<div class="modal-overlay" id="card-self-sheet">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">🙋 義工自助報到</div>
+    <div id="card-action-area"></div>
+    <button class="btn btn-gray btn-full mt-3" onclick="closeCardSelfSheet()">關閉</button>
+  </div>
+</div>
 
 <!-- ════ 領隊專區 Sheet ════ -->
 <div class="modal-overlay" id="leader-sheet">
@@ -363,7 +391,6 @@
     <div class="sheet-handle"></div>
     <div class="sheet-title">⚙️ 領隊專區</div>
 
-    <!-- 登入 -->
     <div id="leader-login-panel">
       <div class="pin-label">請輸入領隊代碼</div>
       <input type="tel" class="pin-field" id="leader-pin-input"
@@ -375,7 +402,6 @@
       <button class="btn btn-gray btn-full mt-3" onclick="closeLeaderSheet()">取消</button>
     </div>
 
-    <!-- 後台 -->
     <div id="leader-panel" class="hidden">
       <div class="leader-section">
         <div class="leader-section-title">⚡ 報到管理</div>
@@ -384,44 +410,39 @@
           <div class="sum-box"><div class="s-num num-red"   id="adm-pending">—</div><div class="s-lbl">未到</div></div>
         </div>
         <div class="jump-bar">
+          <span class="jump-icon">🔍</span>
           <select class="jump-select" id="jump-leader" onchange="jumpToCard(this,'swo-')">
-            <option value="">⬇ 快速跳轉至姓名…</option>
+            <option value="">快速跳轉至姓名…</option>
           </select>
           <span class="jump-arrow">▼</span>
         </div>
         <div id="checkin-list"></div>
       </div>
-
-      <!-- 底部三個全寬按鈕 -->
       <div class="leader-bottom-btns">
         <button class="btn btn-gray btn-full" onclick="leaderLogout()">退出領隊後台</button>
-        <button class="btn btn-red btn-full" onclick="clearAllData()">🗑 清除所有記錄</button>
+        <button class="btn btn-red btn-full"  onclick="clearAllData()">🗑 清除所有記錄</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════ 卡片自助報到 Sheet ════ -->
-<div class="modal-overlay" id="card-self-sheet">
-  <div class="modal-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">🙋 義工自助報到</div>
-    <div id="card-action-area"></div>
-    <button class="btn btn-gray btn-full mt-3" onclick="closeCardSelfSheet()">關閉</button>
-  </div>
-</div>
-
 <script>
-const API         = 'https://script.google.com/macros/s/AKfycbz_i1spdxXnPJmx7tZUtIfBn9ybdrJdtaBNjjGaVBpViFrED01sFYWwIviiB3tH6yB3Fw/exec';
-const LEADER_CODE = '7777';
-const HOLD_MS     = 3000;
+// ╔══════════════════════════════════════════════════════╗
+// ║  ★ 部署設定（需要更改時只需修改此區塊）              ║
+// ╠══════════════════════════════════════════════════════╣
+const GAS_DEPLOY_ID = 'AKfycbz_i1spdxXnPJmx7tZUtIfBn9ybdrJdtaBNjjGaVBpViFrED01sFYWwIviiB3tH6yB3Fw';
+const LEADER_CODE   = '7777';   // 領隊登入代碼
+// ╚══════════════════════════════════════════════════════╝
+
+const API     = `https://script.google.com/macros/s/${GAS_DEPLOY_ID}/exec`;
+const HOLD_MS = 3000;
 
 let data               = { students: [], statuses: {}, frozen: [] };
 let isLeader           = false;
 let selfCheckinEnabled = true;
 let filterMode         = 'all';
 let isReadonly         = false;
-let selfStudent        = null;   // 自助報到選取的義工
+let selfStudent        = null;
 
 // ── 工具 ──
 function nCode(r){ return String(r||'').padStart(3,'0'); }
@@ -460,7 +481,6 @@ async function loadData(){
       Object.entries(r.statuses||{}).forEach(([k,v]) => { norm[nCode(k)] = v; });
       r.statuses = norm;
       r.frozen   = (r.frozen||[]).map(c => nCode(c));
-      // 讀取自助報到開關（後端支援後啟用）
       if(typeof r.selfCheckin === 'boolean') selfCheckinEnabled = r.selfCheckin;
       data = r;
     }
@@ -531,7 +551,7 @@ function setFilter(mode){
   renderCards();
 }
 
-// ── 主頁名單卡片（唯讀） ──
+// ── 主頁名單卡片 ──
 function renderCards(){
   const c = document.getElementById('cards');
   if(!data.students.length){
@@ -542,18 +562,31 @@ function renderCards(){
   let sorted = [...data.students].sort((a,b)=>Number(a.order)-Number(b.order));
   if(filterMode === 'pending') sorted = sorted.filter(s => !isPresentByCode(s.code) && !isFrozen(s.code));
   sorted.forEach(s => {
-    const fr = isFrozen(s.code), pr = isPresentByCode(s.code);
-    const el = document.createElement('div');
-    el.className = 'card' + (fr ? ' frozen' : pr ? ' present' : '');
+    const fr   = isFrozen(s.code);
+    const pr   = isPresentByCode(s.code);
+    const isCore = Number(s.order) <= 3;   // 前3張核心領隊
+    const el   = document.createElement('div');
+    // 狀態 class 組合
+    let cls = 'card';
+    if(fr)           cls += ' frozen';
+    else if(pr)      cls += ' present';
+    if(isCore && !fr) cls += ' core-leader';
+    el.className = cls;
     el.id = 'card-' + nCode(s.code);
     if(!fr && !isReadonly) el.onclick = () => openCardSelfSheet(nCode(s.code));
-    const unit = s.unit ? `<span class="tag tag-unit">${esc(s.unit)}</span>` : '';
-    const room = s.room ? `<span class="tag tag-room">🛏${esc(s.room)}</span>` : '';
+
+    const unit  = s.unit ? `<span class="tag tag-unit">${esc(s.unit)}</span>` : '';
+    const room  = s.room ? `<span class="tag tag-room">🛏${esc(s.room)}</span>` : '';
+    // 前3張顯示電話（純文字不可點）
+    const phoneHtml = (isCore && s.phone)
+      ? `<span class="card-phone">${esc(s.phone)}</span>` : '';
+
     el.innerHTML = `
       <div class="card-row1">
         <span class="card-order">${s.order}</span>
         <span class="card-name">${esc(s.name)}</span>
         ${s.dharma ? `<span class="card-dharma">${esc(s.dharma)}</span>` : ''}
+        ${phoneHtml}
       </div>
       <div class="card-row2">
         ${unit}${room}
@@ -609,7 +642,7 @@ function buildActionCard(s, selfMode){
   outer.className = 'sw-outer' + (fr ? ' frozen' : pr ? ' present' : '');
   outer.id = 'swo-' + code;
 
-  // 資訊（自助模式不顯示電話）
+  // 後台顯示電話（可點撥），自助不顯示
   const phoneHtml = (!selfMode && s.phone)
     ? `<a class="sw-phone" href="tel:${s.phone.replace(/[^0-9+]/g,'')}">📞 ${esc(s.phone)}</a>`
     : '';
@@ -636,7 +669,6 @@ function buildActionCard(s, selfMode){
     </div>`;
   outer.appendChild(info);
 
-  // 長按按鈕列
   const actionRow = document.createElement('div');
   actionRow.className = 'sw-action-row';
   if(!fr){
@@ -652,7 +684,6 @@ function buildActionCard(s, selfMode){
   } else {
     actionRow.appendChild(makeHoldBtn('hb-disabled', '🔒', '已凍結\n無法報到'));
   }
-  // 凍結按鈕（僅領隊）
   if(!selfMode){
     const fb = makeHoldBtn('hb-freeze' + (fr?' is-frozen':''), '❄', fr?'按三秒\n解凍此人':'按三秒\n凍結此人');
     attachHold(fb, () => toggleFreeze(code));
@@ -704,10 +735,23 @@ function rebuildCard(code, selfMode, oldOuter){
   oldOuter.parentNode.replaceChild(buildActionCard(s, selfMode), oldOuter);
 }
 
+// ── 卡片點擊自助報到 ──
+function openCardSelfSheet(code){
+  if(!selfCheckinEnabled){ showToast('⛔ 自助報到已關閉'); return; }
+  const s = data.students.find(s => nCode(s.code) === code);
+  if(!s) return;
+  selfStudent = s;
+  const area = document.getElementById('card-action-area');
+  area.innerHTML = '';
+  area.appendChild(buildActionCard(s, true));
+  document.getElementById('card-self-sheet').classList.add('show');
+}
+function closeCardSelfSheet(){
+  document.getElementById('card-self-sheet').classList.remove('show');
+}
+function closeSelfSheet(){ closeCardSelfSheet(); }
 
-// ══════════════════════════════════════
-// 領隊 Sheet
-// ══════════════════════════════════════
+// ── 領隊 Sheet ──
 function openLeaderSheet(){
   if(isLeader){
     document.getElementById('leader-login-panel').classList.add('hidden');
@@ -760,19 +804,8 @@ async function leaderRefresh(){
   await loadData(); renderStats(); renderCheckinList();
   buildJumpSelect('jump-leader'); showToast('✅ 已同步');
 }
-function toggleSelfCheckinConfirm(){
-  if(selfCheckinEnabled){
-    if(!confirm('確定關閉自助報到功能？\n義工將無法自行操作。')) return;
-    if(!confirm('再次確認：關閉後義工無法自助報到，需領隊代為操作。\n確定關閉？')) return;
-  }
-  toggleSelfCheckin();
-}
 function toggleSelfCheckin(){
   selfCheckinEnabled = !selfCheckinEnabled;
-  const btn = document.getElementById('toggle-self-btn');
-  btn.textContent = selfCheckinEnabled ? '🔒 關閉自助報到' : '🔓 開啟自助報到';
-  // 同步後端（待 GAS 支援後啟用）
-  // apiCall({ action: 'setSelfCheckin', enabled: selfCheckinEnabled });
   renderMain();
   showToast(selfCheckinEnabled ? '✅ 自助報到已開啟' : '🔒 自助報到已關閉');
 }
@@ -823,11 +856,9 @@ async function clearAllData(){
   setLoading(false);
 }
 
-// 遮罩點擊關閉
 document.getElementById('card-self-sheet').addEventListener('click', function(e){ if(e.target===this) closeCardSelfSheet(); });
 document.getElementById('leader-sheet').addEventListener('click', function(e){ if(e.target===this) closeLeaderSheet(); });
 
-// 回頂按鈕
 document.getElementById('leader-sheet').addEventListener('scroll', function(){
   const sheet = this.querySelector('.modal-sheet');
   const btn = document.getElementById('back-to-top');
@@ -838,22 +869,6 @@ document.getElementById('back-to-top').onclick = function(){
   const sheet = document.querySelector('#leader-sheet .modal-sheet');
   if(sheet) sheet.scrollTo({ top: 0, behavior: 'smooth' });
 };
-
-
-// ── 卡片點擊自助報到 ──
-function openCardSelfSheet(code){
-  if(!selfCheckinEnabled){ showToast('⛔ 自助報到已關閉'); return; }
-  const s = data.students.find(s => nCode(s.code) === code);
-  if(!s) return;
-  selfStudent = s;
-  const area = document.getElementById('card-action-area');
-  area.innerHTML = '';
-  area.appendChild(buildActionCard(s, true));
-  document.getElementById('card-self-sheet').classList.add('show');
-}
-function closeCardSelfSheet(){
-  document.getElementById('card-self-sheet').classList.remove('show');
-}
 
 window.onload = async () => {
   isReadonly = (window.location.hash === '#readonly');
