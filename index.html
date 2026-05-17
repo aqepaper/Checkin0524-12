@@ -135,18 +135,18 @@
     /* ── 主頁名單卡片 ── */
     .cards-grid { display: flex; flex-direction: column; gap: 10px; }
     .card {
-      background: var(--white); border-radius: 16px; padding: 14px 16px;
+      background: #fdf9f3; border-radius: 16px; padding: 14px 16px;
       box-shadow: 0 4px 12px rgba(90,64,32,0.06); border: 2px solid #ede0cc;
       cursor: pointer; -webkit-tap-highlight-color: transparent;
       transition: all 0.2s ease; display: flex; flex-direction: column; gap: 8px;
     }
     .card:active { transform: scale(0.98); box-shadow: 0 2px 6px rgba(0,0,0,.05); opacity: .9; }
     .card.frozen { cursor: default; }
-    .card.present { border-color: var(--green); border-width: 2px; background: linear-gradient(135deg,#fff,#edf7f1); }
+    .card.present { border-color: var(--green); border-width: 3px; background: linear-gradient(135deg,#c8ecd6,#dff5e8); }
     .card.frozen  { border-color: var(--red); border-width: 2px; background: #fff5f5; opacity: .78; }
     /* 前3張：核心領隊金框 */
-    .card.core-leader { border: 2px solid var(--gold-border); background: linear-gradient(135deg,#fff,#fdfbf7); }
-    .card.core-leader.present { border-color: var(--green); background: linear-gradient(135deg,#fff,#edf7f1); }
+    .card.core-leader { border: 2px solid var(--gold-border); background: linear-gradient(135deg,#fefbf3,#fdf7e8); }
+    .card.core-leader.present { border-color: var(--green); border-width: 3px; background: linear-gradient(135deg,#c8ecd6,#dff5e8); }
 
     .card-row1 { display: flex; align-items: center; gap: 12px; }
     .card-order {
@@ -176,11 +176,11 @@
        報到卡片（領隊後台）
     ══════════════════════════════ */
     .sw-outer {
-      background: var(--white); border-radius: 16px;
+      background: #fdf9f3; border-radius: 16px;
       border: 2px solid var(--gray-light); margin-bottom: 12px; overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.04);
     }
-    .sw-outer.present { border-color: var(--green); border-width: 2px; background: #edf7f1; }
+    .sw-outer.present { border-color: var(--green); border-width: 3px; background: linear-gradient(135deg,#c8ecd6,#dff5e8); }
     .sw-outer.frozen  { border-color: var(--red); border-width: 2px; background: #fff5f5; }
     .sw-card-info { display: flex; flex-direction: column; padding: 14px 16px 10px; gap: 8px; }
     .sw-row1 { display: flex; align-items: center; gap: 12px; }
